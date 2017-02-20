@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cuesheet_templates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <broadcaster_id>CH4001</broadcaster_id>
+  <cuesheet_template>
+    <production_company>
+      <ext_sys_ref>1855943169</ext_sys_ref>
+      <name>JV BOX TELEVISION LIMITED</name>
+      <subscriber>Y</subscriber>
+      <address>
+        <line1>Mappin House
+4 Winsley Street
+London</line1>
+        <line2 />
+        <line3 />
+        <line4 />
+        <line5 />
+        <town />
+        <county />
+        <postcode>W1W 8HF</postcode>
+        <telephone>020 7182 8761</telephone>
+        <fax />
+        <email>MNansera@Channel4.co.uk</email>
+      </address>
+    </production_company>
+    <projects>
+     
+      <Project>
+        <ext_sys_ref>${episode.ctrPrg}</ext_sys_ref>
+        <name>${episode.title}</name>
+        <contract_no>${episode.series.contractNumber}</contract_no>
+        <episodes_in_series>${episode.number!"01"}</episodes_in_series>
+        <commissioning_editor> </commissioning_editor>
+        <production_source>H</production_source>
+        <contacts />
+        <programmes>
+        <#list episode.cuePoints as cuePoint>
+          <Programme>
+            <ext_sys_ref>${cuePoint.materiaId!"####"}</ext_sys_ref>
+            <name>${cuePoint.name!"###"}</name>
+            <production_no>${cuePoint.materiaId!"####"}</production_no>
+            <episode_no xsi:nil="true" />
+            <date_transmit></date_transmit>
+            <duration>${cuePoint.duration!"0"}</duration>
+            <channel_transmit></channel_transmit>
+            <type>LK</type>
+            <product_details>${cuePoint.track!"####"}</product_details>
+            <notes xsi:nil="true" />
+          </Programme>
+          </#list>         
+        </programmes>
+      </Project>      
+    </projects>
+  </cuesheet_template>
+</cuesheet_templates>

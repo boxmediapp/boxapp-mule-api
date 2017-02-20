@@ -1,0 +1,17 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "a9915e61-4ffd-575d-990d-0e656c056ab8",
+  "TopicArn" : "arn:aws:sns:eu-west-1:006270873208:box-video",
+  "Subject" : "Amazon S3 Notification",
+  "Message" : "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"eu-west-1\",\"eventTime\":\"2016-07-16T11:59:52.761Z\",\"eventName\":\"ObjectCreated:Comple
+teMultipartUpload\",\"userIdentity\":{\"principalId\":\"AWS:AIDAJDVVI5DCEP6QMPFDW\"},\"requestParameters\":{\"sourceIPAddress\":\"185.28.203.125\"},\"responseElements\":{\"x-amz-request-id\
+":\"DC399A6BD013E574\",\"x-amz-id-2\":\"SLXgKaOVNjKAOfTcXw9IrD0PSf4L8YFIsLVRrrwb/1la/vV8uFCr22/0U3i5ej6l8ROsX2lkUEo=\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"boxmediaapp
+\",\"bucket\":{\"name\":\"box-video\",\"ownerIdentity\":{\"principalId\":\"A2TIMUMFKUM9ZX\"},\"arn\":\"arn:aws:s3:::box-video\"},\"object\":{\"key\":\"V_64626_004_001.mp4\",\"size\":5509081
+859,\"eTag\":\"57fa85dd66a5ccfccfd4a73f3c0f147d-1051\",\"sequencer\":\"00578A1F4383542C62\"}}}]}",
+  "Timestamp" : "2016-07-16T11:59:52.928Z",
+  "SignatureVersion" : "1",
+  "Signature" : "aI3FxkKFNTeUUnXCIfp8D2SRbL+0JndUExn9QjLQdR5fjYUeGveIAwMFMjiU6ir/0sP7dIoTSNsGcpBuqjhGVdn7aYmPaG2EV2T5VWuZHe7E/PsFqhwE45o2OaIFLN97rMDkpyVK03D3utNEd1I1i6E/MvMvzc2FIFl11EEyea/7
+BPDxDaZ1CFZraes2QQHeeIGqU6fY2JBW4EpvkW9W/K5tuXJNV4P2kJPRnm8DoyK7pPE/JNWW2RK8PswtStLbZ3HgOL/Majv6uiCZo51JA/XVE3B5ZTKtolEfMC5kKsd063X717iR+/OFq4nLtkEBiSv8h9qPH//XnHuULLdY+g==",
+  "SigningCertURL" : "https://sns.eu-west-1.amazonaws.com/SimpleNotificationService-bb750dd426d95ee9390147a5624348ee.pem",
+  "UnsubscribeURL" : "https://sns.eu-west-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-1:006270873208:box-video:1610a8b0-931a-48d9-8e00-22224c06991d"
+}

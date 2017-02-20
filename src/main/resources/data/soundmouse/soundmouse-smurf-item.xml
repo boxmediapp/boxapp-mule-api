@@ -1,0 +1,19 @@
+    <media>
+	     <titleSeries>${soundMouseItem.title!"###"}</titleSeries>
+	     <mediaIdExtSysRef>${soundMouseItem.materialId!"####"}</mediaIdExtSysRef>
+	     <mediaType>AudioVisual</mediaType>
+	     <contentType>Promo</contentType>
+	     <duration>${soundMouseItem.duration!"0"}</duration>
+      <usages>
+        <usage>
+	         <usageType>Stream</usageType>
+	         <numberUses>${soundMouseItem.analyticData.video_view}</numberUses>
+	         <usageStartDate>${soundMouseData.reportStartDate}</usageStartDate>
+	         <usageEndDate>${soundMouseData.reportEndDate}</usageEndDate>
+          <platforms>
+            <platform>VOD</platform>
+          </platforms>
+        </usage>
+      </usages>
+     </media>
+  

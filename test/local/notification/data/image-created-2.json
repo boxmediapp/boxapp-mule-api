@@ -1,0 +1,12 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "a3466583-eeac-5dc1-ac68-34816ffba8a2",
+  "TopicArn" : "arn:aws:sns:eu-west-1:006270873208:box-video-archive",
+  "Subject" : "Amazon S3 Notification",
+  "Message" : "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"eu-west-1\",\"eventTime\":\"2017-01-25T10:33:59.013Z\",\"eventName\":\"ObjectCreated:Post\",\"userIdentity\":{\"principalId\":\"AWS:AIDAJDVVI5DCEP6QMPFDW\"},\"requestParameters\":{\"sourceIPAddress\":\"81.107.11.131\"},\"responseElements\":{\"x-amz-request-id\":\"C272E4A4880B7D33\",\"x-amz-id-2\":\"wtXFJOayQdR4GF7SoyXCskZSQQb0hVX3tU86Ea72Af1FpSwhN+rnSSPOQsBjWm4qhls3OPzrCt4=\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"box-video-archive video upload\",\"bucket\":{\"name\":\"box-video-archive\",\"ownerIdentity\":{\"principalId\":\"A2TIMUMFKUM9ZX\"},\"arn\":\"arn:aws:s3:::box-video-archive\"},\"object\":{\"key\":\"assets/programmes/master-images/dilshat-series-group-3.png\",\"size\":1569428,\"eTag\":\"5c56fb938cc827f859858439fd61d430\",\"sequencer\":\"0058887F15D60138E0\"}}}]}",
+  "Timestamp" : "2017-01-25T10:33:59.237Z",
+  "SignatureVersion" : "1",
+  "Signature" : "DiKAygVvo4ykSlWpzVzkP/s2C/WkcWa+VHvh0ylZiMVGRDDnBZh9RZqE7PQ0YNOL8watzRwWYDTJMoM8Lac5WtrYOX+am2YvlIoqVvnkBohLvh4hzpg6aVOzpx2/GfFUBInh4V+JoSn7mafN8ZSHDUK0NX5eHQBerP63P+TUSTJb+NRu0OL8GAVJf86e3wYiu29VwXf8CkgGiaNlvKArxzQOAYi7mzzmsL9TgoOy1mhNTPJ/gL1R3xQHlh0VMA/n8QZ4EUzxUQYVPTThreBt9QTbAcjORgVab/M8vEbqvG3MoqrxNINsHzttCpAniT0v1/+VeghgxxoiAzjK6RexFA==",
+  "SigningCertURL" : "https://sns.eu-west-1.amazonaws.com/SimpleNotificationService-b95095beb82e8f6a046b3aafc7f4149a.pem",
+  "UnsubscribeURL" : "https://sns.eu-west-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-1:006270873208:box-video-archive:fb9c6239-184f-456a-bda5-e491c8e21b25"
+}

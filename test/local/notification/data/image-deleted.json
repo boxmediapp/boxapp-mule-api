@@ -1,0 +1,12 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "1792b1be-0be2-5fab-9bc5-e1bacabeee68",
+  "TopicArn" : "arn:aws:sns:eu-west-1:006270873208:box-images",
+  "Subject" : "Amazon S3 Notification",
+  "Message" : "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"eu-west-1\",\"eventTime\":\"2016-07-16T23:11:24.564Z\",\"eventName\":\"ObjectRemoved:Delete\",\"userIdentity\":{\"principalId\":\"AWS:AIDAI34W5CQLBKIWNIFX4\"},\"requestParameters\":{\"sourceIPAddress\":\"81.107.11.131\"},\"responseElements\":{\"x-amz-request-id\":\"B83CAF219A349E0E\",\"x-amz-id-2\":\"oCFEi+aUsLWByANn/0M5cmQ4W7NlZSrmBD3jDLfsDVzAg+yh1R7k0aN5K2veWsDY\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"box-images\",\"bucket\":{\"name\":\"box-origin\",\"ownerIdentity\":{\"principalId\":\"A2TIMUMFKUM9ZX\"},\"arn\":\"arn:aws:s3:::box-origin\"},\"object\":{\"key\":\"images/mule-optimum-services.jpg\",\"sequencer\":\"00578ABF1C867B4B7E\"}}}]}",
+  "Timestamp" : "2016-07-16T23:11:24.774Z",
+  "SignatureVersion" : "1",
+  "Signature" : "T0cXUkBM4dwY5fD3+CH8zVPssGbRgP3en3lbySI+Uq9WTWehuUKQmvuXfwNr0YY8XgkpaNhAAml0zlz4uarjiwNZun2932t14cU69iLZ6QrDh5x6b9QXs6BYM+tSWIc2Opz9B6Vm9oo00topB7tzbMj0tPYezUB33ehTBkKQX/NXgDtcISbHphFSG9OCxwtmYZTWXn3rlvcnRmmT2VbVTjte6/U6sQqy59EXqSqMjsGd580ldTxdM37g3JCKGlMAF+M/Dv/wBCVpCh/HzBRFhSl+sPJ7WYrfF2Qh/zv75soEIa/8q8eqPhGwKlZ9Tm3ffFYCs2/ds7Nd7pMYsQxfag==",
+  "SigningCertURL" : "https://sns.eu-west-1.amazonaws.com/SimpleNotificationService-bb750dd426d95ee9390147a5624348ee.pem",
+  "UnsubscribeURL" : "https://sns.eu-west-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-1:006270873208:box-images:75712fc4-9f1f-48e0-8e7d-bd10b7c13e08"
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<usageReport>
+  <entityName>Box</entityName>
+  <entityType>Broadcaster</entityType>
+  <entityIdBroadcaster>CH4001</entityIdBroadcaster>
+  <country>UK</country>
+  <territory>GBR</territory>
+  <language>en</language>
+  <filename>SMURF_BOX_CH4001_20160809_152300_AUG2016_version00001.xml</filename>
+  <createdBy>Simon Roberts (Test)</createdBy>
+  <created>2016-08-09T15:23:00</created>
+  <reportStartDate>2016-08-01T00:00:00</reportStartDate >
+  <reportEndDate>2016-08-31T23:59:59</reportEndDate >
+  <mediaCount>2</mediaCount>
+  <usageCount>4</usageCount>
+  <mediaList>
+    <media>
+	     <titleSeries>IDENT KG: NOV07 6</titleSeries>
+	     <mediaIdExtSysRef>CH4BRG33024G</mediaIdExtSysRef>
+	     <mediaType>AudioVisual</mediaType>
+	     <contentType>Promo</contentType>
+	     <duration>00:00:08</duration>
+      <usages>
+        <usage>
+	         <usageType>Stream</usageType>
+	         <numberUses>57</numberUses>
+	         <usageStartDate>2016-08-01T00:00:00</usageStartDate>
+	         <usageEndDate>2016-08-31T23:59:59</usageEndDate>
+          <platforms>
+            <platform>VOD</platform>
+          </platforms>
+        </usage>
+      </usages>
+    </media>
+    <media>
+	     <titleSeries>IDENT KG: NOV07 7</titleSeries>
+	     <mediaIdExtSysRef>CH4BRG33034G</mediaIdExtSysRef>
+	     <mediaType>AudioVisual</mediaType>
+	     <contentType>Promo</contentType>
+	     <duration>00:00:08</duration>
+      <usages>
+        <usage>
+	         <usageType>Stream</usageType>
+	         <numberUses>82</numberUses>
+	         <usageStartDate>2016-08-01T00:00:00</usageStartDate>
+	         <usageEndDate>2016-08-31T23:59:59</usageEndDate>
+          <platforms>
+            <platform>VOD</platform>
+          </platforms>
+        </usage>
+      </usages>
+    </media>
+  </mediaList>
+</usageReport>

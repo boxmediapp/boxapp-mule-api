@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule  xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd">
+    
+    
+      
+    <flow name="s3-service">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.s3.path}" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	
+	        	<transformer ref="s3VideoBucketTransformer" doc:name="Box Video Service"/>    	
+	        </otherwise>
+	    </choice>
+    </flow>
+    
+    <flow name="box-video-service">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.boxvideo.path}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="boxVideoTransformer" doc:name="Box Video"/>    	
+	        </otherwise>
+	    </choice>
+        
+        
+                                 		
+    </flow>
+    
+    <flow name="presigned">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.presigned.path}" doc:name="HTTP"/>
+         <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="presignedURLTransformer" doc:name="presgined"/>    	
+	        </otherwise>
+	    </choice>
+        
+        
+                                  		
+    </flow>
+    
+    
+    <flow name="box-master-image-service">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.images.master.path}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="boxMasterImageTransfoer" doc:name="Box Video"/>
+	        	    	
+	        </otherwise>
+	    </choice>
+        
+        
+                                 		
+    </flow>
+    
+    
+</mule>

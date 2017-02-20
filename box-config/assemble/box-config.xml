@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<assembly>
+	<id>distribution</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <baseDirectory>maven</baseDirectory>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+           
+           <fileSet>
+                   <directory>metadata-config/</directory>
+                   <includes>
+                       <include>*.*</include>
+                   </includes>
+                   <outputDirectory>/box-config/metadata-config</outputDirectory>
+           </fileSet>
+           <fileSet>
+                   <directory>aws/</directory>
+                   <includes>
+                       <include>*</include>
+                   </includes>
+                   <outputDirectory>/box-config/aws</outputDirectory>
+           </fileSet>
+           
+    </fileSets>
+</assembly>

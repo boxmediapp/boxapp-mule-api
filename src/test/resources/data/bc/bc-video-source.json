@@ -1,0 +1,65 @@
+[ {
+  "asset_id" : "5255125456001",
+  "remote" : false,
+  "src" : "http://hlsboxplus-a.akamaihd.net/4821467243001/4821467243001_5255125456001_5245858805001.m3u8?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T11:19:19.276Z",
+  "type" : "application/vnd.apple.mpegurl",
+  "key_systems" : {
+    "com.apple.fps.1_0" : {
+      "key_request_url" : "https://fps.brightcove.com/v1/fairplay_session_playback"
+    }
+  }
+}, {
+  "asset_id" : "5255125456001",
+  "remote" : false,
+  "src" : "https://hlsboxplus-a.akamaihd.net/4821467243001/4821467243001_5255125456001_5245858805001.m3u8?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T11:19:19.276Z",
+  "type" : "application/vnd.apple.mpegurl",
+  "key_systems" : {
+    "com.apple.fps.1_0" : {
+      "key_request_url" : "https://fps.brightcove.com/v1/fairplay_session_playback"
+    }
+  }
+}, {
+  "asset_id" : "5255123697001",
+  "remote" : false,
+  "src" : "http://boxplusnet-a.akamaihd.net/mp4/4821467243001/201612/4821467243001_5255123697001_5245858805001.mpd?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T11:19:17.392Z",
+  "type" : "application/dash+xml",
+  "profiles" : "urn:mpeg:dash:profile:isoff-live:2011",
+  "key_systems" : {
+    "com.widevine.alpha" : {
+      "license_url" : "https://wvlic.brightcove.com/proxy/5245858805001"
+    },
+    "com.microsoft.playready" : {
+      "license_url" : "https://prlic.brightcove.com/license/4821467243001"
+    }
+  }
+}, {
+  "asset_id" : "5255123697001",
+  "remote" : false,
+  "src" : "https://boxplusnet-a.akamaihd.net/mp4/4821467243001/201612/4821467243001_5255123697001_5245858805001.mpd?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T11:19:17.392Z",
+  "type" : "application/dash+xml",
+  "profiles" : "urn:mpeg:dash:profile:isoff-live:2011",
+  "key_systems" : {
+    "com.widevine.alpha" : {
+      "license_url" : "https://wvlic.brightcove.com/proxy/5245858805001"
+    },
+    "com.microsoft.playready" : {
+      "license_url" : "https://prlic.brightcove.com/license/4821467243001"
+    }
+  }
+}, {
+  "asset_id" : "5255241040001",
+  "remote" : false,
+  "src" : "http://smoothqa-s.akamaihd.net/ondemand/4821467243001/201612/2404/4821467243001_5255241040001_5245858805001.ism?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T13:03:00.784Z",
+  "type" : "application/vnd.ms-sstr+xml"
+}, {
+  "asset_id" : "5255241133001",
+  "remote" : false,
+  "src" : "http://smoothqa-s.akamaihd.net/ondemand/4821467243001/201612/2404/4821467243001_5255241133001_5245858805001.ismc?pubId=4821467243001&videoId=5245858805001",
+  "uploaded_at" : "2016-12-20T13:03:00.875Z",
+  "type" : "application/vnd.ms-sstr+xml"
+} ]

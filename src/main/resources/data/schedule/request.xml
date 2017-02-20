@@ -1,0 +1,18 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:GetSchedulesByParams>
+         
+         <tem:channelId>${channelId}</tem:channelId>
+         
+         <tem:fromDate>${fromDate}</tem:fromDate>
+         
+         <tem:toDate>${toDate}</tem:toDate>
+         
+         <tem:type>${type}</tem:type>
+         
+         <tem:info>${info}</tem:info>
+      </tem:GetSchedulesByParams>
+   </soapenv:Body>
+</soapenv:Envelope>
+

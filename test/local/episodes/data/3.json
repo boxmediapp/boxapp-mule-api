@@ -1,0 +1,59 @@
+{
+                "title": "The UK Music Video Chart",
+                "materialId": "63307/027/001",
+                "contentType": "Shorts",
+                "durationScheduled": 5400.234,
+                "series":{
+                	"seriesGroup":{
+                	   "title":"UK MUSIC VIDEO CHART (2016)"
+                	}     
+                 },                
+                "showType": "Link & Clip Countdown",
+                "prAuk": "1869588329",
+                "synopsis": "We've teamed up with YouTube to compile a chart of the most watched videos that's packed with future hits and all the biggest tracks around!",
+ 
+                "cuePoints": [ {
+                                 "name": "Show Opener: OPENER The UK Music Video Chart",
+                                "type": "AD",
+                                "time": 0.000,
+                                "metadata": {
+                                                "materialId": "62273/001/023/001",
+                                                "mediaType": "BUMPER OUT",
+                                                "duration": "00:00:10:00"
+                                             }
+                             },{ 
+                                 "name": "The UK Music Video Chart 090716 SKIP 20, INTRO 19 (THIS ONE'S FOR YOU)",
+                                 "type": "CODE",
+                                 "time": 25.560,
+                                 "metadata": {
+                                                "materialId": "63307/027/002/002",
+                                                "duration": "00:00:20:00",
+                                                "mediaType": "PROG + GFX"
+                                              }
+                              },{    
+                                 "name": "DAVID GUETTA THIS ONES FOR YOU",
+                                 "type": "CODE",
+                                 "time": 607.294,
+                                 "metadata": {
+                                                "materialId": "64223/355/001/001",
+                                                "mediaType": "SCHED MUSIC",
+                                                "duration": "00:03:26:00",
+                                                "artist": "David Guetta ft. Zara Larsson",
+                                                "track": "This One's For You",
+                                                "certification": "All times"
+ 
+                                              }
+                              },{ 
+                                  "name": "JENNIFER LOPEZ AINT YOUR MAMA SHORT",
+                                   "type": "CODE",
+                                   "time": 1207.510,
+                                   "metadata": {
+                                                "materialId": "64223/239/001/001",
+                                                "mediaType": "SCHED MUSIC",
+                                                "duration": "00:04:01:00",
+                                                "artist": "Jennifer Lopez",
+                                                "track": "Ain't Your Mama",
+                                                "certification": "Post Watershed (Post 2100)"
+                                                }
+ 				               }]
+ }

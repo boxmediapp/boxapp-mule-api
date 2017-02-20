@@ -1,0 +1,60 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <GetComplianceInformationForAssetResponse xmlns="http://tempuri.org/">
+         <GetComplianceInformationForAssetResult xmlns:a="http://schemas.datacontract.org/2004/07/C4.Pirate.Compliance.Contracts.Dtos" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <a:ComplianceInformation>
+               <a:IssueNumber>1</a:IssueNumber>
+               <a:MaterialId>63369/003/001/001</a:MaterialId>
+               <a:ParentViewer i:nil="true"/>
+               <a:ProgrammeCertifications>
+                  <a:Certification>
+                     <a:CertificationDate>2016-02-25T09:08:09</a:CertificationDate>
+                     <a:CertificationEndDate>2026-02-25T09:08:09</a:CertificationEndDate>
+                     <a:CertificationType>
+                        <a:CertificationCategory>
+                           <a:Description>Main certification used across C4 network</a:Description>
+                           <a:Id>2</a:Id>
+                           <a:Name>Channel4</a:Name>
+                        </a:CertificationCategory>
+                        <a:CertificationTimes>
+                           <a:CertificationTime>
+                              <a:CertificationType i:nil="true"/>
+                              <a:CheckEndTime>false</a:CheckEndTime>
+                              <a:CheckStartTime>false</a:CheckStartTime>
+                              <a:DistributionId>0</a:DistributionId>
+                              <a:EndTime>1899-12-30T23:59:59</a:EndTime>
+                              <a:Id>6</a:Id>
+                              <a:ScheduleWarningFlag>false</a:ScheduleWarningFlag>
+                              <a:StartTime>1899-12-30T00:00:00</a:StartTime>
+                              <a:Warning i:nil="true"/>
+                           </a:CertificationTime>
+                        </a:CertificationTimes>
+                        <a:CliKey>45912833</a:CliKey>
+                        <a:Code>FA</a:Code>
+                        <a:Description>All times</a:Description>
+                        <a:Id>30</a:Id>
+                     </a:CertificationType>
+                     <a:ComplianceObservationId>0</a:ComplianceObservationId>
+                     <a:CreatedBy>1854976017</a:CreatedBy>
+                     <a:CreatedOn>2016-02-25T09:08:09</a:CreatedOn>
+                     <a:Id>107686</a:Id>
+                     <a:ModifiedBy>1854976017</a:ModifiedBy>
+                     <a:ModifiedOn>2016-02-25T09:08:09</a:ModifiedOn>
+                     <a:PreviousCertificationType i:nil="true"/>
+                  </a:Certification>
+               </a:ProgrammeCertifications>
+               <a:ProgrammeVersionCertification>As Delivered</a:ProgrammeVersionCertification>
+               <a:TransmissionDate>0001-01-01T00:00:00</a:TransmissionDate>
+               <a:id>1853358197</a:id>
+               <a:AssetId>1869602083</a:AssetId>
+               <a:ViewerUserKey>1854976017</a:ViewerUserKey>
+               <a:CertificationFinished>Y</a:CertificationFinished>
+               <a:EditedOn>2016-02-25T09:07:52</a:EditedOn>
+               <a:EditedBy i:nil="true"/>
+               <a:AsistantSignoff i:nil="true"/>
+               <a:CommissioningEditor i:nil="true"/>
+            </a:ComplianceInformation>
+         </GetComplianceInformationForAssetResult>
+      </GetComplianceInformationForAssetResponse>
+   </s:Body>
+</s:Envelope>

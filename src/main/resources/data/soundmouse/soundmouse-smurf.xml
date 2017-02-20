@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<usageReport>
+  <entityName>Box</entityName>
+  <entityType>Broadcaster</entityType>
+  <entityIdBroadcaster>CH4001</entityIdBroadcaster>
+  <country>UK</country>
+  <territory>GBR</territory>
+  <language>en</language>
+  <filename>${soundMouseData.smurfFilename}</filename>
+  <createdBy>JV BOX TELEVISION LIMITED</createdBy>
+  <created>${soundMouseData.createdAt}</created>
+  <reportStartDate>${soundMouseData.reportStartDate}</reportStartDate >
+  <reportEndDate>${soundMouseData.reportEndDate}</reportEndDate >
+  <mediaCount>${soundMouseData.mediaCount}</mediaCount>
+  <usageCount>${soundMouseData.usageCount}</usageCount>
+  <mediaList>  
+  </mediaList>
+</usageReport>
+

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cuesheet_templates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <broadcaster_id>CH4001</broadcaster_id>
+  <cuesheet_template>
+    <production_company>
+      <ext_sys_ref>1855943169</ext_sys_ref>
+      <name>JV BOX TELEVISION LIMITED</name>
+      <subscriber>Y</subscriber>
+      <address>
+        <line1>Mappin House
+4 Winsley Street
+London</line1>
+        <line2 />
+        <line3 />
+        <line4 />
+        <line5 />
+        <town />
+        <county />
+        <postcode>W1W 8HF</postcode>
+        <telephone>020 7182 8761</telephone>
+        <fax />
+        <email>MNansera@Channel4.co.uk</email>
+      </address>
+    </production_company>
+    <projects>
+      <Project>
+        <ext_sys_ref>CH4BRG33024G</ext_sys_ref>
+        <name>IDENT KG: NOV07 6</name>
+        <contract_no>CH4BRG33024G</contract_no>
+        <episodes_in_series>2</episodes_in_series>
+        <commissioning_editor> </commissioning_editor>
+        <production_source>H</production_source>
+        <contacts />
+        <programmes>
+          <Programme>
+            <ext_sys_ref>CH4BRG33024G</ext_sys_ref>
+            <name>IDENT KG: NOV07 6</name>
+            <production_no>CH4BRG33024G</production_no>
+            <episode_no xsi:nil="true" />
+            <date_transmit>26/12/2011</date_transmit>
+            <duration>00:00:08</duration>
+            <channel_transmit>15</channel_transmit>
+            <type>LK</type>
+            <product_details>4 Music Link</product_details>
+            <notes xsi:nil="true" />
+          </Programme>
+          <Programme>
+            <ext_sys_ref>CH4BRG33024G</ext_sys_ref>
+            <name>IDENT KG: NOV07 6</name>
+            <production_no>CH4BRG33024G</production_no>
+            <episode_no xsi:nil="true" />
+            <date_transmit xsi:nil="true" />
+            <duration>00:00:08</duration>
+            <channel_transmit>15</channel_transmit>
+            <type>LK</type>
+            <product_details>4 Music Link</product_details>
+            <notes xsi:nil="true" />
+          </Programme>
+        </programmes>
+      </Project>
+      <Project>
+        <ext_sys_ref>CH4BRG33034G</ext_sys_ref>
+        <name>IDENT KG: NOV07 7</name>
+        <contract_no>CH4BRG33034G</contract_no>
+        <episodes_in_series>2</episodes_in_series>
+        <commissioning_editor> </commissioning_editor>
+        <production_source>H</production_source>
+        <contacts />
+        <programmes>
+          <Programme>
+            <ext_sys_ref>CH4BRG33034G</ext_sys_ref>
+            <name>IDENT KG: NOV07 7</name>
+            <production_no>CH4BRG33034G</production_no>
+            <episode_no xsi:nil="true" />
+            <date_transmit>26/12/2011</date_transmit>
+            <duration>00:00:08</duration>
+            <channel_transmit>15</channel_transmit>
+            <type>LK</type>
+            <product_details>4 Music Link</product_details>
+            <notes xsi:nil="true" />
+          </Programme>
+          <Programme>
+            <ext_sys_ref>CH4BRG33034G</ext_sys_ref>
+            <name>IDENT KG: NOV07 7</name>
+            <production_no>CH4BRG33034G</production_no>
+            <episode_no xsi:nil="true" />
+            <date_transmit xsi:nil="true" />
+            <duration>00:00:08</duration>
+            <channel_transmit>15</channel_transmit>
+            <type>LK</type>
+            <product_details>4 Music Link</product_details>
+            <notes xsi:nil="true" />
+          </Programme>
+        </programmes>
+      </Project>
+    </projects>
+  </cuesheet_template>
+</cuesheet_templates>

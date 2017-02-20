@@ -1,0 +1,7 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <GetComplianceInformationForAssetResponse xmlns="http://tempuri.org/">
+         <GetComplianceInformationForAssetResult xmlns:a="http://schemas.datacontract.org/2004/07/C4.Pirate.Compliance.Contracts.Dtos" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"/>
+      </GetComplianceInformationForAssetResponse>
+   </s:Body>
+</s:Envelope>

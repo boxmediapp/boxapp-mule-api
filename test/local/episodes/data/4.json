@@ -1,0 +1,586 @@
+{
+  "title": "UK HOTLIST Top 40",
+  "materialId": "63377/026/001",
+  "programmeNumber": "63377/026",
+  "number": 26,
+  "durationScheduled": "7251",
+  "showType": "Official UK Chart",
+  "prAuk": "1869592175",
+  "synopsis": "We count down the UK's most-streamed tracks of the week, as compiled by Spotify",
+  "cuePoints": [
+    {
+      "name": "Show Opener: OPENER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 0,
+      "metadata": {
+        "materialId": "62642/001/001/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:10:00"
+      }
+    },
+    {
+      "name": "CHAINSMOKERS ROZES SHORT",
+      "type": "CODE",
+      "time": 202,
+      "metadata": {
+        "materialId": "63300/460/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:22:00",
+        "artist": "The Chainsmokers ft. Rozes",
+        "track": "Roses"
+      }
+    },
+    {
+      "name": "JUSTIN BIEBER LOVE YOURSELF ALBUM",
+      "type": "CODE",
+      "time": 403,
+      "metadata": {
+        "materialId": "62278/459/001/002",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:21:00",
+        "artist": "Justin Bieber",
+        "track": "Love Yourself"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 406,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 409,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "JASON DERULO IF IT AINT LOVE SHORT",
+      "type": "CODE",
+      "time": 613,
+      "metadata": {
+        "materialId": "64223/238/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:24:00",
+        "artist": "Jason DeRulo",
+        "track": "If It Ain't Love"
+      }
+    },
+    {
+      "name": "BASTILLE GOOD GRIEF",
+      "type": "CODE",
+      "time": 849,
+      "metadata": {
+        "materialId": "64223/408/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:56:00",
+        "artist": "Bastille",
+        "track": "Good Grief"
+      }
+    },
+    {
+      "name": "ONEREPUBLIC WHEREVER I GO SHORT",
+      "type": "CODE",
+      "time": 1030,
+      "metadata": {
+        "materialId": "64223/323/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:01:00",
+        "artist": "OneRepublic",
+        "track": "Wherever I Go"
+      }
+    },
+    {
+      "name": "JUSTIN BIEBER SORRY DANCE VID",
+      "type": "CODE",
+      "time": 1235,
+      "metadata": {
+        "materialId": "62278/371/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:25:00",
+        "artist": "Justin Bieber",
+        "track": "Sorry"
+      }
+    },
+    {
+      "name": "DUA LIPA HOTTER THAN HELL SHORT",
+      "type": "CODE",
+      "time": 1429,
+      "metadata": {
+        "materialId": "64223/234/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:14:00",
+        "artist": "Dua Lipa",
+        "track": "Hotter Than Hell"
+      }
+    },
+    {
+      "name": "LITTLE MIX SEAN PAUL HAIR SHORT",
+      "type": "CODE",
+      "time": 1659,
+      "metadata": {
+        "materialId": "64223/243/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:50:00",
+        "artist": "Little Mix ft. Sean Paul",
+        "track": "Hair"
+      }
+    },
+    {
+      "name": "CALUM SCOTT DANCING ON MY OWN OFFICIAL",
+      "type": "CODE",
+      "time": 1881,
+      "metadata": {
+        "materialId": "64223/388/001/003",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:42:00",
+        "artist": "Calum Scott",
+        "track": "Dancing On My Own"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 1884,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 1887,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "ARIANA GRANDE INTO YOU",
+      "type": "CODE",
+      "time": 2128,
+      "metadata": {
+        "materialId": "64223/280/001/002",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:04:01:00",
+        "artist": "Ariana Grande",
+        "track": "Into You"
+      }
+    },
+    {
+      "name": "KENT JONES DONT MIND",
+      "type": "CODE",
+      "time": 2313,
+      "metadata": {
+        "materialId": "64223/169/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:05:00",
+        "artist": "Kent Jones",
+        "track": "Don't Mind"
+      }
+    },
+    {
+      "name": "MK PIECE OF ME",
+      "type": "CODE",
+      "time": 2458,
+      "metadata": {
+        "materialId": "64223/118/001/002",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:02:25:00",
+        "artist": "MK & Becky Hill",
+        "track": "Piece Of Me"
+      }
+    },
+    {
+      "name": "LUKAS GRAHAM 7 YEARS SHORT",
+      "type": "CODE",
+      "time": 2659,
+      "metadata": {
+        "materialId": "63300/340/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:21:00",
+        "artist": "Lukas Graham",
+        "track": "7 Years"
+      }
+    },
+    {
+      "name": "RIHANNA WORK OFFICIAL CLEAN",
+      "type": "CODE",
+      "time": 2874,
+      "metadata": {
+        "materialId": "63986/002/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:35:00",
+        "artist": "Rihanna ft. Drake",
+        "track": "Work"
+      }
+    },
+    {
+      "name": "MAJOR LAZER LIGHT OFFICIAL SHORT",
+      "type": "CODE",
+      "time": 3014,
+      "metadata": {
+        "materialId": "64223/052/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:02:20:00",
+        "artist": "Major Lazer ft. Nyla & Fuse ODG",
+        "track": "Light It Up"
+      }
+    },
+    {
+      "name": "ALAN WALKER FADED SHORT",
+      "type": "CODE",
+      "time": 3123,
+      "metadata": {
+        "materialId": "63300/406/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:01:49:00",
+        "artist": "Alan Walker",
+        "track": "Faded"
+      }
+    },
+    {
+      "name": "CHAINSMOKERS DONT LET ME DOWN SHORT",
+      "type": "CODE",
+      "time": 3320,
+      "metadata": {
+        "materialId": "64223/233/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:17:00",
+        "artist": "The Chainsmokers ft. Daya",
+        "track": "Don't Let Me Down"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 3323,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 3326,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "DNCE CAKE BY THE OCEAN SHORT",
+      "type": "CODE",
+      "time": 3500,
+      "metadata": {
+        "materialId": "63300/402/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:02:54:00",
+        "artist": "DNCE",
+        "track": "Cake By The Ocean"
+      }
+    },
+    {
+      "name": "JONAS BLUE FAST CAR SHORT",
+      "type": "CODE",
+      "time": 3688,
+      "metadata": {
+        "materialId": "63300/310/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:08:00",
+        "artist": "Jonas Blue ft. Dakota",
+        "track": "Fast Car"
+      }
+    },
+    {
+      "name": "ADELE SEND MY LOVE",
+      "type": "CODE",
+      "time": 3908,
+      "metadata": {
+        "materialId": "64223/264/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:40:00",
+        "artist": "Adele",
+        "track": "Send My Love"
+      }
+    },
+    {
+      "name": "ZARA LARSSON LUSH LIFE SHORT",
+      "type": "CODE",
+      "time": 4047,
+      "metadata": {
+        "materialId": "63300/341/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:02:19:00",
+        "artist": "Zara Larsson",
+        "track": "Lush Life"
+      }
+    },
+    {
+      "name": "TINIE TEMPAH GIRLS LIKE SHORT",
+      "type": "CODE",
+      "time": 4240,
+      "metadata": {
+        "materialId": "64223/142/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:13:00",
+        "artist": "Tinie Tempah ft. Zara Larsson",
+        "track": "Girls Like"
+      }
+    },
+    {
+      "name": "DAVID GUETTA THIS ONES FOR YOU",
+      "type": "CODE",
+      "time": 4442,
+      "metadata": {
+        "materialId": "64223/355/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:22:00",
+        "artist": "David Guetta ft. Zara Larsson",
+        "track": "This One's For You"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 4445,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 4448,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "DJ SNAKE MIDDLE SHORT",
+      "type": "CODE",
+      "time": 4654,
+      "metadata": {
+        "materialId": "64223/058/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:26:00",
+        "artist": "DJ Snake ft Bipolar Sunshine",
+        "track": "Middle"
+      }
+    },
+    {
+      "name": "CLEAN BANDIT TEARS UNOFFICIAL",
+      "type": "CODE",
+      "time": 4850,
+      "metadata": {
+       "materialId": "64223/359/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:16:00",
+        "artist": "Clean Bandit ft. Louisa Johnson",
+        "track": "Tears"
+      }
+    },
+    {
+      "name": "FIFTH HARMONY WORK FROM SHORT",
+      "type": "CODE",
+      "time": 5047,
+      "metadata": {
+        "materialId": "63300/449/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:17:00",
+        "artist": "Fifth Harmony ft. Ty Dolla $ign",
+        "track": "Work From Home"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 5050,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 5053,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "GNASH I HATE U I LOVE U",
+      "type": "CODE",
+      "time": 5279,
+      "metadata": {
+        "materialId": "64223/179/001/002",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:46:00",
+        "artist": "gnash ft. Olivia O'Brien",
+        "track": "I Hate U, I Love U"
+      }
+    },
+    {
+      "name": "DESIIGNER PANDA",
+      "type": "CODE",
+      "time": 5517,
+      "metadata": {
+        "materialId": "64223/258/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:58:00",
+        "artist": "Desiigner",
+        "track": "Panda"
+      }
+    },
+    {
+      "name": "MIKE POSNER I TOOK A PLANE SHORT",
+      "type": "CODE",
+      "time": 5699,
+      "metadata": {
+        "materialId": "63300/447/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:02:00",
+        "artist": "Mike Posner",
+        "track": "I Took A Plane To Ibiza"
+      }
+    },
+    {
+      "name": "CHEAT CODES SEX",
+      "type": "CODE",
+      "time": 5811,
+      "metadata": {
+        "materialId": "64223/178/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:01:52:00",
+        "artist": "Cheat Codes",
+        "track": "SEX"
+      }
+    },
+   {
+      "name": "KUNGS THIS GIRL",
+      "type": "CODE",
+      "time": 6008,
+      "metadata": {
+        "materialId": "64223/127/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:17:00",
+        "artist": "Kungs vs. Cookin' On 3 Burners",
+        "track": "This Girl"
+      }
+    },
+    {
+      "name": "GALANTIS NO MONEY",
+      "type": "CODE",
+      "time": 6207,
+      "metadata": {
+        "materialId": "64223/223/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:19:00",
+        "artist": "Galantis",
+        "track": "No Money"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "AD",
+      "time": 6210,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "IDENT: BUMPER UK HOTLIST Top 40",
+      "type": "CODE",
+      "time": 6213,
+      "metadata": {
+        "materialId": "62642/001/002/004",
+        "mediaType": "BUMPER OUT",
+        "duration": "00:00:03:00"
+      }
+    },
+    {
+      "name": "JUSTIN TIMBERLAKE CANT STOP OFFICIAL SHORT",
+      "type": "CODE",
+      "time": 6451,
+      "metadata": {
+       "materialId": "64223/260/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:58:00",
+        "artist": "Justin Timberlake",
+        "track": "Can't Stop The Feeling"
+      }
+    },
+    {
+      "name": "SIA CHEAP THRILLS LYRIC VIDEO SHORT",
+      "type": "CODE",
+      "time": 6665,
+      "metadata": {
+        "materialId": "63300/478/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:34:00",
+        "artist": "Sia ft. Sean Paul",
+        "track": "Cheap Thrills"
+      }
+    },
+    {
+      "name": "DRAKE TOO GOOD UNOFFICIAL",
+      "type": "CODE",
+      "time": 6854,
+      "metadata": {
+        "materialId": "64223/358/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:09:00",
+        "artist": "Drake",
+        "track": "Too Good"
+      }
+    },
+    {
+      "name": "CALVIN HARRIS RIHANNA THIS IS OFFICIAL",
+      "type": "CODE",
+      "time": 7072,
+      "metadata": {
+        "materialId": "64223/386/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:03:38:00",
+        "artist": "Calvin Harris ft. Rihanna",
+        "track": "This Is What You Came For"
+      }
+    },
+    {
+      "name": "DRAKE ONE DANCE UNOFFICIAL LONG CLIP",
+      "type": "AD",
+      "time": 7241,
+      "metadata": {
+        "materialId": "64223/402/001/001",
+        "mediaType": "SCHED MUSIC",
+        "duration": "00:02:49:00",
+        "artist": "Drake ft. Wizkid & Kyla",
+        "track": "One Dance"
+      }
+    }
+  ]
+}

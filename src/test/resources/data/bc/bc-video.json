@@ -1,0 +1,67 @@
+{
+  "id" : "5036964227001",
+  "account_id" : "4821467243001",
+  "unknown_fields":"ddd",
+  "ad_keys" : null,
+  "complete" : true,
+  "created_at" : "2016-07-15T12:31:20.638Z",
+  "cue_points" : [ ],
+  "custom_fields" : {
+    "programmetitle" : "Sun, Sex & Suspicious Parents",
+     "newfields":"ddd",
+    "certificationtype" : "Post Watershed",
+    "txchannel" : "4Music",
+    "drm" : "True",
+    "seriesnumber" : "03",
+    "episodenumber" : "03",
+    "contenttype" : "Entertainment"
+  },
+  "description" : "It's sun, sea and outrageous behaviour in the town of Magaluf as two very different groups of friends go on their first holiday without their parents. Fitness fanatic Rhys and gymnast Kiran",
+  "digital_master_id" : "5036986868001",
+  "duration" : 3395882,
+  "economics" : "AD_SUPPORTED",
+  "folder_id" : null,
+  "geo" : null,
+  "images" : {
+    "thumbnail" : {
+      "asset_id" : "5036986865001",
+      "remote" : false,
+      "src" : "http://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986865001_5036964227001-th.jpg?pubId=4821467243001&videoId=5036964227001",
+      "sources" : [ {
+        "src" : "http://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986865001_5036964227001-th.jpg?pubId=4821467243001&videoId=5036964227001",
+        "height" : 180,
+        "width" : 320
+      }, {
+        "src" : "https://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986865001_5036964227001-th.jpg?pubId=4821467243001&videoId=5036964227001",
+        "height" : 180,
+        "width" : 320
+      } ]
+    },
+    "poster" : {
+      "asset_id" : "5036986890001",
+      "remote" : false,
+      "src" : "http://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986890001_5036964227001-vs.jpg?pubId=4821467243001&videoId=5036964227001",
+      "sources" : [ {
+        "src" : "http://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986890001_5036964227001-vs.jpg?pubId=4821467243001&videoId=5036964227001",
+        "height" : 1080,
+        "width" : 1920
+      }, {
+        "src" : "https://boxplusnet-a.akamaihd.net/images/4821467243001/201607/4821467243001_5036986890001_5036964227001-vs.jpg?pubId=4821467243001&videoId=5036964227001",
+        "height" : 1080,
+        "width" : 1920
+      } ]
+    }
+  },
+"link" : null,
+  "long_description" : null,
+  "name" : "Sun, Sex & Suspicious Parents",
+  "original_filename" : "V_64197_003_001.mp4",
+  "published_at" : "2016-07-15T12:31:20.638Z",
+  "reference_id" : "V_64197_003_001",
+  "schedule" : null,
+  "sharing" : null,
+  "state" : "ACTIVE",
+  "tags" : [ ],
+  "text_tracks" : [ ],
+  "updated_at" : "2016-07-16T00:57:44.945Z"
+}

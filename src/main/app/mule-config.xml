@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:https="http://www.mulesoft.org/schema/mule/https"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp" xmlns:jdbc="http://www.mulesoft.org/schema/mule/jdbc" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:ajax="http://www.mulesoft.org/schema/mule/ajax"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:management="http://www.mulesoft.org/schema/mule/management"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:ss="http://www.springframework.org/schema/security"
+	xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+		
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	 xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+http://www.mulesoft.org/schema/mule/jdbc http://www.mulesoft.org/schema/mule/jdbc/current/mule-jdbc.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ajax http://www.mulesoft.org/schema/mule/ajax/current/mule-ajax.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/management http://www.mulesoft.org/schema/mule/management/current/mule-management.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.1/mule-spring-security.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+
+<spring:beans> 
+        <spring:bean id="property-placeholder2" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+            <spring:property name="locations"> 
+                <spring:list>                     
+                    <spring:value>file:///${mule.home}/box-config/metadata-config/*.properties</spring:value>
+                    <spring:value>file:///${mule.home}/box-config/aws/credentials</spring:value>
+                    <spring:value>file:///${mule.home}/box-config/aws/config</spring:value>   
+                </spring:list>  
+               </spring:property>  
+         </spring:bean>
+         
+        <spring:bean id="dataSource" class="org.enhydra.jdbc.standard.StandardDataSource" destroy-method="shutdown">
+    		<spring:property name="driverName" value="com.mysql.jdbc.Driver"/>
+    		<spring:property name="url" value="${db.url}"/>
+    		<spring:property name="user" value="${db.user}"/>
+    		<spring:property name="password" value="${db.password}"/>
+		</spring:bean>
+        <context:component-scan base-package="uk.co.boxnetwork.components" />    
+         
+         <spring:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">		
+ 		 	<spring:property name="dataSource" ref="dataSource"/>
+  		  	<spring:property name="loadTimeWeaver">    	  
+    	 			<spring:bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+ 		 	</spring:property>
+ 		 	<spring:property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+ 		 	<spring:property name="jpaProperties">
+	    		<spring:props>
+	      			<spring:prop key="hibernate.show_sql">true</spring:prop>
+	      			<spring:prop key="hibernate.hbm2dll.auto">create</spring:prop>
+	    		</spring:props>
+  			</spring:property>
+         </spring:bean>
+ 
+ 		<spring:bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+  			<spring:property name="showSql" value="true"/>
+  			<spring:property name="generateDdl" value="true"/>
+  			<spring:property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
+		</spring:bean>
+		
+   		<spring:bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+			<spring:property name="entityManagerFactory" ref="entityManagerFactory" />
+		</spring:bean>
+		
+		<spring:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+				<spring:constructor-arg ref="entityManagerFactory" />
+		</spring:bean>
+		
+		<tx:annotation-driven transaction-manager="transactionManager" />
+		
+		
+		
+		
+                    
+         
+         
+         
+         
+         
+         <spring:bean id="bcConfiguration"  class="uk.co.boxnetwork.data.bc.BCConfiguration">
+                            <spring:property name="oauthurl" value="${brightcove.oauth.url}"/>
+                            <spring:property name="cmsurl" value="${brightcove.cms.url}"/>
+                            <spring:property name="ingesturl" value="${brightcove.ingest.url}"/>
+                            
+                            <spring:property name="mediaapiurl" value="${brightcove.mediaapi.url}"/>
+                            <spring:property name="analyticsapiurl" value="${brightcove.analytics.url}"/>
+                            
+                            <spring:property name="accountId" value="${brightcove.account_id}"/>
+                            <spring:property name="clientId" value="${brightcove.client_id}"/>                            
+                            <spring:property name="clientSecret" value="${brightcove.client_secret}"/>                                                       
+                             <spring:property name="defaltIngestProfile" value="${brightcove.ingest.profile}"/>
+                             <spring:property name="ingestCallback" value="${brightcove.ingest.callback}"/>
+                             
+                             
+                             <spring:property name="analyticsDimension" value="${brightcove.analytics.dimensions}"/>
+                             <spring:property name="analyticsFields" value="${brightcove.analytics.fields}"/>
+                             
+                             <spring:property name="customFieldsUpdateType" value="${brightcove.customFields.updateType}"/>
+                             
+                                                          
+         </spring:bean>
+         <spring:bean id="c4ScheduleConfiguration"  class="uk.co.boxnetwork.data.BasicAuthenticatedURLConfiguration">
+                            <spring:property name="url" value="${c4.schedule.get.url}"/>
+                            <spring:property name="user" value="${c4.schedule.get.user}"/>
+                            <spring:property name="password" value="${c4.schedule.get.password}"/>                            
+         </spring:bean>
+         <spring:bean id="c4CertificationConfiguration"  class="uk.co.boxnetwork.data.BasicAuthenticatedURLConfiguration">
+                            <spring:property name="url" value="${c4.certification.get.url}"/>
+                            <spring:property name="user" value="${c4.certification.get.user}"/>
+                            <spring:property name="password" value="${c4.certification.get.password}"/>                            
+         </spring:bean>
+         
+         <spring:bean id="userService" class="uk.co.boxnetwork.security.BoxUserService">
+         	  <spring:property name="encryptionKey" value="${boxtv_metadata_app.security.encryption}"/>
+         	  <spring:property name="defaultRootPassword" value="${boxtv_metadata_app.security.defaultRootPassword}"/>
+         	  
+         </spring:bean>
+         
+         <spring:bean id="appConfiguration" class="uk.co.boxnetwork.model.AppConfig">         	  
+         	  <spring:property name="recordLimit" value="${record.limit}"/>
+         	  <spring:property name="imagetemplateurl" value="${image.templateurl}"/>
+         	  <spring:property name="brightcoveStatus" value="${brightcove.status}"/>
+         	  <spring:property name="convertImage" value="${convertImage.status}"/>
+         	  <spring:property name="version" value="${app.config.version}"/>
+         	  <spring:property name="s3videoURL"    value="${s3.ingest.url}"/>
+         	   <spring:property name="s3imagesURL" value="${s3.images.url}"/>         	   
+         	   <spring:property name="videoBucket" value="${s3.video.bucket}"/>
+         	   <spring:property name="imageBucket" value="${s3.images.bucket}"/>
+         	   <spring:property name="imageMasterFolder" value="${s3.images.master.folder}"/>
+         	   <spring:property name="imagePublicFolder" value="${s3.images.public.folder}"/>
+         	   <spring:property name="imageUrlAliases" value="${image.urlaliases}"/>
+         	   <spring:property name="requiredFields" value="${record.requiredFields}"/>
+         	   <spring:property name="visibilityCategory" value="${app.visibilityCategory}"/>
+         	   <spring:property name="autoSetGeoAllowedCountries" value="${app.autoSetGeoAllowedCountries}"/>
+         	   <spring:property name="autoSetContentType" value="${app.autoSetContentType}"/>
+         	   <spring:property name="autoSetTxChannel" value="${app.autoSetTxChannel}"/>
+         	   <spring:property name="autoSetPublishedStatus" value="${app.autoSetPublishedStatus}"/>
+         	   <spring:property name="autoCreatePlaceHolder" value="${app.autoCreatePlaceHolder}"/>
+         	   <spring:property name="publishProgrammeInfo" value="${app.publishProgrammeInfo}"/>
+         	   <spring:property name="autoTranscode" value="${app.autoStartTranscode}"/>
+         	   <spring:property name="sendUpdateToSoundMouse" value="${app.sendUpdateToSoundMouse}"/>
+         	   
+         	            	            	  
+         </spring:bean>
+         
+         <spring:bean id="awsSecrets" class="uk.co.boxnetwork.data.AWSConfig">         	  
+         	  <spring:property name="awsAccessKeyId" value="${aws_access_key_id}"/>
+         	  <spring:property name="awsSecretAccessKey" value="${aws_secret_access_key}"/>
+			  <spring:property name="awsRegion" value="${region}"/>         	           	            	  
+         </spring:bean>
+         
+         
+         <spring:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+         
+         <ss:authentication-manager alias="authenticationManager">
+      			<ss:authentication-provider user-service-ref="userService">      			   
+      			   <ss:password-encoder ref="encoder" />
+      			</ss:authentication-provider>
+    	</ss:authentication-manager>
+		           
+ </spring:beans>
+   
+  <mule-ss:security-manager doc:name="Spring Security Provider" name="Spring_Security_Provider">
+      <mule-ss:delegate-security-provider name="memory-provider" delegate-ref="authenticationManager" />
+  </mule-ss:security-manager>
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.EpisodeTransformer" name="episodeService" doc:name="EpisodeService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.ScheduleTransformer" name="scheduleService" doc:name="ScheduleService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.SeriesTransformer" name="seriesService" doc:name="SeriesService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.SeriesGroupTransformer" name="seriesGroupService" doc:name="SeriesGroupService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.TagsTransformer" name="tagsService" doc:name="Tags Services"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.ClientDeciceTransformer" name="devicesService" doc:name="devices Services"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.AdvertisementRuleTransformer" name="advertisementRuleService" doc:name="Advertisement rule Services"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.CueTransformer" name="cueTransformer" doc:name="Cue Transformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.AvailabilityTransformer" name="availabilityTransformer" doc:name="Availability Transformer"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.DataReportTransformer" name="dataReportTransformer" doc:name="DataReportTransformer"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.soundmouse.SoundmouseTransformer" name="soundMouse" doc:name="SoundMouse"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.soundmouse.EpisodeIdToSoundMouseHeader" name="episodeIdToSoundMouseHeader" doc:name="EpisodeIdToSoundMouseHeader"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.soundmouse.CreateSoundmouseSmurfFile" name="createSoundmouseSmurfFile" doc:name="CreateSoundmouseSmurfFile"/>
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCVideoTransmer" name="bcVideoService" doc:name="BC Video Service"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCVideoPublisher" name="bcVideoPublisher" doc:name="BC Video Publisher"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCIngestTransformer" name="bcVideoIngestTransformer" doc:name="BC Video Ingest"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCIngestNotificationTransformer" name="bcNotification" doc:name="BC Ingest Notification"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCAnalyticsDataTransformer" name="bcAnalyticsData" doc:name="BC Analytics Data"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCImportFromBCWithCSV" name="bcImportFromBCWithCSV" doc:name="BC Batch Import"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.bc.BCPlaylistTranscormer" name="bcPlaylistService" doc:name="BC PlayList Service"/>
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.c4.ImportC4ScheduleTransformer" name="importScheduleService" doc:name="Import Schedules"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.c4.C4ScheduleTransformer" name="c4Schedule" doc:name="C4 Schedules"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.S3NotificationTransformer" name="s3NotificationTransformer" doc:name="S3 Notification"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.S3VideoBucketTransformer" name="s3VideoBucketTransformer" doc:name="S3 VideoBucket Transformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.BoxVideoTransformer" name="boxVideoTransformer" doc:name="BoxVideoTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.PresignedURLTransformer" name="presignedURLTransformer" doc:name="presignedURLTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.BoxMasterImageTransformer" name="boxMasterImageTransfoer" doc:name="boxImageTransformer"/>
+   
+   
+
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.CheckTimedTaskTransformer" name="checkTimedTask" doc:name="Check Timed Tasks"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.TimedTaskServiceTransformer" name="timedTaskServiceTransformer" doc:name="Timed Task Rest Service"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.OnApppStartedTransformer" name="onAppStartdTransformer" doc:name="onAppStartdTransformer"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.BoxUsersTransformer" name="boxUsersTransformer" doc:name="BoxUsersTransformer"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.LoadAppInformationTransformer" name="loadAppInfoTransformer" doc:name="LoadConfig"/>
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.CommandExecutionTransformer" name="commandExecutionTransformer" doc:name="CommandExecutionTransformer"/>
+   
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.DoNothingTransformer" name="doNothingTransformer" doc:name="DoNothingTransformer"/>
+   
+   
+     
+   
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.mock.MockSoapServiceTransformer" name="mockC4Schedule" doc:name="c4Schedule">
+   		<spring:property name="file" value="data/schedule/s2/response.xml"/>
+   </custom-transformer>
+   
+
+	<custom-transformer class="uk.co.boxnetwork.mule.transformers.mock.MockSoapServiceTransformer" name="c4Certification" doc:name="c4Schedule">
+   		<spring:property name="file" value="data/certification/c1/response.xml"/>
+   </custom-transformer>
+   
+      
+    
+    
+        
+<mulexml:jaxb-context name="jaxbContext" packageNames="uk.co.boxnetwork.data" doc:name="JAXB Context"/>
+
+<http:listener-config name="http_metadata_inbound_listener" host="${http.binding.host}" port="${http.binding.port}" basePath="${boxtv_metadata_app.http.path}" doc:name="HTTP Listener Configuration"/>
+
+ 
+ <https:connector name="httpsConnector" doc:name="HTTP-HTTPS">
+     <https:tls-key-store path="${mule.home}/conf/keystore.jks" keyPassword="boxmedia39" storePassword="boxmedia39"/>
+ </https:connector>
+ 
+        
+</mule>

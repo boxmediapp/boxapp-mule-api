@@ -1,0 +1,31 @@
+export ssl_certificate_location=~/box/box-secrets/ssl
+
+export db_user=database-user
+export db_password=database-user-password
+
+export box_aws_access_key_id="AWS_ACCESS_KEY"
+export box_aws_secret_access_key="AWS_ACCESS_SECRET"
+
+export brightcove_account_id=BRIGHTCOVE_ACCOUNT_ID
+export brightcove_client_id=BRIGHTCOVE_CLIENT_ID
+export brightcove_client_secret=BRIGHTCOVE_CLIENT_SECRET
+export brightcove_api_token=BRIGHTCOVE_API_TOKEN
+
+
+
+export c4_schedule_get_user=schedule_service_username
+export c4_schedule_get_password=schedule_service_password
+export c4_certification_get_user=certification_service_username
+export c4_certification_get_password=certification_service_userpassword
+export boxtv_metadata_app_security_encryption=Aejbple62nCdhbprhdalfrwlegnaywlha
+
+
+export boxtv_metadata_app_security_defaultRootPassword="defult-password-changge-me"
+
+
+export soundmouse_ftp_host=ftp.channel4.com
+export soundmouse_ftp_user=fpt-user
+export soundmouse_ftp_password=ftp-password
+export soundmouse_ftp_path=/
+
+

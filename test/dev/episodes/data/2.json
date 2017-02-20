@@ -1,0 +1,33 @@
+{	                                
+	"title": "Test Dilshat Cue points (2016)-test",
+	"materialId": "Dilshat/64197/005",
+	"cuePoints":[
+{
+    
+    "name" : "mid1",
+    "type" : "AD",
+    "time" : 7.294,
+    "metadata" : "numberOfAdsPerBreak=1, somethingelse=2;",
+    "force_stop" : true
+  }, {    
+    "name" : "mid2",
+    "type" : "AD",
+    "time" : 1207.294,
+    "metadata" : "numberOfAdsPerBreak=-3, soemthing=15",
+    "force_stop" : true
+  }, {    
+    "name" : "this is the chapter",
+    "type" : "CODE",
+    "time" : 607.294,
+    "metadata" : null,
+    "force_stop" : false
+  },{
+     "name" : "mid3",
+     "type" : "CODE",
+    "time" : 800.294,
+    "metadata" : null,
+    "force_stop" : false
+  }
+   ]
+	
+}

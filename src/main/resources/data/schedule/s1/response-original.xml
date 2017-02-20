@@ -1,0 +1,1049 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <GetSchedulesByParamsResponse xmlns="http://tempuri.org/">
+         <GetSchedulesByParamsResult xmlns:a="http://schemas.datacontract.org/2004/07/C4.Pirate.BusinessServices.Schedule.Contracts.Dtos" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <a:Duration i:nil="true" xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+            <a:Name i:nil="true"/>
+            <a:ScheduleEventGroupID i:nil="true"/>
+            <a:ScheduleEventGroupType>ScheduleResults</a:ScheduleEventGroupType>
+            <a:ScheduleEventGroups>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</a:Name>
+                  <a:ScheduleEventGroupID>1869276923</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624263</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166910</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>08/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-08T05:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624263</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398303</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Name>
+                           <b:CtrPrg>64197/005</b:CtrPrg>
+                           <b:Number>5</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801952</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398289</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 1)</b:Name>
+                              <b:ContractNumber>64197</b:ContractNumber>
+                              <b:Number>64197</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>08/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-08T05:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276917</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624286</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166904</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>08/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-08T05:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624286</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398326</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/008</b:CtrPrg>
+                           <b:Number>8</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>08/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-08T05:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276915</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624287</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166902</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>08/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-08T06:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624287</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398327</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/009</b:CtrPrg>
+                           <b:Number>9</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>08/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-08T06:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS</a:Name>
+                  <a:ScheduleEventGroupID>1869276913</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624264</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166900</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>08/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-08T06:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624264</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398304</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>Sun, Sex &amp; Suspicious Parents</b:Name>
+                           <b:CtrPrg>64198/001</b:CtrPrg>
+                           <b:Number>1</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801954</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398291</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 2)</b:Name>
+                              <b:ContractNumber>64198</b:ContractNumber>
+                              <b:Number>64198</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>08/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-08T06:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</a:Name>
+                  <a:ScheduleEventGroupID>1869276928</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624263</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166915</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>09/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-09T05:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624263</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398303</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Name>
+                           <b:CtrPrg>64197/005</b:CtrPrg>
+                           <b:Number>5</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801952</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398289</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 1)</b:Name>
+                              <b:ContractNumber>64197</b:ContractNumber>
+                              <b:Number>64197</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>09/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-09T05:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276925</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624286</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166912</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>09/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-09T05:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624286</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398326</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/008</b:CtrPrg>
+                           <b:Number>8</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>09/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-09T05:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276926</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624287</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166913</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>09/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-09T06:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624287</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398327</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/009</b:CtrPrg>
+                           <b:Number>9</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>09/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-09T06:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS</a:Name>
+                  <a:ScheduleEventGroupID>1869276927</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624264</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166914</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>09/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-09T06:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624264</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398304</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>Sun, Sex &amp; Suspicious Parents</b:Name>
+                           <b:CtrPrg>64198/001</b:CtrPrg>
+                           <b:Number>1</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801954</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398291</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 2)</b:Name>
+                              <b:ContractNumber>64198</b:ContractNumber>
+                              <b:Number>64198</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>09/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-09T06:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</a:Name>
+                  <a:ScheduleEventGroupID>1869276929</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624263</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166916</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>10/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-10T05:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624263</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398303</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Name>
+                           <b:CtrPrg>64197/005</b:CtrPrg>
+                           <b:Number>5</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801952</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398289</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 1)</b:Name>
+                              <b:ContractNumber>64197</b:ContractNumber>
+                              <b:Number>64197</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS (YEAR 1)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>10/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-10T05:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276930</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624286</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166917</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>10/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>06:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-10T05:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624286</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398326</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/008</b:CtrPrg>
+                           <b:Number>8</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>10/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>06:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-10T05:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</a:Name>
+                  <a:ScheduleEventGroupID>1869276931</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624287</AssetID>
+                           <AssetName>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEA</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166918</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>10/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:00:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-10T06:00:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624287</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398327</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Name>
+                           <b:CtrPrg>64200/009</b:CtrPrg>
+                           <b:Number>9</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801960</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398288</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 4)</b:Name>
+                              <b:ContractNumber>64200</b:ContractNumber>
+                              <b:Number>64200</b:Number>
+                           </b:Series>
+                           <b:Title>FESTIVALS, SEX &amp; SUSPICIOUS PARENTS (YEAR 4)</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>10/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:00:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-10T06:00:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+               <a:BS.ScheduleEventGroup>
+                  <a:Duration xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:TimeCodeDuration>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>00:30:00:00</b:Time>
+                     </b:TimeCodeDuration>
+                     <b:TimeDuration>PT30M</b:TimeDuration>
+                  </a:Duration>
+                  <a:Name>SUN, SEX &amp; SUSPICIOUS PARENTS</a:Name>
+                  <a:ScheduleEventGroupID>1869276932</a:ScheduleEventGroupID>
+                  <a:ScheduleEventGroupType>Slot</a:ScheduleEventGroupType>
+                  <a:ScheduleEventGroups/>
+                  <a:ScheduleEvents>
+                     <a:BS.ScheduleEvent>
+                        <Asset xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <AssetID>1869624264</AssetID>
+                           <AssetName>SUN, SEX &amp; SUSPICIOUS PARENTS</AssetName>
+                           <AssetType>Episode</AssetType>
+                        </Asset>
+                        <Distribution xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <DistributionID>1865244993</DistributionID>
+                           <DistributionType>Channel</DistributionType>
+                        </Distribution>
+                        <Duration xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <TimeCodeDuration>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>00:30:00:00</Time>
+                           </TimeCodeDuration>
+                           <TimeDuration>PT30M</TimeDuration>
+                        </Duration>
+                        <ScheduleEventID xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">1869166919</ScheduleEventID>
+                        <ScheduleEventStatus xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Scheduled</ScheduleEventStatus>
+                        <ScheduleEventType xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">Episode</ScheduleEventType>
+                        <ScheduleSplit i:nil="true" xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <ScheduledMaterials xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                        <Start xmlns="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                           <ScheduleDay>10/07/2016</ScheduleDay>
+                           <TimeCode>
+                              <FrameRate>25</FrameRate>
+                              <Frames>0</Frames>
+                              <Time>07:30:00:00</Time>
+                           </TimeCode>
+                           <Timestamp>2016-07-10T06:30:00Z</Timestamp>
+                        </Start>
+                        <a:Episode xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts">
+                           <b:Id>
+                              <b:LegacyId>
+                                 <b:AssetType>Episode</b:AssetType>
+                                 <b:Id>1869624264</b:Id>
+                              </b:LegacyId>
+                              <b:PrimaryId>8398304</b:PrimaryId>
+                           </b:Id>
+                           <b:Name>Sun, Sex &amp; Suspicious Parents</b:Name>
+                           <b:CtrPrg>64198/001</b:CtrPrg>
+                           <b:Number>1</b:Number>
+                           <b:Series>
+                              <b:Id>
+                                 <b:LegacyId>
+                                    <b:AssetType>Series</b:AssetType>
+                                    <b:Id>1869801954</b:Id>
+                                 </b:LegacyId>
+                                 <b:PrimaryId>8398291</b:PrimaryId>
+                              </b:Id>
+                              <b:Name>Sun, Sex &amp; Suspicious Parents (Year 2)</b:Name>
+                              <b:ContractNumber>64198</b:ContractNumber>
+                              <b:Number>64198</b:Number>
+                           </b:Series>
+                           <b:Title>SUN, SEX &amp; SUSPICIOUS PARENTS</b:Title>
+                        </a:Episode>
+                        <a:Project i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Domains.Project.Contracts.Dtos"/>
+                        <a:Series i:nil="true" xmlns:b="http://schemas.datacontract.org/2004/07/C4.Pirate.Assets.Service.Contracts"/>
+                     </a:BS.ScheduleEvent>
+                  </a:ScheduleEvents>
+                  <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+                  <a:Start xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1">
+                     <b:ScheduleDay>10/07/2016</b:ScheduleDay>
+                     <b:TimeCode>
+                        <b:FrameRate>25</b:FrameRate>
+                        <b:Frames>0</b:Frames>
+                        <b:Time>07:30:00:00</b:Time>
+                     </b:TimeCode>
+                     <b:Timestamp>2016-07-10T06:30:00Z</b:Timestamp>
+                  </a:Start>
+               </a:BS.ScheduleEventGroup>
+            </a:ScheduleEventGroups>
+            <a:ScheduleEvents/>
+            <a:ScheduleSplits xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+            <a:Start i:nil="true" xmlns:b="http://www.channel4.co.uk/ProgrammeArea/Services/Media/xsd/GetSchedules-v1.1"/>
+         </GetSchedulesByParamsResult>
+      </GetSchedulesByParamsResponse>
+   </s:Body>
+</s:Envelope>

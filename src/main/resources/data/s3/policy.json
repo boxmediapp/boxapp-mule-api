@@ -1,0 +1,10 @@
+{ "expiration": "${data.expirationDate}",
+  "conditions": 
+   [ {"bucket": "${data.bucket}" },
+     {"key": "${data.file}" },
+     {"acl": "${data.acl}" },
+     {"success_action_status": "${data.successActionStatus}" },
+     ["content-length-range", 0, 1000000000000 ],
+     {"x-amz-algorithm": "${data.xamzAlgorithm}" },
+     {"x-amz-credential": "${data.xamzCredential}" },
+     {"x-amz-date": "${data.xamzDate}" } ] }

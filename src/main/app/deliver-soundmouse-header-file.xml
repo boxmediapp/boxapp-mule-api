@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule  xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd http://www.springframework.org/schema/integration/ftp http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd
+	http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd 
+	http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+    <flow name="deliver-soundmouse-header-fileFlow"> 
+        <vm:inbound-endpoint exchange-pattern="one-way" path="deliver_soundmouse_header_file" doc:name="VM"></vm:inbound-endpoint>  
+        <transformer ref="episodeIdToSoundMouseHeader" doc:name="Transformer Episode Service"></transformer>  
+        <choice doc:name="Choice">             
+            <when expression="#[payload is uk.co.boxnetwork.model.MediaCommand]"> 
+                  <logger message="****delivering the file to the sound mouse ftp host****" level="INFO" doc:name="Logger"></logger>       
+                  <transformer ref="soudmouseFTPTransformer" doc:name="FTP"/>
+            </when>  
+            <otherwise> 
+                <logger message="payload is not type of uk.co.boxnetwork.model.MediaCommand] will not deliver to soundmouse:#[payload]" level="INFO" doc:name="Logger"></logger>  
+            </otherwise>  
+        </choice>  
+    </flow>
+    <flow name="deliver-soundmouse-smurf-fileFlow"> 
+        <vm:inbound-endpoint exchange-pattern="one-way" path="deliver_soundmouse_smurf_file" doc:name="VM"></vm:inbound-endpoint>  
+        <transformer ref="createSoundmouseSmurfFile" doc:name="Transformer Episode Service"></transformer>  
+        
+        <choice doc:name="Choice">             
+            <when expression="#[payload is uk.co.boxnetwork.model.MediaCommand]"> 
+                  <logger message="****delivering the smurf file to the sound mouse ftp host****" level="INFO" doc:name="Logger"></logger>       
+                  <transformer ref="soudmouseFTPTransformer" doc:name="FTP"/>
+            </when>  
+            <otherwise> 
+                <logger message="payload is not type of uk.co.boxnetwork.model.MediaCommand] will not deliver to soundmouse:#[payload]" level="INFO" doc:name="Logger"></logger>  
+            </otherwise>  
+        </choice>  
+    </flow>
+    
+    <spring:beans>
+    
+ <spring:bean id="ftpClientFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">	
+	    <spring:property name="host" value="${soundmouse.ftp.host}"/>
+	    <spring:property name="port" value="21"/>
+	    <spring:property name="username" value="${soundmouse.ftp.user}"/>
+	    <spring:property name="password" value="${soundmouse.ftp.password}"/>
+	    
+	    <spring:property name="clientMode" value="2"/>
+	    <spring:property name="fileType" value="2"/>
+	    <spring:property name="bufferSize" value="100000"/>
+	</spring:bean>
+	
+	<int:channel id="ftpChannel"/>
+	
+	
+	<int-ftp:outbound-channel-adapter  id="ftpOutbound"
+				channel="ftpChannel"
+			
+				remote-directory="${soundmouse.ftp.path}"
+				session-factory="ftpClientFactory">
+					<int-ftp:request-handler-advice-chain>
+							<int:retry-advice />
+					</int-ftp:request-handler-advice-chain>
+	</int-ftp:outbound-channel-adapter>	
+	
+	
+</spring:beans>
+	
+	
+	
+
+ 
+<custom-transformer class="uk.co.boxnetwork.mule.transformers.soundmouse.FtpToSoundMouseTransformer" name="soudmouseFTPTransformer" doc:name="soudmouseFTPTransformer"/>
+
+</mule>
