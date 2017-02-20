@@ -15,7 +15,7 @@ This project a Mule ESB component, which can be deployed to the docker container
                 
 (1) Checkout the git repository:
  
-          git clone   https://github.com/boxmediapp/box-mule-api.git
+          git clone   https://github.com/boxmediapp/boxapp-mule-api.git
 
 (2) create the script to set the environmental specific variables such as AWS access key and secrets etc, you can copy and modify "deploy/prod.sh" for this. Since the script file that you have created contains the sensitive information, you can put it outside the project folder.
 
