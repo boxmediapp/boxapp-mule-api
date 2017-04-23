@@ -135,4 +135,11 @@ createUniqueidforfilename(){
  fi
 }
 
+
+initdatabase(){
+    createUniqueidforfilename
+    echo "creating the script for initdb: /tmp/script_$uniqueidforfilename.sh"   
+    echo "docker exec mysql bash /box-scripts/initdb.sh" > /tmp/script_$uniqueidforfilename.sh        
+    executeScript /tmp/script_$uniqueidforfilename.sh   
+}
   
