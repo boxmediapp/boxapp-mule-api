@@ -7,5 +7,6 @@ projectversion=$3
 buildVariables
 createFolders
 deployConfig
+initdatabase
 deployApp
 

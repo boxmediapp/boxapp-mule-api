@@ -1,7 +1,6 @@
 # bdocker
 
-This project a Mule ESB component, which can be deployed to the docker container created by   
-
+This is a Mule ESB project, which can be deployed to the docker container created by   
 
            https://github.com/boxmediapp/bdocker
    
@@ -16,23 +15,37 @@ This project a Mule ESB component, which can be deployed to the docker container
 (1) Checkout the git repository:
  
           git clone   https://github.com/boxmediapp/boxapp-mule-api.git
+          
+(2) create a configuration script  <environment-id>.sh, which specifies the environt specific variables such the database authentication etc. 
+    The name of the script can be dev.sh, int.sh, test.sh, stage.sh and prod.sh and its content can be:
 
-(2) create the script to set the environmental specific variables such as AWS access key and secrets etc, you can copy and modify "deploy/prod.sh" for this. Since the script file that you have created contains the sensitive information, you can put it outside the project folder.
+           export db_user=<any-user-name-you-like-for-database-access>
+           export db_password=<password-you-like-to-be-set-for-database-access>
+           ....                     
+It is recommended that you can created a separate git project to store this type of information, the base name of the script is the unique name of the environment that will be used later in the next step.
 
-and then you need to modify the script "deploy/create_deploy_scripts.sh" to add a new line
 
-     createDeployScript <serverid>    $projectversion  <path-to-the-prod.sh-that-sets-variables>  <your-target-server-host-name>  <the-script-settings-the-environment-specific-variables>
+(3) modify the script "deploy/create_deploy_scripts.sh" to add a new line to the corresponding script that you have created in the previous step. 
+This is for loading the environmental specific configuration. The content you are going to add can be like:
 
-where <serverid> can be any word that can uniquey identify your target server, so that you can identify the generated deployment script in the form of:
+     createDeployScript <serverid>     $projectversion  <path-to-the-script-that-sets-variables>  <your-target-server-host-name>  <username-connecting-to-target-server>
+     
 
-                deploy/deploy_to_<server-id>.sh
-                
+where <serverid> is the unique id of the environment you are going to deploy to, and it is the same in the previous step. 
+
+As the result, 
+
+When the project is build, the corresponding script "deploy/deploy_to_<server-id>.sh" wil be created for you to deploy the files to your environment.
+        
+        
+          
+            
    
-(3) Run a terminal and go into the project folder:
+(4) Run a terminal and go into the project folder:
  
          cd box-mule-api
 
-(3) and then run the script to create the zip file
+(5) and then run the script to create the zip file
  
          build/package.sh
 
@@ -41,7 +54,7 @@ this will create a deployment zip file and  a configuration zip file.
 It also generates the deployment script in the form of "deploy/deploy_to_<server-id>.sh"
 
        
-(4)Execute generated deployment script:
+(6)Execute generated deployment script:
 
          build/deploy_to_<server-id>.sh
          
