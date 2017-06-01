@@ -2199,18 +2199,21 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    public void inspectVideoFile() throws FileNotFoundException{
 	    
 	   
-	    SearchParam searchParam=new SearchParam(null,0,1);
+	    SearchParam searchParam=new SearchParam(null,0,null);
 		List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam);
 		if(episodes.size()==0){
 			logger.info("no episode found");
 			return;
+		}
+		else{
+			logger.info("****total numberOf episodes:"+episodes.size());
 		}
 		File outputfile=new File("/data/videoFiles.csv");
 		PrintWriter writer=new PrintWriter(outputfile);
 		writer.print("Title,Programme Number,Width,Height,Codec Width,Codec Height,Aspect Ratio,Duration\n");
 		
 		for(Episode episode:episodes){
-			writer.print(episode.getTitle()+", "+episode.getCtrPrg()+", ");
+			writer.print(episode.getTitle().replace(",", ";")+", "+episode.getCtrPrg()+", ");
 			if(episode.getIngestSource()==null){
 				writer.print("\n");
 				continue;
@@ -2234,7 +2237,7 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
 						writer.print(stream.get("coded_width")+",");
 						writer.print(stream.get("coded_height")+",");
 						writer.print(stream.get("display_aspect_ratio")+",");
-						writer.print(stream.get("duration")+"\n");
+						writer.print(stream.get("duration"));
 						break;
 					}
 					
