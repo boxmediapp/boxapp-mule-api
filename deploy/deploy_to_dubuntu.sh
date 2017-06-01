@@ -1,3 +1,3 @@
-source /Users/dilshathewzulla/box/box-secrets/dev.sh
-echo "deploying the version 3.0.5-SNAPSHOT to dilshat@dubuntu using the property file /Users/dilshathewzulla/box/box-secrets/dev.sh (for replacement of the environment specific variables) ..."
-deploy/deploy.sh dubuntu dilshat 3.0.5-SNAPSHOT
+source /Users/dilshathewzulla/box/box-secrets/box.sh
+echo "deploying the version 3.0.6-SNAPSHOT to dilshat@dubuntu using the property file /Users/dilshathewzulla/box/box-secrets/box.sh (for replacement of the environment specific variables) ..."
+deploy/deploy.sh dubuntu dilshat 3.0.6-SNAPSHOT

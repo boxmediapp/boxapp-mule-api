@@ -28,6 +28,29 @@ public class CommandServices {
 	@Autowired 
 	private S3BucketService s3BucketService;
 	
+	public String inspectVideoFile(String sourceURL) throws IOException, InterruptedException{
+		logger.info("inspecting the video sourceURL=["+sourceURL+"]");
+    	ProcessBuilder pb = new ProcessBuilder("ffprobe", "-v", "quiet", "-print_format", "json","-show_format","-show_streams", sourceURL);
+    	Map<String, String> env = System.getenv();
+    	String pathvalue=env.get("PATH");
+    	Map<String, String> penv = pb.environment();
+    	penv.put("PATH",pathvalue+":/usr/local/bin");
+   	 logger.info("****: executing the commands.....");
+ 	Process process = pb.start();    	 
+ 	int errCode = process.waitFor();    	    	
+ 	 String outputResult=IOUtils.toString(process.getInputStream());
+ 	 String errorOutput=IOUtils.toString(process.getErrorStream());
+ 	 logger.info("**************outputResult=["+outputResult+"]");
+ 	 logger.info("*************errorOutput=["+errorOutput+"]");
+ 	 if(errCode!=0){    		 
+ 		 return "errorCode="+errCode +" with error message:"+errorOutput;
+ 	 }
+ 	 else{
+ 		 return outputResult;
+ 	 }
+
+    	
+	}
 	public void captureImageFromVideo(String sourceURL, Double secondsAt, String outFilename) throws IOException, InterruptedException{
 		logger.info("executing the capture imahe sourceURL=["+sourceURL+"]secondsAt=["+secondsAt+"]outFilename=["+outFilename+"]");		
     	executeCommand("capture_image_from_video",sourceURL,String.valueOf(secondsAt),outFilename);

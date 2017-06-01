@@ -2,11 +2,11 @@ package uk.co.boxnetwork.components;
 
 import java.io.BufferedWriter;
 import java.io.File;
-
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.io.OutputStreamWriter;
-
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,6 +41,7 @@ import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.data.bc.BCPlayListData;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.data.bc.BCVideoSource;
+import uk.co.boxnetwork.data.bc.BcIngestResponse;
 import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.MediaFilesLocation;
 import uk.co.boxnetwork.data.soundmouse.SoundMouseData;
@@ -1867,6 +1869,16 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    		logger.info("processing the capture image command"+mediaCommand);
    		captureImageFromVideo(mediaCommand.getEpisodeid(), mediaCommand.getSecondsAt());
    	}
+   	else if(MediaCommand.INSPECT_VIDEO_FILE.equals(mediaCommand.getCommand())){
+   		logger.info("processing the list 1080 assets command"+mediaCommand);
+   		try{
+   				inspectVideoFile();
+   		}
+   		catch(Exception e){
+   			logger.error(e+" while processing the inspect video command",e);
+   		}
+   		
+   	}
    	else{
    		logger.info("ignore the command");
    	}
@@ -2184,6 +2196,64 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    	return items.get(0).getFile();
    }
    
+   public void inspectVideoFile() throws FileNotFoundException{
+	    
+	   
+	    SearchParam searchParam=new SearchParam(null,0,1);
+		List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam);
+		if(episodes.size()==0){
+			logger.info("no episode found");
+			return;
+		}
+		File outputfile=new File("/data/videoFiles.csv");
+		PrintWriter writer=new PrintWriter(outputfile);
+		writer.print("Title,Programme Number,Width,Height,Codec Width,Codec Height,Aspect Ratio,Duration\n");
+		
+		for(Episode episode:episodes){
+			writer.print(episode.getTitle()+", "+episode.getCtrPrg()+", ");
+			if(episode.getIngestSource()==null){
+				writer.print("\n");
+				continue;
+			}
+			if(GenericUtilities.isNotValidCrid(episode.getIngestSource())){
+				writer.print("\n");
+				continue;
+		    }			
+			try{
+				String url=s3BucketService.generatedPresignedURL(episode.getIngestSource(), 60);
+				String result=commandService.inspectVideoFile(url);
+				com.fasterxml.jackson.databind.ObjectMapper objectMapper=GenericUtilities.createObjectMapper();
+				Map map= objectMapper.readValue(result, Map.class);
+				List<Map> streams=(List<Map>)map.get("streams");
+				
+				for(Map stream:streams){
+					String codecType=(String)stream.get("codec_type");
+					if("video".equals(codecType)){
+						writer.print(stream.get("width")+",");
+						writer.print(stream.get("height")+",");
+						writer.print(stream.get("coded_width")+",");
+						writer.print(stream.get("coded_height")+",");
+						writer.print(stream.get("display_aspect_ratio")+",");
+						writer.print(stream.get("duration")+"\n");
+						break;
+					}
+					
+				}
+				
+				
+				
+			}		
+			catch(Exception e){
+				logger.error(e+" while processing episode:"+episode.getIngestSource(), e);
+			}	
+			writer.print("\n");
+			
+		}
+		writer.close();
+   	
+   	
+   
+ }
    public void captureImageFromVideo(Long episodeid,Double secondsAt){
 		Episode episode=boxMetadataRepository.findEpisodeById(episodeid);
    	if(episode==null){
