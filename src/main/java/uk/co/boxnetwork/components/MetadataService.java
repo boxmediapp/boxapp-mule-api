@@ -2199,7 +2199,7 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    public void inspectVideoFile() throws FileNotFoundException{
 	    
 	   
-	    SearchParam searchParam=new SearchParam(null,0,1);
+	    SearchParam searchParam=new SearchParam(null,0,null);
 		List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam);
 		if(episodes.size()==0){
 			logger.info("no episode found");
