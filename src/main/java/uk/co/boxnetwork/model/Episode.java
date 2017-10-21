@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-
-
 import uk.co.boxnetwork.util.GenericUtilities;
 
 
@@ -162,6 +160,8 @@ public class Episode {
 	@Column(name="excluded_devices")
 	private String excludeddevices;
 	
+
+	
 	
 	
 	@Column(name="geo_allowed_countries")
@@ -175,6 +175,19 @@ public class Episode {
 	@Column(name="editor_notes")
 	private String editorNotes;
 	
+	
+	@Column(name="image_status")
+	private ImageStatus imageStatus=ImageStatus.IMAGE_MISSING;
+	
+	
+	public ImageStatus getImageStatus() {
+		return imageStatus;
+	}
+
+	public void setImageStatus(ImageStatus imageStatus) {
+		this.imageStatus = imageStatus;
+	}
+
 	public EpisodeStatus getEpisodeStatus() {
 		return episodeStatus;
 	}
