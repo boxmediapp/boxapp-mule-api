@@ -1,6 +1,7 @@
 package uk.co.boxnetwork.data;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.TypedQuery;
 
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.ImageStatus;
+import uk.co.boxnetwork.model.PublishedStatus;
 
 
 public class SearchParam {
@@ -46,10 +49,19 @@ public class SearchParam {
     
 	private SearchParamType searchType;
 	
+	private ImageStatus  imageStatus=null;
 	
 	
 	
 	
+	
+	
+	public ImageStatus getImageStatus() {
+		return imageStatus;
+	}
+	public void setImageStatus(ImageStatus imageStatus) {
+		this.imageStatus = imageStatus;
+	}
 	public String getVideoid() {
 		return videoid;
 	}
@@ -242,7 +254,17 @@ public class SearchParam {
 					catch(Exception e){
 						logger.error("error parsing the limit="+lim,e);
 					}
-				}				
+				}	
+				String imageStatus=queryparams.get("imageStatus");
+				if(imageStatus!=null){
+					try{
+							this.imageStatus=ImageStatus.valueOf(imageStatus);
+					}
+					catch(Exception e){
+						logger.error("wrong enum imageStatus is passed:"+imageStatus);
+					}
+				}
+				
 				
 		}
 		
@@ -288,6 +310,26 @@ public class SearchParam {
 			    return filterQuery;
 		   }
    }
+public String getEpisodeImageSelectQuery(){
+	 boolean whereAdded=false;
+	 String query="SELECT e FROM episode e";
+	 if(this.getImageStatus()!=null){
+		 query+=" where e.imageStatus = :imageStatus";
+		 whereAdded=true;		 
+	 }
+	 if(this.search!=null){
+		 if(whereAdded){
+			 query+=" and ";			 
+		 }
+		 else{
+			 query+=" where ";			 
+		 }
+		 query+="(e.title LIKE :search OR e.materialId LIKE :search)";		 
+	 }
+	 
+	return query;
+	
+}
 	
 	public String selectQuery(String allquery,String  filterQuery, String titleQuery){				   
 		if(this.title!=null){
@@ -335,6 +377,10 @@ public class SearchParam {
 		else if(this.search!=null){
 			typedQuery.setParameter("search",this.search);
 		   }
+		if(this.getImageStatus()!=null){
+			typedQuery.setParameter("imageStatus",this.imageStatus);
+		}
+		
 		if(this.from!=null){
 			try{
 				Long from=Long.valueOf(this.from);

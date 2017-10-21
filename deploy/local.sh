@@ -1,6 +1,6 @@
 source deploy/util.sh
 
-source ~/box/box-secrets/prod.sh
+source ~/box/box-secrets/images.sh
 
 
 getProjectVersionFromPom
