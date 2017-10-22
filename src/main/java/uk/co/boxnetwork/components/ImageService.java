@@ -44,4 +44,17 @@ public class ImageService {
 		}
 				
 	}
+	public  uk.co.boxnetwork.data.image.ImageSet createImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
+		uk.co.boxnetwork.model.ImageSet dbImageSet=new uk.co.boxnetwork.model.ImageSet();
+		imageSet.update(dbImageSet);
+		imageRepository.persist(dbImageSet);
+		return new  uk.co.boxnetwork.data.image.ImageSet(dbImageSet);
+	}
+	public  uk.co.boxnetwork.data.image.Image createImage(Long setid,uk.co.boxnetwork.data.image.Image image){
+		uk.co.boxnetwork.model.Image dbImage=new uk.co.boxnetwork.model.Image();
+		image.update(dbImage);
+		imageRepository.persist(setid,dbImage);
+		return new uk.co.boxnetwork.data.image.Image(dbImage);
+	}
+	
 }

@@ -139,6 +139,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
          	   <spring:property name="imageBucket" value="${s3.images.bucket}"/>
          	   <spring:property name="imageMasterFolder" value="${s3.images.master.folder}"/>
          	   <spring:property name="imagePublicFolder" value="${s3.images.public.folder}"/>
+         	   <spring:property name="imageClientFolder" value="${s3.images.clients.folder}"/>
+         	   
+         	   
          	   <spring:property name="imageUrlAliases" value="${image.urlaliases}"/>
          	   <spring:property name="requiredFields" value="${record.requiredFields}"/>
          	   <spring:property name="visibilityCategory" value="${app.visibilityCategory}"/>
@@ -178,6 +181,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.EpisodeTransformer" name="episodeService" doc:name="EpisodeService"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ListEpisodeTransformer" name="imageListEpisodeService" doc:name="imageListEpisodeService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageSetTransformer" name="imageSetService" doc:name="imageSetService"/>
+   
+   
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.ScheduleTransformer" name="scheduleService" doc:name="ScheduleService"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.SeriesTransformer" name="seriesService" doc:name="SeriesService"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.SeriesGroupTransformer" name="seriesGroupService" doc:name="SeriesGroupService"/>

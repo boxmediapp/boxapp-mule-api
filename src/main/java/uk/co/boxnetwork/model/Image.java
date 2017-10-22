@@ -16,20 +16,23 @@ public class Image {
 	@GeneratedValue
     private Long id;
 		
-	@Column(name="last_modified_at")
-	private Date lastModifiedAt;
 		
 	@Column(name="created_at")
 	private Date createdAt;
 	
+	@Column(name="file_name")
 	private String filename;
+	
+	@Column(name="s3_base_url")
+	private String s3BaseURL;
+	
 	
 	private int width;
 	
 	private int height;
  	    	
 	@ManyToOne(optional=false, fetch=FetchType.EAGER)
-	@JoinColumn( name = "set_id", nullable = false )	
+	@JoinColumn( name = "image_set_id", nullable = false )	
 	private ImageSet imageSet;
 
 	public Long getId() {
@@ -40,13 +43,7 @@ public class Image {
 		this.id = id;
 	}
 
-	public Date getLastModifiedAt() {
-		return lastModifiedAt;
-	}
-
-	public void setLastModifiedAt(Date lastModifiedAt) {
-		this.lastModifiedAt = lastModifiedAt;
-	}
+	
 
 	public Date getCreatedAt() {
 		return createdAt;
@@ -86,6 +83,14 @@ public class Image {
 
 	public void setImageSet(ImageSet imageSet) {
 		this.imageSet = imageSet;
+	}
+
+	public String getS3BaseURL() {
+		return s3BaseURL;
+	}
+
+	public void setS3BaseURL(String s3BaseURL) {
+		this.s3BaseURL = s3BaseURL;
 	}
 	
 	

@@ -14,7 +14,13 @@ public class Episode {
 	private String episodeNumber;
 	private String programmeNumber;
 	
+	
+	
 	private ImageStatus imageStatus;
+	
+	private Integer imageSetNumber;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +58,14 @@ public class Episode {
 	public void setProgrammeNumber(String programmeNumber) {
 		this.programmeNumber = programmeNumber;
 	}
+	
+	
+	public Integer getImageSetNumber() {
+		return imageSetNumber;
+	}
+	public void setImageSetNumber(Integer imageSetNumber) {
+		this.imageSetNumber = imageSetNumber;
+	}
 	public Episode(uk.co.boxnetwork.model.Episode episode){
 		this.id=episode.getId();
 		this.title = episode.getTitle();	
@@ -63,7 +77,8 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}		
-		this.imageStatus=episode.getImageStatus();	
+		this.imageStatus=episode.getImageStatus();
+		this.imageSetNumber=episode.getImageSetnumber();
 	}
 	
 }
