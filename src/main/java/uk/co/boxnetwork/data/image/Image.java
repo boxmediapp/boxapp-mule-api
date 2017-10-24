@@ -13,6 +13,9 @@ public class Image {
 	private String s3BaseURL;
 	private int width;	
 	private int height;
+	private String tags;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +55,14 @@ public class Image {
 	public Image(){
 		
 	}
+	
+	
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 	public Image(uk.co.boxnetwork.model.Image image){
 		this.id=image.getId();		
 		this.createdAt=image.getCreatedAt();					
@@ -59,12 +70,15 @@ public class Image {
 		this.s3BaseURL=image.getS3BaseURL();
 		this.width=image.getWidth();		
 		this.height=image.getHeight();
+		this.tags=image.getTags();
+		
 	}	
 	public void update(uk.co.boxnetwork.model.Image image){		
 		image.setFilename(this.filename);		
 		image.setS3BaseURL(this.s3BaseURL);
 		image.setWidth(this.width);		
-		image.setHeight(this.height);		
+		image.setHeight(this.height);
+		image.setTags(this.tags);
 	}
 	
 }

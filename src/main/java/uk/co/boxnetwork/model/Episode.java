@@ -180,19 +180,9 @@ public class Episode {
 	private ImageStatus imageStatus=ImageStatus.IMAGE_MISSING;
 	
 	
-	@Column(name="image_set_number")
-	private Integer imageSetnumber;
 	
 	
 	
-	public Integer getImageSetnumber() {
-		return imageSetnumber;
-	}
-
-	public void setImageSetnumber(Integer imageSetnumber) {
-		this.imageSetnumber = imageSetnumber;
-	}
-
 	public ImageStatus getImageStatus() {
 		return imageStatus;
 	}

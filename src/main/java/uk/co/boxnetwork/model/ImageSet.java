@@ -20,7 +20,7 @@ public class ImageSet {
 	@Column(name="created_at")
 	private Date createdAt;
 	
-	private String tags;
+	
 	
 	@Column(name="episode_id")
 	private Long episodeId;	
@@ -30,6 +30,10 @@ public class ImageSet {
 	private String programmeNumber;
 	
 	private String title;
+	
+	@Column(name="file_counter")
+	private Integer fileCounter;
+	
 
 	public Long getId() {
 		return id;
@@ -55,13 +59,7 @@ public class ImageSet {
 		this.createdAt = createdAt;
 	}
 
-	public String getTags() {
-		return tags;
-	}
-
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
+	
 
 	public Long getEpisodeId() {
 		return episodeId;
@@ -87,6 +85,15 @@ public class ImageSet {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public Integer getFileCounter() {
+		return fileCounter;
+	}
+
+	public void setFileCounter(Integer fileCounter) {
+		this.fileCounter = fileCounter;
+	}
+
 	
 	
 		

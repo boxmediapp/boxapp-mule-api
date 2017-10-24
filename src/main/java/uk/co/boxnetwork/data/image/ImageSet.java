@@ -1,6 +1,8 @@
 package uk.co.boxnetwork.data.image;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class ImageSet {
@@ -13,15 +15,15 @@ public class ImageSet {
 	
 	private Date createdAt;
 	
-	private String tags;
-	
-	
 	private Long episodeId;	
 	
 	private String programmeNumber;
 	
 	private String title;
+	private List<Image> images=new ArrayList<Image>();
 	
+	
+	private Integer fileCounter;
 	
 	public String getTitle() {
 		return title;
@@ -65,22 +67,39 @@ public class ImageSet {
 	public void setProgrammeNumber(String programmeNumber) {
 		this.programmeNumber = programmeNumber;
 	}
+	
+	public List<Image> getImages() {
+		return images;
+	}
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	
+	public Integer getFileCounter() {
+		return fileCounter;
+	}
+	public void setFileCounter(Integer fileCounter) {
+		this.fileCounter = fileCounter;
+	}
 	public ImageSet(){
 		
 	}
+	
 	public ImageSet(uk.co.boxnetwork.model.ImageSet imageSet){
 		this.id=imageSet.getId();
 		this.lastModifiedAt=imageSet.getLastModifiedAt();
 		this.createdAt=imageSet.getCreatedAt();
-		this.tags=imageSet.getTags();
+
 		this.programmeNumber=imageSet.getProgrammeNumber();	
 		this.title=imageSet.getTitle();
+		this.fileCounter=imageSet.getFileCounter();
+	
 	}
 	public void update(uk.co.boxnetwork.model.ImageSet imageSet){		
-		imageSet.setId(this.id);
-		imageSet.setTags(this.tags);
+		imageSet.setId(this.id);		
 		imageSet.setProgrammeNumber(this.programmeNumber);
 		imageSet.setEpisodeId(this.episodeId);
 		imageSet.setTitle(this.title);		
+		imageSet.setFileCounter(fileCounter);
 	}
 }

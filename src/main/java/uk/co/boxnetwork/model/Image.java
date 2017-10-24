@@ -30,6 +30,9 @@ public class Image {
 	private int width;
 	
 	private int height;
+	 
+	
+	private String tags;
  	    	
 	@ManyToOne(optional=false, fetch=FetchType.EAGER)
 	@JoinColumn( name = "image_set_id", nullable = false )	
@@ -91,6 +94,14 @@ public class Image {
 
 	public void setS3BaseURL(String s3BaseURL) {
 		this.s3BaseURL = s3BaseURL;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	
 	

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.model.Image;
+import uk.co.boxnetwork.model.ImageSet;
 
 
 
@@ -30,20 +32,38 @@ public class ImageService {
 		for(Episode episode:eposides){
 			uk.co.boxnetwork.data.image.Episode dep=new uk.co.boxnetwork.data.image.Episode(episode);			
 			ret.add(dep);			
-		}		
+		}
 		return ret;
 	}
 	
 	public  uk.co.boxnetwork.data.image.Episode findEpisodeById(Long id){
 		Episode episode=imageRepository.findEpisodeById(id);
 		if(episode!=null){
-			return new uk.co.boxnetwork.data.image.Episode(episode);
+			uk.co.boxnetwork.data.image.Episode ret=new uk.co.boxnetwork.data.image.Episode(episode);
+			List<uk.co.boxnetwork.model.ImageSet> imageSetsdb=imageRepository.findImageSetByEpisodeId(episode.getId());
+			List<uk.co.boxnetwork.data.image.ImageSet> imageSets=new ArrayList<uk.co.boxnetwork.data.image.ImageSet>();
+			for(uk.co.boxnetwork.model.ImageSet imgset:imageSetsdb){
+				imageSets.add(createImageSetData(imgset));
+			}
+			ret.setImageSets(imageSets);
+			return ret;
 		}
 		else{
 			return null;
 		}
 				
 	}
+	private uk.co.boxnetwork.data.image.ImageSet createImageSetData(uk.co.boxnetwork.model.ImageSet imgset){
+		uk.co.boxnetwork.data.image.ImageSet ret=new uk.co.boxnetwork.data.image.ImageSet(imgset);
+		List<Image> dbimages=imageRepository.findImagesByImageSet(imgset);
+		List<uk.co.boxnetwork.data.image.Image> images=new ArrayList<uk.co.boxnetwork.data.image.Image>();
+		for(Image img:dbimages){
+			images.add(new uk.co.boxnetwork.data.image.Image(img));
+		}
+		ret.setImages(images);
+		return ret;
+	}
+	
 	public  uk.co.boxnetwork.data.image.ImageSet createImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
 		uk.co.boxnetwork.model.ImageSet dbImageSet=new uk.co.boxnetwork.model.ImageSet();
 		imageSet.update(dbImageSet);
@@ -56,5 +76,9 @@ public class ImageService {
 		imageRepository.persist(setid,dbImage);
 		return new uk.co.boxnetwork.data.image.Image(dbImage);
 	}
-	
+	public void updateImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
+		ImageSet dbImageSet=imageRepository.findImageSetById(imageSet.getId());
+		imageSet.update(dbImageSet);
+		imageRepository.persist(dbImageSet);
+	}
 }

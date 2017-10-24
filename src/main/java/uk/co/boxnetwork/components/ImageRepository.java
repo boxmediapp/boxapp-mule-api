@@ -16,6 +16,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
+import uk.co.boxnetwork.model.ScheduleEvent;
 
 @Repository
 public class ImageRepository {
@@ -59,6 +60,16 @@ public class ImageRepository {
  	  entityManager.persist(image);    	
 	}
 	
+  public List<ImageSet> findImageSetByEpisodeId(Long episodeid){
+	  TypedQuery<ImageSet> query=entityManager.createQuery("SELECT s FROM image_set s where s.episodeId=:episodeId", ImageSet.class);
+	   return query.setParameter("episodeId",episodeid).getResultList();	
+	}
+  public ImageSet findImageSetById(Long id){
+	   return entityManager.find(ImageSet.class, id);		   
+  }
 	
-	
+  public List<Image> findImagesByImageSet(ImageSet imageSet){
+	  TypedQuery<Image> query=entityManager.createQuery("SELECT s FROM image s where s.imageSet=:imageSet", Image.class);
+	   return query.setParameter("imageSet",imageSet).getResultList();	
+	}
 }
