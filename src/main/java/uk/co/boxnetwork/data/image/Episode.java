@@ -81,7 +81,7 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}		
-		this.imageStatus=episode.getImageStatus();
+		//this.imageStatus=episode.getImageStatus();
 		
 	}
 	

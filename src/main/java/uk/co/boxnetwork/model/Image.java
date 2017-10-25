@@ -20,6 +20,10 @@ public class Image {
 	@Column(name="created_at")
 	private Date createdAt;
 	
+	@Column(name="last_modified_at")
+	private Date lastModifiedAt;
+	
+	
 	@Column(name="file_name")
 	private String filename;
 	
@@ -33,6 +37,11 @@ public class Image {
 	 
 	
 	private String tags;
+	
+	
+	@Column(name="image_status")
+	private ImageStatus imageStatus=ImageStatus.IMAGE_MISSING;
+	
  	    	
 	@ManyToOne(optional=false, fetch=FetchType.EAGER)
 	@JoinColumn( name = "image_set_id", nullable = false )	
@@ -102,6 +111,22 @@ public class Image {
 
 	public void setTags(String tags) {
 		this.tags = tags;
+	}
+
+	public Date getLastModifiedAt() {
+		return lastModifiedAt;
+	}
+
+	public void setLastModifiedAt(Date lastModifiedAt) {
+		this.lastModifiedAt = lastModifiedAt;
+	}
+
+	public ImageStatus getImageStatus() {
+		return imageStatus;
+	}
+
+	public void setImageStatus(ImageStatus imageStatus) {
+		this.imageStatus = imageStatus;
 	}
 	
 	

@@ -28,6 +28,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	    </choice>
 
     </flow>
+    
+    
      <flow name="image-set-servicesFlow">
         <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.image.sets}/*" doc:name="HTTP">
         <http:response-builder>
@@ -42,11 +44,32 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<transformer ref="imageSetService" doc:name="Transformer Episode Service"/>    	
+	        	<transformer ref="imageSetService" doc:name="Transformer Image Set Service"/>    	
 	        </otherwise>
 	    </choice>
 
     </flow>
     
+    
+    
+    <flow name="image-Flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.image.images}/*" doc:name="HTTP">
+        <http:response-builder>
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        
+        
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="imageService" doc:name="Transformer Image Service"/>	        	    	
+	        </otherwise>
+	    </choice>
+
+    </flow>
     
 </mule>

@@ -25,7 +25,7 @@ public class ImageRepository {
 	private EntityManager entityManager;
 	       
 	
-	public List<Episode> findAllEpisodes(SearchParam searchParam){		   		   
+	public List<Episode> findEpisodesNotProcessed(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getEpisodeImageSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
 		   TypedQuery<Episode> query=entityManager.createQuery(queryString, Episode.class);		   
@@ -49,27 +49,46 @@ public class ImageRepository {
     		}
 	}
 	@Transactional
-	public void persist(Long setid,Image image){
-	   ImageSet imageSet=entityManager.find(ImageSet.class, setid);
-	   if(imageSet==null){
-		   throw new RuntimeException("Image Set does not exist");
-	   }
- 	   Date createdAt=new Date();
- 	  image.setImageSet(imageSet);
- 	  image.setCreatedAt(createdAt); 	   	    		  
- 	  entityManager.persist(image);    	
+	public void persist(Image image){
+		Date lastModifiedAt=new Date();
+		image.setLastModifiedAt(lastModifiedAt);
+		 if(image.getId()==null){
+			 image.setCreatedAt(lastModifiedAt);
+	 	   	   			entityManager.persist(image);
+	     }
+	     else{
+	     				entityManager.merge(image); 	   
+	    }
 	}
 	
   public List<ImageSet> findImageSetByEpisodeId(Long episodeid){
 	  TypedQuery<ImageSet> query=entityManager.createQuery("SELECT s FROM image_set s where s.episodeId=:episodeId", ImageSet.class);
 	   return query.setParameter("episodeId",episodeid).getResultList();	
-	}
+  }
   public ImageSet findImageSetById(Long id){
 	   return entityManager.find(ImageSet.class, id);		   
   }
+  public Image findImageById(Long id){
+	   return entityManager.find(Image.class, id);		   
+ }
+
+  public List<ImageSet> findImageSet(SearchParam searchParam){	   
+	   String queryString=searchParam.getImageSetSelectQuery();
+	   queryString=searchParam.addSortByToQuery(queryString, "e");
+	   TypedQuery<ImageSet> query=entityManager.createQuery(queryString, ImageSet.class);		   
+	   searchParam.config(query);		   		   
+	   return query.getResultList();
+	}
 	
   public List<Image> findImagesByImageSet(ImageSet imageSet){
 	  TypedQuery<Image> query=entityManager.createQuery("SELECT s FROM image s where s.imageSet=:imageSet", Image.class);
 	   return query.setParameter("imageSet",imageSet).getResultList();	
+  }
+  public List<Image> findImages(SearchParam searchParam){	   
+	   String queryString=searchParam.getImageSelectQuery();
+	   queryString=searchParam.addSortByToQuery(queryString, "e");
+	   TypedQuery<Image> query=entityManager.createQuery(queryString, Image.class);		   
+	   searchParam.config(query);		   		   
+	   return query.getResultList();
 	}
 }

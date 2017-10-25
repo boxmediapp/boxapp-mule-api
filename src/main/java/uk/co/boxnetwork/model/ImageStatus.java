@@ -1,7 +1,6 @@
 package uk.co.boxnetwork.model;
 
-public enum ImageStatus {	
-	  IMAGE_MISSING,
+public enum ImageStatus {	  
 	  WAITING_APPROVE,	  
 	  APPROVED	  
 }

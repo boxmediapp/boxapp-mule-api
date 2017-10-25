@@ -29,10 +29,14 @@ public class ImageSet {
 	@Column(name="programme_number")	
 	private String programmeNumber;
 	
+	
+	
 	private String title;
 	
 	@Column(name="file_counter")
 	private Integer fileCounter;
+	
+	
 	
 
 	public Long getId() {

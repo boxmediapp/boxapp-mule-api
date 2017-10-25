@@ -34,19 +34,16 @@ public class ImageSetTransformer extends BoxRestTransformer{
 	protected Object processGET(MuleMessage message, String outputEncoding){				
 		String setid=MuleRestUtil.getPathPath(message);
 		if(setid==null || setid.length()==0){
-			return getAllImageSets(message,outputEncoding);
+			return findImageSets(message,outputEncoding);
 		}
 		else{
-			//return imageService.findEpisodeById(Long.valueOf(episodeid));
-			return null;
+			return imageService.findImageSetById(Long.valueOf(setid));						
 		}
 	}
 	
-	private  Object getAllImageSets(MuleMessage message, String outputEncoding){
-		//SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);
-	   // return imageService.findAllEpisodes(searchParam);
-		return null;
-				    
+	private  Object findImageSets(MuleMessage message, String outputEncoding){
+	   SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);
+	   return imageService.findImageSets(searchParam);	   
 	}
 	@Override
 	protected Object processPOST(MuleMessage message, String outputEncoding){

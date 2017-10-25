@@ -19,6 +19,10 @@ public class ImageSet {
 	
 	private String programmeNumber;
 	
+	private String contractNumber;
+	private String episodeNumber;
+	
+	
 	private String title;
 	private List<Image> images=new ArrayList<Image>();
 	
@@ -49,12 +53,7 @@ public class ImageSet {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public String getTags() {
-		return tags;
-	}
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
+	
 	public Long getEpisodeId() {
 		return episodeId;
 	}
@@ -81,6 +80,19 @@ public class ImageSet {
 	public void setFileCounter(Integer fileCounter) {
 		this.fileCounter = fileCounter;
 	}
+	
+	public String getContractNumber() {
+		return contractNumber;
+	}
+	public void setContractNumber(String contractNumber) {
+		this.contractNumber = contractNumber;
+	}
+	public String getEpisodeNumber() {
+		return episodeNumber;
+	}
+	public void setEpisodeNumber(String episodeNumber) {
+		this.episodeNumber = episodeNumber;
+	}
 	public ImageSet(){
 		
 	}
@@ -93,6 +105,14 @@ public class ImageSet {
 		this.programmeNumber=imageSet.getProgrammeNumber();	
 		this.title=imageSet.getTitle();
 		this.fileCounter=imageSet.getFileCounter();
+		
+		if(programmeNumber!=null&& programmeNumber.length()>0){
+			String matParts[]=programmeNumber.split("/");
+			this.contractNumber=matParts[0];
+			if(matParts.length>1){
+				this.episodeNumber=matParts[1];				
+			}
+		}	
 	
 	}
 	public void update(uk.co.boxnetwork.model.ImageSet imageSet){		

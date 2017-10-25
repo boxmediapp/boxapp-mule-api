@@ -6,14 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import uk.co.boxnetwork.model.ImageStatus;
+
 public class Image {
     private Long id;			
 	private Date createdAt;	
 	private String filename;	
 	private String s3BaseURL;
+	
 	private int width;	
 	private int height;
 	private String tags;
+	private ImageSet imageSet;
+	private ImageStatus imageStatus;
+	
+	
 	
 	
 	public Long getId() {
@@ -57,6 +64,12 @@ public class Image {
 	}
 	
 	
+	public ImageSet getImageSet() {
+		return imageSet;
+	}
+	public void setImageSet(ImageSet imageSet) {
+		this.imageSet = imageSet;
+	}
 	public String getTags() {
 		return tags;
 	}
@@ -71,6 +84,7 @@ public class Image {
 		this.width=image.getWidth();		
 		this.height=image.getHeight();
 		this.tags=image.getTags();
+		this.imageStatus=image.getImageStatus();
 		
 	}	
 	public void update(uk.co.boxnetwork.model.Image image){		
@@ -79,6 +93,7 @@ public class Image {
 		image.setWidth(this.width);		
 		image.setHeight(this.height);
 		image.setTags(this.tags);
+		image.setImageStatus(this.imageStatus);
 	}
 	
 }
