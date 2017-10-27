@@ -105,6 +105,7 @@ public class ImageSet {
 		this.programmeNumber=imageSet.getProgrammeNumber();	
 		this.title=imageSet.getTitle();
 		this.fileCounter=imageSet.getFileCounter();
+		this.episodeId=imageSet.getEpisodeId();
 		
 		if(programmeNumber!=null&& programmeNumber.length()>0){
 			String matParts[]=programmeNumber.split("/");

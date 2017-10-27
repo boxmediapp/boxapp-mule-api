@@ -1,6 +1,8 @@
 package uk.co.boxnetwork.mule.transformers.images;
 
 import org.mule.api.MuleMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -55,7 +57,7 @@ public class ImageTransformer extends BoxRestTransformer{
 			   image = objectMapper.readValue(imageInJson, Image.class);
 		} catch (Exception e1) {
 			logger.error("failed to parse into the Image:"+imageInJson,e1);
-			return returnError("failed to parse the ImageSet payload, wrong format", message);	
+			return returnError("failed to parse the Image payload, wrong format", message);	
 		}		
 		return image;
 	}

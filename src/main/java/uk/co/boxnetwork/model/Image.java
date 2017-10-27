@@ -40,7 +40,7 @@ public class Image {
 	
 	
 	@Column(name="image_status")
-	private ImageStatus imageStatus=ImageStatus.IMAGE_MISSING;
+	private ImageStatus imageStatus=ImageStatus.WAITING_APPROVE;
 	
  	    	
 	@ManyToOne(optional=false, fetch=FetchType.EAGER)

@@ -67,6 +67,12 @@ public class Image {
 	public ImageSet getImageSet() {
 		return imageSet;
 	}
+	public ImageStatus getImageStatus() {
+		return imageStatus;
+	}
+	public void setImageStatus(ImageStatus imageStatus) {
+		this.imageStatus = imageStatus;
+	}
 	public void setImageSet(ImageSet imageSet) {
 		this.imageSet = imageSet;
 	}
@@ -76,6 +82,8 @@ public class Image {
 	public void setTags(String tags) {
 		this.tags = tags;
 	}
+	
+	
 	public Image(uk.co.boxnetwork.model.Image image){
 		this.id=image.getId();		
 		this.createdAt=image.getCreatedAt();					

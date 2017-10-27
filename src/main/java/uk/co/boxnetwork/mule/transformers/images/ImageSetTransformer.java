@@ -52,7 +52,7 @@ public class ImageSetTransformer extends BoxRestTransformer{
 			return createImageSet(message,outputEncoding);
 		}
 		else{
-			return createImage(setid,message,outputEncoding);
+			return returnError("single post not supportede", message);
 		}
 	}
 	private Object createImageSet(MuleMessage message, String outputEncoding){
@@ -80,28 +80,5 @@ public class ImageSetTransformer extends BoxRestTransformer{
 		return imageSet;
 	}
 	            
-	private Object createImage(String setidstring,MuleMessage message, String outputEncoding){
-		Long setid=Long.valueOf(setidstring);
-		
-		String imageInJson=null;
-		try{	
-			imageInJson=(String)message.getPayloadAsString();
-		}
-		catch(Exception e){
-			logger.error(e +" while getting the payload",e);
-			return returnError("failed to get the request payload", message);	
-		}
-		 logger.info("*****Posted a new image:"+imageInJson+"****");
-		 com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();								
-		 objectMapper.setSerializationInclusion(Include.NON_NULL);
-		 Image image=null;
-		   try {
-			   image = objectMapper.readValue(imageInJson, Image.class);
-		} catch (Exception e1) {
-			logger.error("failed to parse into the Image:"+imageInJson,e1);
-			return returnError("failed to parse the Image payload, wrong format", message);	
-		}		  		
-		image=imageService.createImage(setid,image);					   
-		return image;
-	} 
+	 
 }
