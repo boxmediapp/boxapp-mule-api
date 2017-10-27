@@ -311,24 +311,29 @@ public class SearchParam {
 		   }
    }
 public String getEpisodeImageSelectQuery(){
-	 boolean whereAdded=false;
-	 String query="SELECT e FROM episode e";
-	 if(this.getImageStatus()!=null){
-		 query+=" where e.imageStatus = :imageStatus";
-		 whereAdded=true;		 
-	 }
-	 if(this.search!=null){
-		 if(whereAdded){
-			 query+=" and ";			 
-		 }
-		 else{
-			 query+=" where ";			 
-		 }
-		 query+="(e.title LIKE :search OR e.materialId LIKE :search)";		 
-	 }
 	 
-	return query;
-	
+	 String query="SELECT e FROM episode e where e.id not in (select episodeId from image_set)";
+	 if(this.getImageStatus()!=null){
+		 query+=" and  e.imageStatus = :imageStatus";				 
+	 }
+	 if(this.search!=null){		
+		 query+=" and (e.title LIKE :search OR e.materialId LIKE :search)";		 
+	 }	 
+	return query;	
+}
+public String getImageSetSelectQuery(){
+	String query="SELECT e FROM image_set e";	
+    if(this.search!=null){		
+			 query+=" where (e.title LIKE :search OR e.programmeNumber LIKE :search)";		 
+	}
+    return query;
+}
+public String getImageSelectQuery(){
+	String query="SELECT e FROM image e";	
+    if(this.search!=null){		
+			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";		 
+	}
+    return query;
 }
 	
 	public String selectQuery(String allquery,String  filterQuery, String titleQuery){				   

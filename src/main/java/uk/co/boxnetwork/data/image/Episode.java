@@ -2,6 +2,8 @@ package uk.co.boxnetwork.data.image;
 
 
 
+import java.util.List;
+
 import uk.co.boxnetwork.model.ImageStatus;
 
 
@@ -14,7 +16,14 @@ public class Episode {
 	private String episodeNumber;
 	private String programmeNumber;
 	
+	
+	
 	private ImageStatus imageStatus;
+	
+	
+	private List<ImageSet> imageSets;	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +61,15 @@ public class Episode {
 	public void setProgrammeNumber(String programmeNumber) {
 		this.programmeNumber = programmeNumber;
 	}
+	
+	
+	public List<ImageSet> getImageSets() {
+		return imageSets;
+	}
+	public void setImageSets(List<ImageSet> imageSets) {
+		this.imageSets = imageSets;
+	}
+	
 	public Episode(uk.co.boxnetwork.model.Episode episode){
 		this.id=episode.getId();
 		this.title = episode.getTitle();	
@@ -63,7 +81,8 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}		
-		this.imageStatus=episode.getImageStatus();	
+		//this.imageStatus=episode.getImageStatus();
+		
 	}
 	
 }

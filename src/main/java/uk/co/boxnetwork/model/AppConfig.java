@@ -110,6 +110,19 @@ private String imageBucket;
  
   
 
+ @Column(name="image_client_folder")
+ private String imageClientFolder;
+ 
+ 
+ 
+public String getImageClientFolder() {
+	return imageClientFolder;
+}
+
+public void setImageClientFolder(String imageClientFolder) {
+	this.imageClientFolder = imageClientFolder;
+}
+
 public Boolean getPublishProgrammeInfo() {
 	return publishProgrammeInfo;
 }
@@ -332,6 +345,8 @@ public void exportConfig(AppConfig config){
      config.setTranscodeDestBucket(this.transcodeDestBucket);
      config.setAutoTranscode(this.autoTranscode);
      config.setPublishProgrammeInfo(this.publishProgrammeInfo);
+     config.setImageClientFolder(this.imageClientFolder);
+    
 }
 
 public void importConfig(AppConfig config){	
@@ -364,6 +379,7 @@ public void importConfig(AppConfig config){
     this.transcodeDestBucket=config.getTranscodeDestBucket();
     this.autoTranscode=config.getAutoTranscode();
     this.publishProgrammeInfo=config.getPublishProgrammeInfo();
+    this.imageClientFolder=config.getImageClientFolder();
 }
 
 public Integer getVersion() {

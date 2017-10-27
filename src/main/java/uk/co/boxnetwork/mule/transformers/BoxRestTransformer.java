@@ -22,7 +22,7 @@ import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
 public class BoxRestTransformer  extends AbstractMessageTransformer{
-	static final protected Logger logger=LoggerFactory.getLogger(BoxRestTransformer.class);
+	 static final protected Logger logger=LoggerFactory.getLogger(BoxRestTransformer.class);
 	
 	protected String convertObjectToJson(Object obj) throws JsonProcessingException{
 		com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();		
@@ -30,6 +30,7 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 		return objectMapper.writeValueAsString(obj);			
 	}
 	public String returnError(String desc,MuleMessage message){
+		
 		message.setOutboundProperty("http.status", 500);		
 		return "{error:\""+desc+"\"}";		
 	}

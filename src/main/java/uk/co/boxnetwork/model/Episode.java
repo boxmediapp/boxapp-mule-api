@@ -176,18 +176,12 @@ public class Episode {
 	private String editorNotes;
 	
 	
-	@Column(name="image_status")
-	private ImageStatus imageStatus=ImageStatus.IMAGE_MISSING;
 	
 	
-	public ImageStatus getImageStatus() {
-		return imageStatus;
-	}
-
-	public void setImageStatus(ImageStatus imageStatus) {
-		this.imageStatus = imageStatus;
-	}
-
+	
+	
+	
+	
 	public EpisodeStatus getEpisodeStatus() {
 		return episodeStatus;
 	}
