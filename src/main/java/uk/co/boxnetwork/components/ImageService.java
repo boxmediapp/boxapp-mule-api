@@ -66,6 +66,7 @@ public class ImageService {
 		imageRepository.persist(dbImageSet);
 		return new  uk.co.boxnetwork.data.image.ImageSet(dbImageSet);
 	}
+	
 	public  uk.co.boxnetwork.data.image.Image createImage(uk.co.boxnetwork.data.image.Image image){		
 		uk.co.boxnetwork.model.Image dbImage=new uk.co.boxnetwork.model.Image();
 		image.update(dbImage);
@@ -75,8 +76,8 @@ public class ImageService {
 		imageRepository.persist(dbImage);
 		return toData(dbImage);
 	}
-	public void updateImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
-		ImageSet dbImageSet=imageRepository.findImageSetById(imageSet.getId());
+	public void updateImageSet(Long id, uk.co.boxnetwork.data.image.ImageSet imageSet){
+		ImageSet dbImageSet=imageRepository.findImageSetById(id);
 		imageSet.update(dbImageSet);
 		imageRepository.persist(dbImageSet);
 	}
