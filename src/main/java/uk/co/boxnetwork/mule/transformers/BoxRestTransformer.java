@@ -6,7 +6,7 @@ import java.util.Base64;
 import java.util.Map;
 
 import org.mule.api.MuleMessage;
-import org.mule.api.config.MuleProperties;
+
 import org.mule.api.transformer.TransformerException;
 import org.mule.api.transport.PropertyScope;
 import org.mule.transformer.AbstractMessageTransformer;
@@ -16,10 +16,8 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import uk.co.boxnetwork.data.ErrorMessage;
+
 import uk.co.boxnetwork.data.bc.BCErrorMessage;
-import uk.co.boxnetwork.data.bc.BCVideoData;
-import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
 public class BoxRestTransformer  extends AbstractMessageTransformer{
 	 static final protected Logger logger=LoggerFactory.getLogger(BoxRestTransformer.class);
@@ -32,7 +30,7 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 	public String returnError(String desc,MuleMessage message){
 		
 		message.setOutboundProperty("http.status", 500);		
-		return "{error:\""+desc+"\"}";		
+		return "{\"error\":\""+desc+"\"}";		
 	}
 	
 	public String getClientInfo(MuleMessage message){

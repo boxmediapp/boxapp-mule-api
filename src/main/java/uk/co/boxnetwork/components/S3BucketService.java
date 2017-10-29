@@ -194,7 +194,7 @@ public class S3BucketService {
 	}
 	public void deleteImagesInImageBucket(String keyName){
 		if(keyName==null|| keyName.trim().length()<=1){
-			throw new RuntimeException("refuxed to do the delte operation on the s3 bucket:"+keyName);
+			throw new RuntimeException("refused to do the delete operation on the s3 bucket:"+keyName);
 		}
 		logger.info("deleting the image in the ImageBucket:"+keyName);
 		AmazonS3 s3=getAmazonS3();		

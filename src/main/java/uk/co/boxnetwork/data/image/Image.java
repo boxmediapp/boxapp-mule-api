@@ -103,5 +103,8 @@ public class Image {
 		image.setTags(this.tags);
 		image.setImageStatus(this.imageStatus);
 	}
+	public String toString(){
+		return "id=["+id+"]createdAt=["+createdAt+"]filename=["+filename+"]s3BaseURL=["+s3BaseURL+"]tags=["+tags+"]";
+	}
 	
 }

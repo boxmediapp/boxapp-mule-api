@@ -70,7 +70,12 @@ public class ImageRepository {
   }
   public Image findImageById(Long id){
 	   return entityManager.find(Image.class, id);		   
- }
+  }
+  @Transactional
+  public void deleteImageById(Long id){
+	  Image image=findImageById(id);
+	  entityManager.remove(image);
+  }
 
   public List<ImageSet> findImageSet(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSetSelectQuery();
