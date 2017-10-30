@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.co.boxnetwork.data.SearchParam;
+import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
@@ -106,11 +107,14 @@ public class ImageService {
 		int ie=path.lastIndexOf("/", ib-1);
 		if(ie<=0||(ie+2)>=ib){
 			logger.error("path is not valid path, seems it is in the root folder, please delete the image manually:"+path);
-			return image;
+			return image;	
 		}
 		logger.info("The image file is deleted from the s3:"+path);
 		
 		s3BucketService.deleteImagesInImageBucket(path);
+		ImageSet  imageSet=dbimage.getImageSet();
+		imageRepository.deleteImageSetIfEmpty(imageSet);
+		
 		return image; 
 	}
 	public void updateImageSet(Long id, uk.co.boxnetwork.data.image.ImageSet imageSet){
@@ -153,6 +157,11 @@ public class ImageService {
 			ret.add(toData(dbimg));			
 		}		
 		return ret;
+		
+	}
+	public ImageSummaries buildImageSummaries(){
+		
+		return imageRepository.buildImageSummaries();
 		
 	}
 }

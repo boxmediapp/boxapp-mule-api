@@ -72,4 +72,26 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     </flow>
     
+    <flow name="summaries">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.summaries}/*" doc:name="HTTP">
+        <http:response-builder>
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        
+        
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>	        	
+	        	<transformer ref="imageSummaries" doc:name="Transformer Image Summaries"/>
+	        		        	    	
+	        </otherwise>
+	    </choice>
+
+    </flow>
+    
+    
+    
 </mule>

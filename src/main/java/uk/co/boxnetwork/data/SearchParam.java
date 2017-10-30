@@ -320,10 +320,7 @@ public class SearchParam {
    }
 public String getEpisodeImageSelectQuery(){
 	 
-	 String query="SELECT e FROM episode e where e.id not in (select episodeId from image_set)";
-	 if(this.getImageStatus()!=null){
-		 query+=" and  e.imageStatus = :imageStatus";				 
-	 }
+	 String query="SELECT e FROM episode e where e.id not in (select episodeId from image_set)";	
 	 if(this.search!=null){		
 		 query+=" and (e.title LIKE :search OR e.materialId LIKE :search)";		 
 	 }	 
