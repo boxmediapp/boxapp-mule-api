@@ -31,6 +31,8 @@ public class Image {
 	private String s3BaseURL;
 	
 	
+
+	
 	private int width;
 	
 	private int height;
@@ -128,7 +130,8 @@ public class Image {
 	public void setImageStatus(ImageStatus imageStatus) {
 		this.imageStatus = imageStatus;
 	}
-	
+
+		
 	
 	
 }

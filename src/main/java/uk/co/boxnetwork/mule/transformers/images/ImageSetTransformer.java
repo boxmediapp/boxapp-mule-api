@@ -55,6 +55,17 @@ public class ImageSetTransformer extends BoxRestTransformer{
 			return returnError("single post not supportede", message);
 		}
 	}
+	@Override
+	protected Object processPUT(MuleMessage message, String outputEncoding){
+		String setid=MuleRestUtil.getPathPath(message);
+		if(setid==null || setid.length()==0){
+			return returnError("plural put not supported", message);
+		}
+		else{
+			
+			return updateImageSet(setid,message,outputEncoding);
+		}
+	}
 	private Object createImageSet(MuleMessage message, String outputEncoding){
 		String imageseteInJson=null;
 		try{	
@@ -79,6 +90,32 @@ public class ImageSetTransformer extends BoxRestTransformer{
 		}	    					   
 		return imageSet;
 	}
-	            
+	    
+	private Object updateImageSet(String setid,MuleMessage message, String outputEncoding){
+		String imageseteInJson=null;
+		try{	
+			imageseteInJson=(String)message.getPayloadAsString();
+		}
+		catch(Exception e){
+			logger.error(e +" while getting the payload",e);
+			return returnError("failed to get the request payload", message);	
+		}
+		 logger.info("*****Posted a new imageset:"+imageseteInJson+"****");
+		   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();								
+		   objectMapper.setSerializationInclusion(Include.NON_NULL);
+		   ImageSet imageSet=null;
+		   try {
+			   Long id=Long.valueOf(setid);
+			   imageSet = objectMapper.readValue(imageseteInJson, ImageSet.class);
+			   
+				    imageService.updateImageSet(id,imageSet);
+				    return imageSet;
+			 } catch (Exception e1) {
+			logger.error("failed to parse into the ImageSet:"+imageseteInJson,e1);
+			return returnError("failed to parse the ImageSet payload, wrong format", message);	
+		}		  
+			    					   
+
+	}
 	 
 }

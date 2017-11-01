@@ -98,7 +98,11 @@ public class ImageSet {
 		this.fileCounter = fileCounter;
 	}
 
-	
+	@Override
+	public String toString(){
+		return "id=["+id+"]programmeNumber=["+programmeNumber+"]episodeId=["+episodeId+"]createdAt=["+createdAt+"]lastModifiedAt=["+lastModifiedAt+"]title=["+title+"]";
+		
+	}
 	
 		
 }

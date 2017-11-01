@@ -70,19 +70,30 @@ public class ImageTransformer extends BoxRestTransformer{
 		else{
 			Object obj=parseImage(message,outputEncoding);
 			if(obj instanceof Image){
-				Image image=(Image)obj;
-				if(image.getId()==Long.valueOf(imgid)){
-					return imageService.createImage(image);
-				}
-				else{
-					return returnError("image id does not match", message);
-				}
+				Image image=(Image)obj;				
+				
+				imageService.updateImage(Long.valueOf(imgid),image);	
+			   return image;
 			}
 			else{
 				return obj;
 			}
 		}
 	}
+	
+	@Override
+	protected Object processDELETE(MuleMessage message, String outputEncoding){
+		String imgid=MuleRestUtil.getPathPath(message);
+		if(imgid==null || imgid.length()==0){
+			return returnError("DELETE not supoorted for pulural", message);
+		}
+		else{				
+				return imageService.deleteImageById(Long.valueOf(imgid));				   
+			}
+			
+		
+	}
+	
 	@Override
 	protected Object processPOST(MuleMessage message, String outputEncoding){
 		String imgid=MuleRestUtil.getPathPath(message);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.boxnetwork.data.SearchParam;
+import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
+import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.ScheduleEvent;
 
 @Repository
@@ -70,7 +73,12 @@ public class ImageRepository {
   }
   public Image findImageById(Long id){
 	   return entityManager.find(Image.class, id);		   
- }
+  }
+  @Transactional
+  public void deleteImageById(Long id){
+	  Image image=findImageById(id);
+	  entityManager.remove(image);
+  }
 
   public List<ImageSet> findImageSet(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSetSelectQuery();
@@ -81,9 +89,19 @@ public class ImageRepository {
 	}
 	
   public List<Image> findImagesByImageSet(ImageSet imageSet){
-	  TypedQuery<Image> query=entityManager.createQuery("SELECT s FROM image s where s.imageSet=:imageSet", Image.class);
+	   TypedQuery<Image> query=entityManager.createQuery("SELECT s FROM image s where s.imageSet=:imageSet", Image.class);
 	   return query.setParameter("imageSet",imageSet).getResultList();	
   }
+  @Transactional
+  public void deleteImageSetIfEmpty(ImageSet imageSet){
+	  List<Image> imagesInImageSet=findImagesByImageSet(imageSet);
+	  if(imagesInImageSet.size()==0){		  
+		  ImageSet dbImageSet=findImageSetById(imageSet.getId());
+		  logger.info("deleting the imageset because it is empty:"+imagesInImageSet);
+		  entityManager.remove(dbImageSet);
+	  }
+  }
+  
   public List<Image> findImages(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSelectQuery();
 	   queryString=searchParam.addSortByToQuery(queryString, "e");
@@ -91,4 +109,37 @@ public class ImageRepository {
 	   searchParam.config(query);		   		   
 	   return query.getResultList();
 	}
+  public ImageSummaries buildImageSummaries(){
+	  ImageSummaries ret=new ImageSummaries();
+	  String sql = "SELECT COUNT(s.id) FROM  image s";
+	  TypedQuery<Long> q = entityManager.createQuery(sql, Long.class);
+	  Long nunberOfImages = (Long)q.getSingleResult();
+	  ret.setNunberOfImages(nunberOfImages);		  
+	  
+	  
+	  sql = "SELECT COUNT(s.id) FROM  image_set s";
+	  q = entityManager.createQuery(sql, Long.class);
+	  Long nunberOfImageSets = (Long)q.getSingleResult();
+	  ret.setNumberOfImageSets(nunberOfImageSets);
+
+	  sql="SELECT COUNT(e.id) FROM episode e where e.id not in (select episodeId from image_set)";
+	  q = entityManager.createQuery(sql, Long.class);
+	  Long numberOfEpisodesMissingImages = (Long)q.getSingleResult();
+	  ret.setNumberOfEpisodesMissingImages(numberOfEpisodesMissingImages);
+	  
+	  sql = "SELECT COUNT(s.id) FROM  image s where s.imageStatus=:imageStatus";
+	  q = entityManager.createQuery(sql, Long.class);
+	  q.setParameter("imageStatus",ImageStatus.WAITING_APPROVE);
+	  Long numberOfImageWaitingApproved = (Long)q.getSingleResult();
+	  ret.setNumberOfImageWaitingApproved(numberOfImageWaitingApproved);	
+	  
+	  sql = "SELECT COUNT(s.id) FROM  image s where s.imageStatus=:imageStatus";
+	  q = entityManager.createQuery(sql, Long.class);
+	  q.setParameter("imageStatus",ImageStatus.APPROVED);
+	  Long numberOfImageApproved = (Long)q.getSingleResult();
+	  ret.setNumberOfImageApproved(numberOfImageApproved);	
+	  
+	  
+	  return ret;
+  }
 }

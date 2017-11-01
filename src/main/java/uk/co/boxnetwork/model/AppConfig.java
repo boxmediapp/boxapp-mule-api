@@ -113,8 +113,19 @@ private String imageBucket;
  @Column(name="image_client_folder")
  private String imageClientFolder;
  
+ @Column(name="image_client_base_url")
+ private String imageClientBaseURL;
  
  
+ 
+public String getImageClientBaseURL() {
+	return imageClientBaseURL;
+}
+
+public void setImageClientBaseURL(String imageClientBaseURL) {
+	this.imageClientBaseURL = imageClientBaseURL;
+}
+
 public String getImageClientFolder() {
 	return imageClientFolder;
 }
@@ -346,6 +357,7 @@ public void exportConfig(AppConfig config){
      config.setAutoTranscode(this.autoTranscode);
      config.setPublishProgrammeInfo(this.publishProgrammeInfo);
      config.setImageClientFolder(this.imageClientFolder);
+     config.setImageClientBaseURL(imageClientBaseURL);
     
 }
 
@@ -380,6 +392,7 @@ public void importConfig(AppConfig config){
     this.autoTranscode=config.getAutoTranscode();
     this.publishProgrammeInfo=config.getPublishProgrammeInfo();
     this.imageClientFolder=config.getImageClientFolder();
+    this.imageClientBaseURL=config.getImageClientBaseURL();
 }
 
 public Integer getVersion() {

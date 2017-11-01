@@ -17,10 +17,6 @@ public class Episode {
 	private String programmeNumber;
 	
 	
-	
-	private ImageStatus imageStatus;
-	
-	
 	private List<ImageSet> imageSets;	
 	
 	
@@ -48,12 +44,7 @@ public class Episode {
 	public void setEpisodeNumber(String episodeNumber) {
 		this.episodeNumber = episodeNumber;
 	}
-	public ImageStatus getImageStatus() {
-		return imageStatus;
-	}
-	public void setImageStatus(ImageStatus imageStatus) {
-		this.imageStatus = imageStatus;
-	}
+	
 	
 	public String getProgrammeNumber() {
 		return programmeNumber;
@@ -81,7 +72,7 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}		
-		//this.imageStatus=episode.getImageStatus();
+
 		
 	}
 	

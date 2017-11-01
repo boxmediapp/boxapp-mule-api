@@ -50,6 +50,7 @@ public class SearchParam {
 	private SearchParamType searchType;
 	
 	private ImageStatus  imageStatus=null;
+	private String programmeNumber=null;
 	
 	
 	
@@ -264,6 +265,13 @@ public class SearchParam {
 						logger.error("wrong enum imageStatus is passed:"+imageStatus);
 					}
 				}
+				String programmeNumber=queryparams.get("programmeNumber");
+				if(programmeNumber!=null){
+							programmeNumber=programmeNumber.trim().replace("-","/");
+							if(programmeNumber.length()>0){
+								this.programmeNumber=programmeNumber;
+							}
+				}
 				
 				
 		}
@@ -312,10 +320,7 @@ public class SearchParam {
    }
 public String getEpisodeImageSelectQuery(){
 	 
-	 String query="SELECT e FROM episode e where e.id not in (select episodeId from image_set)";
-	 if(this.getImageStatus()!=null){
-		 query+=" and  e.imageStatus = :imageStatus";				 
-	 }
+	 String query="SELECT e FROM episode e where e.id not in (select episodeId from image_set)";	
 	 if(this.search!=null){		
 		 query+=" and (e.title LIKE :search OR e.materialId LIKE :search)";		 
 	 }	 
@@ -326,6 +331,9 @@ public String getImageSetSelectQuery(){
     if(this.search!=null){		
 			 query+=" where (e.title LIKE :search OR e.programmeNumber LIKE :search)";		 
 	}
+    else if(this.programmeNumber!=null){
+   	 	query+=" where (e.programmeNumber LIKE :programmeNumber)";
+    }
     return query;
 }
 public String getImageSelectQuery(){
@@ -333,7 +341,11 @@ public String getImageSelectQuery(){
     if(this.search!=null){		
 			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";		 
 	}
+    else if(programmeNumber!=null){
+    	query+=" where (e.imageSet.programmeNumber LIKE :programmeNumber)";
+    }    
     return query;
+    
 }
 	
 	public String selectQuery(String allquery,String  filterQuery, String titleQuery){				   
@@ -385,7 +397,9 @@ public String getImageSelectQuery(){
 		if(this.getImageStatus()!=null){
 			typedQuery.setParameter("imageStatus",this.imageStatus);
 		}
-		
+		if(this.programmeNumber!=null){
+			 typedQuery.setParameter("programmeNumber",programmeNumber);
+		}
 		if(this.from!=null){
 			try{
 				Long from=Long.valueOf(this.from);
@@ -411,7 +425,8 @@ public String getImageSelectQuery(){
 		   }
 		   if(this.limit!=null && this.limit>=0){
 			   typedQuery.setMaxResults(this.limit);
-		   }		   
+		   }
+		 
 	}
    public boolean isEnd(int fetchSize){
 	   return fetchSize<limit;
