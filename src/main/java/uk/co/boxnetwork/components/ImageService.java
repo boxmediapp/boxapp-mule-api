@@ -14,6 +14,7 @@ import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
+import uk.co.boxnetwork.model.ImageStatus;
 
 
 
@@ -160,6 +161,9 @@ public class ImageService {
 		
 	}
 	public List<uk.co.boxnetwork.data.image.ClientImage>  findClientImages(SearchParam searchParam){
+		if(searchParam.getImageStatus()==null){
+			searchParam.setImageStatus(ImageStatus.APPROVED);
+		}
 		List<Image> dbImages=imageRepository.findImages(searchParam);
 		List<uk.co.boxnetwork.data.image.ClientImage> ret=new ArrayList<uk.co.boxnetwork.data.image.ClientImage>();
 		for(Image dbimg:dbImages){	
