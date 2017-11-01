@@ -337,13 +337,25 @@ public String getImageSetSelectQuery(){
     return query;
 }
 public String getImageSelectQuery(){
-	String query="SELECT e FROM image e";	
+	String query="SELECT e FROM image e";
+	boolean hasWhere=false;
+	
     if(this.search!=null){		
-			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";		 
+			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";
+			 hasWhere=true;
 	}
     else if(programmeNumber!=null){
     	query+=" where (e.imageSet.programmeNumber LIKE :programmeNumber)";
-    }    
+    	hasWhere=true;
+    }
+    if(imageStatus!=null){
+    	if(hasWhere){
+    		query+=" and e.imageStatus=:imageStatus";    		
+    	}
+    	else{
+    		query+=" where (e.imageStatus=:imageStatus)";
+    	}
+    }
     return query;
     
 }
