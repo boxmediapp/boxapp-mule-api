@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.ImageStatus;
 
 public class Image {
@@ -19,6 +20,8 @@ public class Image {
 	private String tags;
 	private ImageSet imageSet;
 	private ImageStatus imageStatus;
+	private String url;
+	
 	
 	
 	
@@ -84,7 +87,13 @@ public class Image {
 	}
 	
 	
-	public Image(uk.co.boxnetwork.model.Image image){
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public Image(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 		this.id=image.getId();		
 		this.createdAt=image.getCreatedAt();					
 		this.filename=image.getFilename();		
@@ -93,7 +102,7 @@ public class Image {
 		this.height=image.getHeight();
 		this.tags=image.getTags();
 		this.imageStatus=image.getImageStatus();
-		
+		this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();		
 	}	
 	public void update(uk.co.boxnetwork.model.Image image){		
 		image.setFilename(this.filename);		

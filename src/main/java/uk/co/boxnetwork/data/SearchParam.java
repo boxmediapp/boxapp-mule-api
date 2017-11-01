@@ -341,7 +341,11 @@ public String getImageSelectQuery(){
     if(this.search!=null){		
 			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";		 
 	}
+    else if(programmeNumber!=null){
+    	query+=" where (e.imageSet.programmeNumber LIKE :programmeNumber)";
+    }    
     return query;
+    
 }
 	
 	public String selectQuery(String allquery,String  filterQuery, String titleQuery){				   

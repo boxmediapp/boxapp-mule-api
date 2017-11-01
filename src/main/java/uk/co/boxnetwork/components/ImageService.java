@@ -62,7 +62,7 @@ public class ImageService {
 		List<Image> dbimages=imageRepository.findImagesByImageSet(imgset);
 		List<uk.co.boxnetwork.data.image.Image> images=new ArrayList<uk.co.boxnetwork.data.image.Image>();
 		for(Image img:dbimages){
-			images.add(new uk.co.boxnetwork.data.image.Image(img));
+			images.add(new uk.co.boxnetwork.data.image.Image(img,appConfig));
 		}
 		ret.setImages(images);
 		return ret;
@@ -141,7 +141,7 @@ public class ImageService {
 		return toData(dbImageSet);		
 	}
 	uk.co.boxnetwork.data.image.Image toData(Image dbImage){
-		uk.co.boxnetwork.data.image.Image ret=new uk.co.boxnetwork.data.image.Image(dbImage);
+		uk.co.boxnetwork.data.image.Image ret=new uk.co.boxnetwork.data.image.Image(dbImage,appConfig);
 		uk.co.boxnetwork.data.image.ImageSet imgSet=new uk.co.boxnetwork.data.image.ImageSet(dbImage.getImageSet());
 		ret.setImageSet(imgSet);
 		return ret;
@@ -159,6 +159,21 @@ public class ImageService {
 		return ret;
 		
 	}
+	public List<uk.co.boxnetwork.data.image.ClientImage>  findClientImages(SearchParam searchParam){
+		List<Image> dbImages=imageRepository.findImages(searchParam);
+		List<uk.co.boxnetwork.data.image.ClientImage> ret=new ArrayList<uk.co.boxnetwork.data.image.ClientImage>();
+		for(Image dbimg:dbImages){	
+			uk.co.boxnetwork.data.image.ClientImage cimage=new uk.co.boxnetwork.data.image.ClientImage(dbimg,appConfig);			
+			ret.add(cimage);			
+		}		
+		return ret;
+		
+	}
+	public uk.co.boxnetwork.data.image.ClientImage findClientImageById(Long imgid){
+		Image dbImage=imageRepository.findImageById(imgid);
+		return new uk.co.boxnetwork.data.image.ClientImage(dbImage,appConfig);
+	}
+	
 	public ImageSummaries buildImageSummaries(){
 		
 		return imageRepository.buildImageSummaries();

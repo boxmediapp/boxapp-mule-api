@@ -95,9 +95,9 @@ public class ImageRepository {
   @Transactional
   public void deleteImageSetIfEmpty(ImageSet imageSet){
 	  List<Image> imagesInImageSet=findImagesByImageSet(imageSet);
-	  if(imagesInImageSet.size()==0){
-		  logger.info("deleting the imageset because it is empty:"+imagesInImageSet);
+	  if(imagesInImageSet.size()==0){		  
 		  ImageSet dbImageSet=findImageSetById(imageSet.getId());
+		  logger.info("deleting the imageset because it is empty:"+imagesInImageSet);
 		  entityManager.remove(dbImageSet);
 	  }
   }
