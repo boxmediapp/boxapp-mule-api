@@ -11,6 +11,7 @@ public class ClientImage {
 		private int height;		
 		private String contractNumber;
 		private String episodeNumber;
+		private String tags;
 		public Long getId() {
 			return id;
 		}
@@ -47,11 +48,19 @@ public class ClientImage {
 		public void setEpisodeNumber(String episodeNumber) {
 			this.episodeNumber = episodeNumber;
 		}
+		
+		public String getTags() {
+			return tags;
+		}
+		public void setTags(String tags) {
+			this.tags = tags;
+		}
 		public ClientImage(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 			this.id=image.getId();						
 			this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();	
 			this.width=image.getWidth();
-			this.height=image.getHeight();						
+			this.height=image.getHeight();
+			this.tags=image.getTags();
 			String programmeNumber=image.getImageSet().getProgrammeNumber();
 			if(programmeNumber!=null&& programmeNumber.length()>0){
 				String matParts[]=programmeNumber.split("/");
