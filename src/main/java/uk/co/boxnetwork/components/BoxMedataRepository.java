@@ -533,7 +533,16 @@ public class BoxMedataRepository {
 	   
 	   
 	   private Series returnExistingSeriesOrPersist(Series series,List<Series> matchedSeries,String messageOnDuplication){
-		   if(matchedSeries.size()==0){			  
+		   if(matchedSeries.size()==0){	
+			   if(series.getContractNumber()!=null){
+				   Series foundSeries=findSingleSeriesByContractNumber(series.getContractNumber());
+				   if(foundSeries!=null){
+					   logger.warn("Found the series with the same contract number when try to create:"+foundSeries+"  for series=["+series);
+					   foundSeries.mergeFieldValues(series);
+					   mergeSeries(foundSeries);
+					   return foundSeries;
+				   }
+			   }
 				   persisSeries(series);
 			   return series;
 		   }
@@ -551,14 +560,24 @@ public class BoxMedataRepository {
 		   if(series==null){
 			   		return null;
 		   }
-		   else if(series.getId()!=null){
+		   else if(series.getId()!=null){			   
 			   persisSeries(series);
 			   return series;
 		   }
 		   else{
 				   if(GenericUtilities.isNotAValidId(series.getPrimaryId())){
+					   if(series.getContractNumber()!=null){
+						   Series foundSeries=findSingleSeriesByContractNumber(series.getContractNumber());
+						   if(foundSeries!=null){
+							   logger.warn("Found the series with the same contract number when try to create:"+foundSeries+"  for series=["+series);
+							   foundSeries.mergeFieldValues(series);
+							   mergeSeries(foundSeries);
+							   return foundSeries;
+						   }
+					   }
 						   if(GenericUtilities.isNotAValidId(series.getContractNumber())){
 							   if(GenericUtilities.isNotValidTitle(series.getName())){
+								   
 								   persisSeries(series);
 								   
 								   return series;
@@ -761,6 +780,26 @@ public class BoxMedataRepository {
 	   public List<Series> findSeriesByContractNumber(String contractNumber){
 		   TypedQuery<Series> query=entityManager.createQuery("SELECT s FROM series s where s.contractNumber=:contractNumber", Series.class);
 		   return query.setParameter("contractNumber",contractNumber).getResultList();
+	   }
+	   public Series findSingleSeriesByContractNumber(String contractNumber){
+		   List<Series> matchedSeries=findSeriesByContractNumber(contractNumber);
+		   if(matchedSeries.size()==0){
+			   return null;
+		   }
+		   if(matchedSeries.size()==1){
+			   return matchedSeries.get(0);			   
+		   }
+		   Series seletedSeries=matchedSeries.get(0);
+			List<Episode> selectedEpisodes=findEpisodesBySeries(seletedSeries);
+			for(int i=1;i<matchedSeries.size();i++){
+				Series series=matchedSeries.get(i);
+				List<Episode> episodes=findEpisodesBySeries(series);
+				if(episodes.size()>selectedEpisodes.size()){
+					selectedEpisodes=episodes;
+					seletedSeries=series;
+				}
+			}
+			return seletedSeries; 
 	   }
 	   public List<Series> findSeriesByName(String name){
 		   TypedQuery<Series> query=entityManager.createQuery("SELECT s FROM series s where s.name=:name", Series.class);
