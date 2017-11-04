@@ -1,29 +1,38 @@
 source deploy/util.sh
 
-source ~/box/box-secrets/images.sh
 
+buildLocalVariables(){
+  export appzipfilenamebase="boxtv-metadata-app-"
+  export appzipfilename="$appzipfilenamebase$projectversion.zip"
+  
+  export appsourcezipfilepath="target/$appzipfilename"  
+  export appdestfolder="~/bdocker/bmule/opt/mule/apps"
+  
+  export configzipfilename="box-config-$projectversion.zip"
+  export configsourcezipfilepath="box-config/target/$configzipfilename"  
+  export configdestfolder="/Users/dilshathewzulla/bdocker/bmule/opt/mule/"     
+}
 
-getProjectVersionFromPom
-
-buildVariables
-
-mkdir -p ~/$appdestfolder
-mkdir -p ~/$configdestfolder
-
-
-cp $appsourcezipfilepath ~/$appdestfolder/
-cp $configsourcezipfilepath ~/$configdestfolder
-
-cd ~
-
-
-createUniqueidforfilename    
-   
-unzipConfigAndReplaceVariables $uniqueidforfilename
-
-chmod u+x /tmp/script_$uniqueidforfilename.sh
-/tmp/script_$uniqueidforfilename.sh
-
+deployLocalConfig(){
+    echo "deploying the configuration: $configsourcezipfilepath $configdestfolder"    
+    cp $configsourcezipfilepath $configdestfolder
+    createUniqueidforfilename    
     
-    
+    unzipConfigAndReplaceVariables $uniqueidforfilename
+    chmod u+x /tmp/script_$uniqueidforfilename.sh
+    /tmp/script_$uniqueidforfilename.sh        
+}
+
+
+
+
+
+deploy_to_hostname=""
+deploy_to_username=""
+projectversion=$3
+
+buildLocalVariables
+
+deployLocalConfig
+
 
