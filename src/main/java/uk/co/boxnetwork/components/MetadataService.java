@@ -590,6 +590,20 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 //			boxMetadataRepository.persistEpisodeStatus(episodeStatusInDB);
 //		}
     }
+	private Series selectMostAppropriateSeries(List<Series> sers){
+		
+		Series matchedSeries=sers.get(0);
+		List<Episode> matchedEpisodes=boxMetadataRepository.findEpisodesBySeries(matchedSeries);
+		for(int i=1;i<sers.size();i++){
+			Series series=sers.get(i);
+			List<Episode> episodes=boxMetadataRepository.findEpisodesBySeries(series);
+			if(episodes.size()>matchedEpisodes.size()){
+				matchedEpisodes=episodes;
+				matchedSeries=series;
+			}
+		}
+		return matchedSeries;
+	}
 	@Transactional
 	public uk.co.boxnetwork.data.Episode reicevedEpisodeByMaterialId(uk.co.boxnetwork.data.Episode episode){
 		String materiaId=episode.getMaterialId();
@@ -615,14 +629,14 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 			logger.info("matching episode number not found programmeId:"+programmeId);
 		}
 		else if(matchedEpisodes.size()>1){
+			
 			throw new RuntimeException("more than one episodes matched to the materia id:"+materiaId);
 		}
 		else{
 				existingEpisode=matchedEpisodes.get(0);
 				existingSeries=existingEpisode.getSeries();
 				if(existingSeries!=null){
-					existingSeriesGroup=existingSeries.getSeriesGroup();
-					
+					existingSeriesGroup=existingSeries.getSeriesGroup();					
 				}
 		}	
 		if(existingSeries==null && episode.getSeries()!=null && episode.getSeries().getId()!=null){
@@ -637,6 +651,8 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 		    	 logger.info("matching series not found contractNumber:"+contractNumber);
 		     }
 		     else if(matchSeries.size()>1){
+		    	 existingSeries=selectMostAppropriateSeries(matchSeries);
+		    	 existingSeriesGroup=existingSeries.getSeriesGroup();
 		    	 throw new RuntimeException("more than one series matching the contractNumber:"+contractNumber);
 		     }
 		     else{
