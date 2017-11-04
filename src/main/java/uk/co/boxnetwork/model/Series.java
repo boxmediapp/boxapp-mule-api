@@ -224,7 +224,7 @@ public class Series {
 	   }
 	   return false;
     }
-	public void overrideWhenCreate(Series series){
+	public void mergeFieldValues(Series series){
 		if(series.getAssetId()!=null){
 			this.assetId=series.getAssetId();
 		}
