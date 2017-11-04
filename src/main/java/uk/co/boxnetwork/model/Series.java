@@ -224,4 +224,17 @@ public class Series {
 	   }
 	   return false;
     }
+	public void mergeFieldValues(Series series){
+		if(series.getAssetId()!=null){
+			this.assetId=series.getAssetId();
+		}
+		if(series.getPrimaryId()!=null){
+			this.primaryId=series.getPrimaryId();
+		}
+		
+	}
+	@Override
+	public String toString(){
+		return "id="+id+" assetId=["+assetId+"]primaryId=["+primaryId+" contractNumber=["+contractNumber+"]lastModifiedAt="+lastModifiedAt+"]createdAt=["+createdAt+"]";
+	}
 }

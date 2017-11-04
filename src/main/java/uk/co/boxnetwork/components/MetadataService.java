@@ -590,20 +590,8 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 //			boxMetadataRepository.persistEpisodeStatus(episodeStatusInDB);
 //		}
     }
-	private Series selectMostAppropriateSeries(List<Series> sers){
-		
-		Series matchedSeries=sers.get(0);
-		List<Episode> matchedEpisodes=boxMetadataRepository.findEpisodesBySeries(matchedSeries);
-		for(int i=1;i<sers.size();i++){
-			Series series=sers.get(i);
-			List<Episode> episodes=boxMetadataRepository.findEpisodesBySeries(series);
-			if(episodes.size()>matchedEpisodes.size()){
-				matchedEpisodes=episodes;
-				matchedSeries=series;
-			}
-		}
-		return matchedSeries;
-	}
+	
+	
 	@Transactional
 	public uk.co.boxnetwork.data.Episode reicevedEpisodeByMaterialId(uk.co.boxnetwork.data.Episode episode){
 		String materiaId=episode.getMaterialId();
@@ -646,19 +634,14 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 			}			
 		}
 	    if(existingSeries==null && (!GenericUtilities.isNotValidCrid(contractNumber))){
-		     List<Series> matchSeries=boxMetadataRepository.findSeriesByContractNumber(contractNumber);
-		     if(matchSeries.size()==0){
+	    	 Series foundSeries=boxMetadataRepository.findSingleSeriesByContractNumber(contractNumber);
+		     if(foundSeries==null){
 		    	 logger.info("matching series not found contractNumber:"+contractNumber);
 		     }
-		     else if(matchSeries.size()>1){
-		    	 existingSeries=selectMostAppropriateSeries(matchSeries);
-		    	 existingSeriesGroup=existingSeries.getSeriesGroup();
-		    	 throw new RuntimeException("more than one series matching the contractNumber:"+contractNumber);
-		     }
 		     else{
-		    	 	existingSeries=matchSeries.get(0);		    	 	
-		    	 	existingSeriesGroup=existingSeries.getSeriesGroup();
-		     }
+		    	 existingSeries=foundSeries;
+		    	 existingSeriesGroup=existingSeries.getSeriesGroup();
+		     }		     
 	    }   
 		if(existingSeriesGroup==null && episode.getSeries() !=null && episode.getSeries().getSeriesGroup() !=null && (!GenericUtilities.isNotValidTitle(episode.getSeries().getSeriesGroup().getTitle()))){
 			List<SeriesGroup> matchedSeriesGroups=boxMetadataRepository.findSeriesGroupByTitle(episode.getSeries().getSeriesGroup().getTitle());
