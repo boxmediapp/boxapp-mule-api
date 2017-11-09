@@ -3,6 +3,7 @@ package uk.co.boxnetwork.mule.transformers.tasks;
 import java.util.List;
 
 import org.mule.api.MuleMessage;
+import org.mule.module.http.internal.ParameterMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -46,8 +47,18 @@ public class TimedTaskServiceTransformer extends BoxRestTransformer{
 	}
 	@Override
 	 protected Object processGET(MuleMessage message, String outputEncoding){
-			List<TimedTask> tasks=timedTaskService.findAllTimedTasks();			
-			return tasks;
+		    ParameterMap queryparams=message.getInboundProperty("http.query.params");
+		    String channel=queryparams.get("channel");
+		    if(channel!=null && channel.trim().length()>0){
+		    	logger.info("***findAllTimedTasksByChannelId:"+channel);
+		    	List<TimedTask> tasks=timedTaskService.findAllTimedTasksByChannelId(channel.trim());		
+				return tasks;
+		    }
+		    else{
+		    	List<TimedTask> tasks=timedTaskService.findAllTimedTasks();			
+				return tasks;
+		    }
+			
 	 }
 	protected Object processDELETE(MuleMessage message, String outputEncoding){	
 		String taskid=MuleRestUtil.getPathPath(message);

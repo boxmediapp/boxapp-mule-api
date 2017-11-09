@@ -37,6 +37,13 @@ public class TimedTaskService {
 		   return query.getResultList();
 	   }
 	
+	public List<TimedTask> findAllTimedTasksByChannelId(String channelId){
+		   TypedQuery<TimedTask> query=entityManager.createQuery("SELECT e FROM timed_task e where e.importScheduleTask.channelId=:channelId", TimedTask.class);
+		   query.setParameter("channelId",channelId);		   
+		   return query.getResultList();
+	 }
+	
+	
 	@Transactional
 	public void merge(TimedTask task){
 		entityManager.merge(task);
