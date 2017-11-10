@@ -22,6 +22,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AdvertisementRule;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.CertificationCategory;
 import uk.co.boxnetwork.model.CertificationTime;
@@ -50,7 +51,26 @@ public class BoxMedataRepository {
       @Autowired	
 	  private EntityManager entityManager;
 
-	    
+       @Transactional
+	   public void importBoxEpisode(Episode episode){
+		   String programmeNumber=episode.getCtrPrg();
+		   if(programmeNumber==null){
+			   return;
+		   }
+		   programmeNumber=programmeNumber.trim();
+		   if(programmeNumber.length()==0){
+			   return;
+		   }
+		   TypedQuery<BoxEpisode> query=entityManager.createQuery("SELECT b FROM box_episode b where b.programmeNumber=:programmeNumber", BoxEpisode.class);
+		   List<BoxEpisode> matchedEpisode=query.setParameter("programmeNumber",programmeNumber).getResultList();
+		   if(matchedEpisode.size()>0){
+			   return;
+		   }
+		   BoxEpisode boxEpisode=new BoxEpisode();
+		   boxEpisode.copyFrom(episode);
+		   boxEpisode.setCreatedAt(new Date());
+		   entityManager.persist(boxEpisode);		   
+	   }
        public void persisEvent(ScheduleEvent newEvent){
     	   	Date lastModifiedAt=new Date();
 			newEvent.setLastModifiedAt(lastModifiedAt);
@@ -131,6 +151,7 @@ public class BoxMedataRepository {
         	   entityManager.merge(episode);
     	   
        		}
+    	   importBoxEpisode(episode);
 		}
        @Transactional
        public void updateEpisode(Episode episode){

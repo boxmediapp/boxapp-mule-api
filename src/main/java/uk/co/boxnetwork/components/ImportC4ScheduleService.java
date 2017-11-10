@@ -149,7 +149,7 @@ public class ImportC4ScheduleService {
 	}
 
  
- public void importSchedule(ImportScheduleRequest request){	 	 
+ public void importOnDemandSchedule(ImportScheduleRequest request){	 	 
 	 String schedule=requestSchedulService(request);
 	 try{
 		 parseAndImport(schedule);
@@ -158,6 +158,19 @@ public class ImportC4ScheduleService {
 		 logger.error("error is parsing the schedule", ex);
 		 logger.error("response returned from the pirate:"+schedule);		 
 	 }
+ }
+ public void importBoxEpisodes(ImportScheduleRequest request){
+	 String schedule=requestSchedulService(request);
+	 try {			
+			C4Metadata c4metadata=c4SchedulerParser.parse(schedule);
+			for(ScheduleEvent event: c4metadata.getScheduleEvents()){
+				boxMetadataRepository.importBoxEpisode(event.getEpisode());
+			}
+			
+		} catch (DocumentException e) {
+			logger.error("Error in Parsing schedule document",e);
+		   throw new RuntimeException(e+ "in parsig the schedule document",e);
+		}
  }
  
 	

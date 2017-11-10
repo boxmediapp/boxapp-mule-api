@@ -43,7 +43,7 @@ public class ImportC4ScheduleTransformer extends AbstractMessageTransformer{
 			ImportScheduleRequest request;
 			
 			request = objectMapper.readValue(payload, ImportScheduleRequest.class);
-			importC4ScheduleService.importSchedule(request);
+			importC4ScheduleService.importOnDemandSchedule(request);
 			return request;			
 		} catch (Exception e) {
 			logger.error("error while parsing the import schedule request:"+payload,e);			

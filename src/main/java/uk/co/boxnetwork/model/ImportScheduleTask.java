@@ -47,7 +47,10 @@ public class ImportScheduleTask {
 	
 	private String info;
 	
-
+	@Column(name="import_schedule_type")
+	private ImportScheduleType importScheduleType;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -141,6 +144,14 @@ public class ImportScheduleTask {
 
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
+	}
+
+	public ImportScheduleType getImportScheduleType() {
+		return importScheduleType;
+	}
+
+	public void setImportScheduleType(ImportScheduleType importScheduleType) {
+		this.importScheduleType = importScheduleType;
 	}
 	
 	
