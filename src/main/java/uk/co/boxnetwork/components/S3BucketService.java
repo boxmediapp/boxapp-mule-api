@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,11 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.cloudfront.AmazonCloudFrontClient;
+import com.amazonaws.services.cloudfront.model.CreateInvalidationRequest;
+import com.amazonaws.services.cloudfront.model.CreateInvalidationResult;
+import com.amazonaws.services.cloudfront.model.InvalidationBatch;
+import com.amazonaws.services.cloudfront.model.Paths;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
@@ -379,5 +385,15 @@ public class S3BucketService {
 		URL signedURL= s3.generatePresignedUrl(generatePresignedUrlRequest);
 		return signedURL.toString();
 	}
-
+   public String  invalidateCloudFronCache(Collection<String> paths, String distributionId){
+	   
+	   AWSCredentials credentials=getAWSCredentials();
+	   AmazonCloudFrontClient client = new AmazonCloudFrontClient(credentials);	   
+	   Paths invalidation_paths = new Paths().withItems(paths).withQuantity(paths.size());
+	   String requestId=String.valueOf(System.currentTimeMillis());	   	   
+	   InvalidationBatch invalidation_batch = new InvalidationBatch(invalidation_paths, requestId);
+	   CreateInvalidationRequest invalidation = new CreateInvalidationRequest(distributionId, invalidation_batch);
+	   CreateInvalidationResult ret = client.createInvalidation(invalidation);
+	   return requestId;
+   }
 }
