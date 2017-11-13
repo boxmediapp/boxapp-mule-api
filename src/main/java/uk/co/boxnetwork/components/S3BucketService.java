@@ -385,7 +385,7 @@ public class S3BucketService {
 		URL signedURL= s3.generatePresignedUrl(generatePresignedUrlRequest);
 		return signedURL.toString();
 	}
-   public String  invalidateCloudFronCache(Collection<String> paths, String distributionId){
+   public String  invalidateCloudFrontCache(Collection<String> paths, String distributionId){
 	   
 	   AWSCredentials credentials=getAWSCredentials();
 	   AmazonCloudFrontClient client = new AmazonCloudFrontClient(credentials);	   
@@ -396,4 +396,21 @@ public class S3BucketService {
 	   CreateInvalidationResult ret = client.createInvalidation(invalidation);
 	   return requestId;
    }
+   public String invalidateImageCDNCache(Collection<String> paths){
+	   if(awsConfig.getImageCDNDistributionID()==null || awsConfig.getImageCDNDistributionID().length()==0){
+		   return null;		   
+	   }
+	   return invalidateCloudFrontCache(paths,awsConfig.getImageCDNDistributionID());
+   }
+   public String  invalidateCDNClientImageCache(String imageFilename){
+		List<String> files=new ArrayList<String>();
+		if(appConfig.getImageClientFolder()==null|| appConfig.getImageClientFolder().trim().length()==0){
+					return null;
+		}
+		String filepath="/"+appConfig.getImageClientFolder()+"/"+imageFilename;
+		files.add(filepath);
+		logger.info("Invalidating the invalidateCDNClientImageCache:"+filepath);
+		return invalidateImageCDNCache(files);
+		
+	}
 }

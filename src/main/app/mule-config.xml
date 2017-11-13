@@ -160,7 +160,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
          <spring:bean id="awsSecrets" class="uk.co.boxnetwork.data.AWSConfig">         	  
          	  <spring:property name="awsAccessKeyId" value="${aws_access_key_id}"/>
          	  <spring:property name="awsSecretAccessKey" value="${aws_secret_access_key}"/>
-			  <spring:property name="awsRegion" value="${region}"/>         	           	            	  
+			  <spring:property name="awsRegion" value="${region}"/>
+			  <spring:property name="imageCDNDistributionID" value="${image_cdn_distribution_id}"/>   
+			        	           	            	  
          </spring:bean>
          
          

@@ -86,6 +86,7 @@ public class MetadataService {
 	@Autowired
     private BCConfiguration bcConfiguration;
 	
+	
 	  ExecutorService pool = Executors.newFixedThreadPool(1);
 
 	public List<uk.co.boxnetwork.data.SeriesGroup> getAllSeriesGroups(SearchParam searchParam){
@@ -1878,6 +1879,10 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    		}
    		
    	}
+   	else if(MediaCommand.INVALIDATE_CDN_CLIENT_IMAGE_CACHE.equals(mediaCommand.getCommand())){
+   		    
+   		s3BucketService.invalidateCDNClientImageCache(mediaCommand.getFilename());
+   	}   	
    	else{
    		logger.info("ignore the command");
    	}
