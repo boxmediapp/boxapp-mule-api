@@ -85,6 +85,34 @@ public class MetadataMaintainanceService {
 	private static final Logger logger=LoggerFactory.getLogger(MetadataMaintainanceService.class);
 	
 	
+	
+	public void importBoxEpisodesFronEpsiodes(){
+		logger.info("importing box episodes......");
+		
+		int rcordLimit=appConfig.getRecordLimit();
+		if(rcordLimit<1){
+			rcordLimit=Integer.MAX_VALUE;
+		}
+		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
+		
+		while(true){
+				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				if(episodes.size()==0){
+					break;
+				}
+				for(Episode episode:episodes){
+					repository.importBoxEpisode(episode);			
+				}
+				if(searchParam.isEnd(episodes.size())){
+					break;
+				}
+				else{
+					searchParam.nextBatch();
+				}
+		}
+	}
+	
+	
 	@Transactional
 	public void fixTxChannel(){
 		logger.info("fixing the channel......");

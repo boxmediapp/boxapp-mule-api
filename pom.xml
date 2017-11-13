@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>boxtv-metadata-app</artifactId>
-    <version>3.0.17</version>
+    <version>3.0.18</version>
     <packaging>mule</packaging>
 	<name>Mule boxtv-metadata-app Application</name>
 
@@ -242,7 +242,12 @@
     	<version>${aws.sdk.version}</version>
 	</dependency>
     
-    
+    <dependency>
+    	<groupId>com.amazonaws</groupId>
+    	<artifactId>aws-java-sdk-cloudfront</artifactId>
+    	<version>${aws.sdk.version}</version>
+	</dependency>
+	
     
       <dependency>
 	    <groupId>mysql</groupId>

@@ -20,6 +20,7 @@ public class MediaCommand {
 	public static String CAPTURE_IMAGES_FROM_VIDEO="capture_image_from_video";
 	public static String PUSH_CHANGES_ON_NEEDS_TO_PUBLISH="published_changes_on_needs_publish";
 	public static String INSPECT_VIDEO_FILE="inspect_video_file";
+	public static String INVALIDATE_CDN_CLIENT_IMAGE_CACHE="invalidate-client-image-cdn-cache";
 	
 	@Id
 	@GeneratedValue

@@ -6,6 +6,9 @@ public class AWSConfig {
 private String awsAccessKeyId;
 private String awsSecretAccessKey;
 private String awsRegion;
+
+private String imageCDNDistributionID;
+
 public String getAwsAccessKeyId() {
 	return awsAccessKeyId;
 }
@@ -23,6 +26,12 @@ public String getAwsRegion() {
 }
 public void setAwsRegion(String awsRegion) {
 	this.awsRegion = awsRegion;
+}
+public String getImageCDNDistributionID() {
+	return imageCDNDistributionID;
+}
+public void setImageCDNDistributionID(String imageCDNDistributionID) {
+	this.imageCDNDistributionID = imageCDNDistributionID;
 }
 
 

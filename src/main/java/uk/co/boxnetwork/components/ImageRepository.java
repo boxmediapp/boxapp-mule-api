@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.ImageSummaries;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
@@ -26,17 +27,18 @@ public class ImageRepository {
 	private static final Logger logger=LoggerFactory.getLogger(ImageRepository.class);
 	@Autowired	
 	private EntityManager entityManager;
+	
 	       
 	
-	public List<Episode> findEpisodesNotProcessed(SearchParam searchParam){		   		   
+	public List<BoxEpisode> findEpisodesNotProcessed(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getEpisodeImageSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
-		   TypedQuery<Episode> query=entityManager.createQuery(queryString, Episode.class);		   
+		   TypedQuery<BoxEpisode> query=entityManager.createQuery(queryString, BoxEpisode.class);		   
 		   searchParam.config(query);		   		   
 		   return query.getResultList();		   
 	}
-	public Episode findEpisodeById(Long id){
-		   return entityManager.find(Episode.class, id);		   
+	public BoxEpisode findEpisodeById(Long id){
+		   return entityManager.find(BoxEpisode.class, id);		   
 	 }
 
 	@Transactional
@@ -122,7 +124,7 @@ public class ImageRepository {
 	  Long nunberOfImageSets = (Long)q.getSingleResult();
 	  ret.setNumberOfImageSets(nunberOfImageSets);
 
-	  sql="SELECT COUNT(e.id) FROM episode e where e.id not in (select episodeId from image_set)";
+	  sql="SELECT COUNT(e.id) FROM box_episode e where e.id not in (select episodeId from image_set)";
 	  q = entityManager.createQuery(sql, Long.class);
 	  Long numberOfEpisodesMissingImages = (Long)q.getSingleResult();
 	  ret.setNumberOfEpisodesMissingImages(numberOfEpisodesMissingImages);

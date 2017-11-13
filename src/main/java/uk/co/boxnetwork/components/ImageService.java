@@ -1,6 +1,7 @@
 package uk.co.boxnetwork.components;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
@@ -36,9 +38,10 @@ public class ImageService {
 	public List<uk.co.boxnetwork.data.image.Episode> findEpisodesNotProcessed(SearchParam searchParam){
 		return toDataEpisodes(imageRepository.findEpisodesNotProcessed(searchParam),appConfig);
 	}
-	private  List<uk.co.boxnetwork.data.image.Episode>  toDataEpisodes(List<Episode> eposides, AppConfig appConfig){
+	private  List<uk.co.boxnetwork.data.image.Episode>  toDataEpisodes(List<BoxEpisode> eposides, AppConfig appConfig){
 		List<uk.co.boxnetwork.data.image.Episode> ret=new ArrayList<uk.co.boxnetwork.data.image.Episode>();
-		for(Episode episode:eposides){
+		
+		for(BoxEpisode episode:eposides){
 			uk.co.boxnetwork.data.image.Episode dep=new uk.co.boxnetwork.data.image.Episode(episode);			
 			ret.add(dep);			
 		}
@@ -46,7 +49,7 @@ public class ImageService {
 	}
 	
 	public  uk.co.boxnetwork.data.image.Episode findEpisodeById(Long id){
-		Episode episode=imageRepository.findEpisodeById(id);
+		BoxEpisode episode=imageRepository.findEpisodeById(id);		
 		if(episode!=null){
 			uk.co.boxnetwork.data.image.Episode ret=new uk.co.boxnetwork.data.image.Episode(episode);
 			List<uk.co.boxnetwork.model.ImageSet> imageSetsdb=imageRepository.findImageSetByEpisodeId(episode.getId());			
@@ -183,4 +186,6 @@ public class ImageService {
 		return imageRepository.buildImageSummaries();
 		
 	}
+	 
+	
 }

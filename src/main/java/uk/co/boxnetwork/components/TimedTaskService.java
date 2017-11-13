@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 
 import uk.co.boxnetwork.model.ImportScheduleTask;
+import uk.co.boxnetwork.model.ImportScheduleType;
 import uk.co.boxnetwork.model.ScheduleEvent;
 import uk.co.boxnetwork.model.TaskType;
 import uk.co.boxnetwork.model.TimedTask;
@@ -36,6 +37,13 @@ public class TimedTaskService {
 		   TypedQuery<TimedTask> query=entityManager.createQuery("SELECT e FROM timed_task e", TimedTask.class);
 		   return query.getResultList();
 	   }
+	
+	public List<TimedTask> findAllTimedTasksByChannelId(String channelId){
+		   TypedQuery<TimedTask> query=entityManager.createQuery("SELECT e FROM timed_task e where e.importScheduleTask.channelId=:channelId", TimedTask.class);
+		   query.setParameter("channelId",channelId);		   
+		   return query.getResultList();
+	 }
+	
 	
 	@Transactional
 	public void merge(TimedTask task){
@@ -99,7 +107,13 @@ public class TimedTaskService {
 			logger.info("executing the import schedule task");
 		}
 		ImportScheduleRequest importSechduleRequest=importScheduleTask.createImportScheduleRequest();
-		importC4ScheduleService.importSchedule(importSechduleRequest);				
+		if(importScheduleTask.getImportScheduleType()==null|| importScheduleTask.getImportScheduleType()==ImportScheduleType.ONDEMAND){
+			importC4ScheduleService.importOnDemandSchedule(importSechduleRequest);
+		}
+		else if(importScheduleTask.getImportScheduleType()==ImportScheduleType.IMPORT_BOX_EPISODE){
+			importC4ScheduleService.importBoxEpisodes(importSechduleRequest);
+		}		
+						
 	}
 	
 		

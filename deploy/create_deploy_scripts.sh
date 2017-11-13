@@ -6,6 +6,6 @@ createDeployScript box      $projectversion  ~/box/box-secrets/box.sh  mediapp.i
 createDeployScript bebox    $projectversion  ~/box/box-secrets/bebox.sh  bemediaapp.iterativesolution.co.uk  ec2-user
 createDeployScript image    $projectversion  ~/box/box-secrets/image.sh  image.boxnetwork.co.uk  ec2-user
 
-createLocalDeployScript local $projectversion  ~/box/box-secrets/image.sh  image.boxnetwork.co.uk  ec2-user
+createLocalDeployScript local $projectversion  ~/box/box-secrets/local.sh  image.boxnetwork.co.uk  ec2-user
 
 

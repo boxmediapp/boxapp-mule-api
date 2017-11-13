@@ -98,6 +98,10 @@ unzipConfigAndReplaceVariables(){
 	   echo  'sed -i -e "s,@@@box_convert_image_status@@@,'$box_convert_image_status',g" metadata-config/app-config.properties  ' >> /tmp/script_$uniqueidforfilename.sh
 	   echo  'sed -i -e "s,@@@box_send_update_to_soundmouse@@@,'$box_send_update_to_soundmouse',g" metadata-config/app-config.properties  ' >> /tmp/script_$uniqueidforfilename.sh
 
+      echo  'sed -i -e "s,@@@image_cdn_distribution_id@@@,'$image_cdn_distribution_id',g" metadata-config/app-config.properties  ' >> /tmp/script_$uniqueidforfilename.sh
+      echo  'sed -i -e "s,@@@s3_images_clients_baseurl@@@,'$s3_images_clients_baseurl',g" metadata-config/app-config.properties  ' >> /tmp/script_$uniqueidforfilename.sh
+
+
 }
 
 

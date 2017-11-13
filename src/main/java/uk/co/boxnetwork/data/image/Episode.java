@@ -61,10 +61,10 @@ public class Episode {
 		this.imageSets = imageSets;
 	}
 	
-	public Episode(uk.co.boxnetwork.model.Episode episode){
+	public Episode(uk.co.boxnetwork.model.BoxEpisode episode){
 		this.id=episode.getId();
 		this.title = episode.getTitle();	
-		this.programmeNumber=episode.getCtrPrg();
+		this.programmeNumber=episode.getProgrammeNumber();
 		if(programmeNumber!=null&& programmeNumber.length()>0){
 			String matParts[]=programmeNumber.split("/");
 			this.contractNumber=matParts[0];
