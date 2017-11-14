@@ -51,7 +51,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		logger.info("Application initialization");
 		metadataMaintainanceService.syncAppConfigWithDatabase();
-		//metadataMaintainanceService.importBoxEpisodesFronEpsiodes();		
+		metadataMaintainanceService.importBoxEpisodesFronEpsiodes();		
 		//metadataMaintainanceService.updateSeriesNextEpisodeNumber();
 		//metadataMaintainanceService.calculateUploadedDuration();
 		//metadataMaintainanceService.checkAllRecordsConsistency();
