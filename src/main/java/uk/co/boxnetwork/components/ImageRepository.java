@@ -30,12 +30,27 @@ public class ImageRepository {
 	
 	       
 	
-	public List<BoxEpisode> findEpisodesNotProcessed(SearchParam searchParam){		   		   
-		   String queryString=searchParam.getEpisodeImageSelectQuery();
+	public List<BoxEpisode> findBoxEpisodes(SearchParam searchParam){		   		   
+		   String queryString=searchParam.getNewBoxEpisodeSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
 		   TypedQuery<BoxEpisode> query=entityManager.createQuery(queryString, BoxEpisode.class);		   
 		   searchParam.config(query);		   		   
 		   return query.getResultList();		   
+	}
+	public BoxEpisode findEpisodeByProgrammeNumber(String programmeNumber){
+		String queryString="SELECT e FROM box_episode e where e.programmeNumber=:programmeNumber";
+		TypedQuery<BoxEpisode> typedQuery=entityManager.createQuery(queryString, BoxEpisode.class);
+		typedQuery.setParameter("programmeNumber",programmeNumber);
+		List<BoxEpisode> result=typedQuery.getResultList();
+		if(result.size()==0){
+			return null;
+		}
+		else{
+			if(result.size()>1){
+				logger.warn("Duplicated box_episode records for programmeNumber:"+programmeNumber+" size="+result.size());
+			}
+			return result.get(0);
+		}		
 	}
 	public BoxEpisode findEpisodeById(Long id){
 		   return entityManager.find(BoxEpisode.class, id);		   
@@ -66,10 +81,7 @@ public class ImageRepository {
 	    }
 	}
 	
-  public List<ImageSet> findImageSetByEpisodeId(Long episodeid){
-	  TypedQuery<ImageSet> query=entityManager.createQuery("SELECT s FROM image_set s where s.episodeId=:episodeId", ImageSet.class);
-	   return query.setParameter("episodeId",episodeid).getResultList();	
-  }
+  
   public ImageSet findImageSetById(Long id){
 	   return entityManager.find(ImageSet.class, id);		   
   }
@@ -103,7 +115,13 @@ public class ImageRepository {
 		  entityManager.remove(dbImageSet);
 	  }
   }
-  
+  @Transactional
+  public void deleteImageSetById(Long id){
+	   ImageSet dbImageSet=findImageSetById(id);
+	   if(dbImageSet!=null){
+		   entityManager.remove(dbImageSet);
+	   }	 
+  }
   public List<Image> findImages(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSelectQuery();
 	   queryString=searchParam.addSortByToQuery(queryString, "e");
@@ -124,7 +142,7 @@ public class ImageRepository {
 	  Long nunberOfImageSets = (Long)q.getSingleResult();
 	  ret.setNumberOfImageSets(nunberOfImageSets);
 
-	  sql="SELECT COUNT(e.id) FROM box_episode e where e.id not in (select episodeId from image_set)";
+	  sql="SELECT COUNT(e.id) FROM box_episode e where SIZE(e.imageSets)=0";
 	  q = entityManager.createQuery(sql, Long.class);
 	  Long numberOfEpisodesMissingImages = (Long)q.getSingleResult();
 	  ret.setNumberOfEpisodesMissingImages(numberOfEpisodesMissingImages);

@@ -2,6 +2,7 @@ package uk.co.boxnetwork.data.image;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.boxnetwork.model.ImageStatus;
@@ -71,9 +72,8 @@ public class Episode {
 			if(matParts.length>1){
 				this.episodeNumber=matParts[1];				
 			}
-		}		
-
-		
+		}				
 	}
+	
 	
 }

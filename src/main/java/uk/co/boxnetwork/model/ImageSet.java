@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name="image_set")
 public class ImageSet {
@@ -21,23 +23,14 @@ public class ImageSet {
 	private Date createdAt;
 	
 	
-	
-	@Column(name="episode_id")
-	private Long episodeId;	
-	
-	
-	@Column(name="programme_number")	
-	private String programmeNumber;
-	
-	
-	
 	private String title;
 	
 	@Column(name="file_counter")
 	private Integer fileCounter;
 	
-	
-	
+	@ManyToOne(optional=true, fetch=FetchType.EAGER)
+	@JoinColumn( name = "box_episode_id", nullable = true)
+	private BoxEpisode boxEpisode;	
 
 	public Long getId() {
 		return id;
@@ -63,24 +56,6 @@ public class ImageSet {
 		this.createdAt = createdAt;
 	}
 
-	
-
-	public Long getEpisodeId() {
-		return episodeId;
-	}
-
-	public void setEpisodeId(Long episodeId) {
-		this.episodeId = episodeId;
-	}
-
-	
-	public String getProgrammeNumber() {
-		return programmeNumber;
-	}
-
-	public void setProgrammeNumber(String programmeNumber) {
-		this.programmeNumber = programmeNumber;
-	}
 
 	public String getTitle() {
 		return title;
@@ -97,10 +72,19 @@ public class ImageSet {
 	public void setFileCounter(Integer fileCounter) {
 		this.fileCounter = fileCounter;
 	}
+	
+
+	public BoxEpisode getBoxEpisode() {
+		return boxEpisode;
+	}
+
+	public void setBoxEpisode(BoxEpisode boxEpisode) {
+		this.boxEpisode = boxEpisode;
+	}
 
 	@Override
 	public String toString(){
-		return "id=["+id+"]programmeNumber=["+programmeNumber+"]episodeId=["+episodeId+"]createdAt=["+createdAt+"]lastModifiedAt=["+lastModifiedAt+"]title=["+title+"]";
+		return "id=["+id+"]createdAt=["+createdAt+"]lastModifiedAt=["+lastModifiedAt+"]title=["+title+"]";
 		
 	}
 	

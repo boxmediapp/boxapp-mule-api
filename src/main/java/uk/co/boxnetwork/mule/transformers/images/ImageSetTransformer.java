@@ -66,6 +66,19 @@ public class ImageSetTransformer extends BoxRestTransformer{
 			return updateImageSet(setid,message,outputEncoding);
 		}
 	}
+	@Override
+	protected Object processDELETE(MuleMessage message, String outputEncoding){
+		String imgsetid=MuleRestUtil.getPathPath(message);
+		if(imgsetid==null || imgsetid.length()==0){
+			return returnError("DELETE not supoorted for pulural", message);
+		}
+		else{				
+				return imageService.deleteImageSetById(Long.valueOf(imgsetid));
+				
+			}
+			
+		
+	}
 	private Object createImageSet(MuleMessage message, String outputEncoding){
 		String imageseteInJson=null;
 		try{	

@@ -71,14 +71,17 @@ public class ClientImage {
 			this.height=image.getHeight();
 			this.tags=image.getTags();
 			this.title=image.getImageSet().getTitle();
-			String programmeNumber=image.getImageSet().getProgrammeNumber();
-			if(programmeNumber!=null&& programmeNumber.length()>0){
-				String matParts[]=programmeNumber.split("/");
-				this.contractNumber=matParts[0];
-				if(matParts.length>1){
-					this.episodeNumber=matParts[1];				
+			if(image.getImageSet()!=null && image.getImageSet().getBoxEpisode()!=null){
+				String programmeNumber=image.getImageSet().getBoxEpisode().getProgrammeNumber();
+				if(programmeNumber!=null&& programmeNumber.length()>0){
+					String matParts[]=programmeNumber.split("/");
+					this.contractNumber=matParts[0];
+					if(matParts.length>1){
+						this.episodeNumber=matParts[1];				
+					}
 				}
-			}	
+			}
+				
 		}
 		
 }

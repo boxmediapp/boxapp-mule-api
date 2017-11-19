@@ -1,11 +1,14 @@
 package uk.co.boxnetwork.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name="box_episode")
 public class BoxEpisode {
@@ -23,6 +26,14 @@ public class BoxEpisode {
 	
 	@Column(name="created_at")
 	private Date createdAt;
+	
+	
+	@OneToMany(mappedBy="boxEpisode", fetch=FetchType.EAGER)	
+	private Set<ImageSet> imageSets;
+	
+	@Column(name="schedule_timestamp")
+	private Date scheduleTimestamp;
+	
 
 	public Long getId() {
 		return id;
@@ -62,6 +73,14 @@ public class BoxEpisode {
 			this.title=episode.getName();
 		}
 		this.programmeNumber=episode.getCtrPrg();		
+	}
+
+	public Set<ImageSet> getImageSets() {
+		return imageSets;
+	}
+
+	public void setImageSets(Set<ImageSet> imageSets) {
+		this.imageSets = imageSets;
 	}
 	
 }
