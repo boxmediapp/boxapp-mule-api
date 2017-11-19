@@ -35,26 +35,34 @@ public class ImageService {
 	
 
 	
-	public List<uk.co.boxnetwork.data.image.Episode> findEpisodesNotProcessed(SearchParam searchParam){
-		return toDataEpisodes(imageRepository.findEpisodesNotProcessed(searchParam),appConfig);
+	public List<uk.co.boxnetwork.data.image.Episode> findBoxEpisodes(SearchParam searchParam){
+		return toDataEpisodes(imageRepository.findBoxEpisodes(searchParam),appConfig);
 	}
 	private  List<uk.co.boxnetwork.data.image.Episode>  toDataEpisodes(List<BoxEpisode> eposides, AppConfig appConfig){
-		List<uk.co.boxnetwork.data.image.Episode> ret=new ArrayList<uk.co.boxnetwork.data.image.Episode>();
-		
+		List<uk.co.boxnetwork.data.image.Episode> ret=new ArrayList<uk.co.boxnetwork.data.image.Episode>();		
 		for(BoxEpisode episode:eposides){
-			uk.co.boxnetwork.data.image.Episode dep=new uk.co.boxnetwork.data.image.Episode(episode);			
-			ret.add(dep);			
+			ret.add(toData(episode));			
 		}
 		return ret;
+	}
+	private uk.co.boxnetwork.data.image.Episode toData(BoxEpisode episode){
+		uk.co.boxnetwork.data.image.Episode dep=new uk.co.boxnetwork.data.image.Episode(episode);
+		
+		if(episode.getImageSets().size()>0){
+			List<uk.co.boxnetwork.data.image.ImageSet> imageSets =new ArrayList<uk.co.boxnetwork.data.image.ImageSet>();
+			for(uk.co.boxnetwork.model.ImageSet imgset:episode.getImageSets()){
+				imageSets.add(toData(imgset));				
+			}
+			dep.setImageSets(imageSets);
+		}
+		return dep;
+		
 	}
 	
 	public  uk.co.boxnetwork.data.image.Episode findEpisodeById(Long id){
 		BoxEpisode episode=imageRepository.findEpisodeById(id);		
 		if(episode!=null){
-			uk.co.boxnetwork.data.image.Episode ret=new uk.co.boxnetwork.data.image.Episode(episode);
-			List<uk.co.boxnetwork.model.ImageSet> imageSetsdb=imageRepository.findImageSetByEpisodeId(episode.getId());			
-			ret.setImageSets(toData(imageSetsdb, appConfig));
-			return ret;
+			return toData(episode);			
 		}
 		else{
 			return null;
@@ -74,9 +82,15 @@ public class ImageService {
 	
 	public  uk.co.boxnetwork.data.image.ImageSet createImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
 		uk.co.boxnetwork.model.ImageSet dbImageSet=new uk.co.boxnetwork.model.ImageSet();
+		BoxEpisode episode=imageRepository.findEpisodeByProgrammeNumber(imageSet.getProgrammeNumber());
+		if(episode==null){
+			throw new RuntimeException("failed to create Image Asset for attached episode not found imageSet=["+imageSet+"]");
+		}		
 		imageSet.update(dbImageSet);
+		dbImageSet.setBoxEpisode(episode);
 		imageRepository.persist(dbImageSet);
-		return new  uk.co.boxnetwork.data.image.ImageSet(dbImageSet);
+		return new uk.co.boxnetwork.data.image.ImageSet(dbImageSet);
+		
 	}
 	
 	public  uk.co.boxnetwork.data.image.Image createImage(uk.co.boxnetwork.data.image.Image image){		
@@ -92,6 +106,16 @@ public class ImageService {
        Image dbImage=imageRepository.findImageById(id);		
        image.update(dbImage);
 		imageRepository.persist(dbImage);
+	}
+	public uk.co.boxnetwork.data.image.ImageSet deleteImageSetById(Long id){
+		ImageSet dbImageSet=imageRepository.findImageSetById(id);
+		uk.co.boxnetwork.data.image.ImageSet imageSet=toData(dbImageSet);
+		List<Image> dbImages=imageRepository.findImagesByImageSet(dbImageSet);
+		for(Image img:dbImages){
+			deleteImageById(img.getId());
+		}
+		imageRepository.deleteImageSetById(id);	
+		return imageSet;
 	}
 	public uk.co.boxnetwork.data.image.Image deleteImageById(Long id){
 		Image dbimage=imageRepository.findImageById(id);

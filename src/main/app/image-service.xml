@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
    
     <flow name="image-episode-servicesFlow">
-        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.episodes}/*" doc:name="HTTP">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.boxepisodes}/*" doc:name="HTTP">
         <http:response-builder>
                 <http:header headerName="Content-Type" value="application/json"/>
             </http:response-builder>
@@ -23,7 +23,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<transformer ref="imageListEpisodeService" doc:name="Transformer Episode Service"/>    	
+	        	<transformer ref="listBoxEpisodeService" doc:name="Transformer Episode Service"/>	        	
 	        </otherwise>
 	    </choice>
 

@@ -182,7 +182,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    
    
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.metadata.EpisodeTransformer" name="episodeService" doc:name="EpisodeService"/>
-   <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ListEpisodeTransformer" name="imageListEpisodeService" doc:name="imageListEpisodeService"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ListEpisodeTransformer" name="listBoxEpisodeService" doc:name="listBoxEpisodeService"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageSetTransformer" name="imageSetService" doc:name="imageSetService"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageTransformer" name="imageTransformer" doc:name="imageTransformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageSummariesTransformer" name="imageSummaries" doc:name="simageSummaries"/>

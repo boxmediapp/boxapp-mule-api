@@ -15,7 +15,7 @@ public class ImageSet {
 	
 	private Date createdAt;
 	
-	private Long episodeId;	
+		
 	
 	private String programmeNumber;
 	
@@ -54,12 +54,7 @@ public class ImageSet {
 		this.createdAt = createdAt;
 	}
 	
-	public Long getEpisodeId() {
-		return episodeId;
-	}
-	public void setEpisodeId(Long episodeId) {
-		this.episodeId = episodeId;
-	}
+	
 	public String getProgrammeNumber() {
 		return programmeNumber;
 	}
@@ -101,11 +96,13 @@ public class ImageSet {
 		this.id=imageSet.getId();
 		this.lastModifiedAt=imageSet.getLastModifiedAt();
 		this.createdAt=imageSet.getCreatedAt();
-
-		this.programmeNumber=imageSet.getProgrammeNumber();	
+		if(imageSet.getBoxEpisode()!=null){
+			this.programmeNumber=imageSet.getBoxEpisode().getProgrammeNumber();
+		}
+			
 		this.title=imageSet.getTitle();
 		this.fileCounter=imageSet.getFileCounter();
-		this.episodeId=imageSet.getEpisodeId();
+		
 		
 		if(programmeNumber!=null&& programmeNumber.length()>0){
 			String matParts[]=programmeNumber.split("/");
@@ -118,9 +115,11 @@ public class ImageSet {
 	}
 	public void update(uk.co.boxnetwork.model.ImageSet imageSet){		
 		imageSet.setId(this.id);		
-		imageSet.setProgrammeNumber(this.programmeNumber);
-		imageSet.setEpisodeId(this.episodeId);
 		imageSet.setTitle(this.title);		
 		imageSet.setFileCounter(fileCounter);
+	}
+	@Override
+	public String toString(){
+		return "id=["+this.id+"]programmeNumber=["+programmeNumber+"]title=["+this.title+"]";
 	}
 }

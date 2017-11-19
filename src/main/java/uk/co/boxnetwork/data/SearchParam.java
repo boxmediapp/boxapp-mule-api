@@ -52,6 +52,8 @@ public class SearchParam {
 	private ImageStatus  imageStatus=null;
 	private String programmeNumber=null;
 	
+	private Integer nunberOfImageSets=null;
+	private Integer minNumberOfImageSets=null;
 	
 	
 	
@@ -108,6 +110,9 @@ public class SearchParam {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
+	
+	
 	public SearchParam(String search, Integer start, Integer limit) {
 		super();
 		this.search = search;
@@ -272,6 +277,24 @@ public class SearchParam {
 								this.programmeNumber=programmeNumber;
 							}
 				}
+				String imageSets=queryparams.get("nunberOfImageSets");
+				if(imageSets!=null){
+					try{
+							this.nunberOfImageSets=Integer.valueOf(imageSets);
+					}
+					catch(Exception e){
+						logger.error(e+" while converting the nunberOfImageSets to Integer",e);
+					}
+				}				
+				String minNumberOfImageSets=queryparams.get("minNumberOfImageSets");
+				if(minNumberOfImageSets!=null){
+					try{
+							this.minNumberOfImageSets=Integer.valueOf(minNumberOfImageSets);
+					}
+					catch(Exception e){
+						logger.error(e+" while converting the minNumberOfImageSets to Integer",e);
+					}
+				}
 				
 				
 		}
@@ -318,21 +341,47 @@ public class SearchParam {
 			    return filterQuery;
 		   }
    }
-public String getEpisodeImageSelectQuery(){
+public String getNewBoxEpisodeSelectQuery(){
 	 
-	 String query="SELECT e FROM box_episode e where e.id not in (select episodeId from image_set)";	
+	 String query="SELECT e FROM box_episode e";
+	 boolean addedWhere=false;
+	 
+	 if(this.nunberOfImageSets!=null){
+		 query+=" where SIZE(e.imageSets) = :nunberOfImageSets ";
+		 addedWhere=true;
+	 }
+	 else if(this.minNumberOfImageSets!=null){
+		 query+=" where SIZE(e.imageSets) >= :minNumberOfImageSets ";
+		 addedWhere=true;
+	 }
 	 if(this.search!=null){		
-		 query+=" and (e.title LIKE :search OR e.programmeNumber LIKE :search)";		 
-	 }	 
+		 if(addedWhere){
+			 query+=" and (e.title LIKE :search OR e.programmeNumber LIKE :search)";
+		 }
+		 else{
+			 query+=" where (e.title LIKE :search OR e.programmeNumber LIKE :search)";
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 if(this.programmeNumber!=null){		
+		 if(addedWhere){
+			 query+=" and (e.programmeNumber LIKE :programmeNumber)";
+		 }
+		 else{
+			 query+=" where (e.programmeNumber LIKE :search)";			 
+		 }		 		 
+	 }
+	 
+	 
 	return query;	
 }
 public String getImageSetSelectQuery(){
 	String query="SELECT e FROM image_set e";	
     if(this.search!=null){		
-			 query+=" where (e.title LIKE :search OR e.programmeNumber LIKE :search)";		 
+			 query+=" where (e.title LIKE :search OR e.boxEpisode.programmeNumber LIKE :search)";		 
 	}
     else if(this.programmeNumber!=null){
-   	 	query+=" where (e.programmeNumber LIKE :programmeNumber)";
+   	 	query+=" where (e.boxEpisode.programmeNumber LIKE :programmeNumber)";
     }
     return query;
 }
@@ -341,11 +390,11 @@ public String getImageSelectQuery(){
 	boolean hasWhere=false;
 	
     if(this.search!=null){		
-			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.programmeNumber LIKE :search)";
+			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.boxEpisode.programmeNumber LIKE :search)";
 			 hasWhere=true;
 	}
     else if(programmeNumber!=null){
-    	query+=" where (e.imageSet.programmeNumber LIKE :programmeNumber)";
+    	query+=" where (e.imageSet.boxEpisode.programmeNumber LIKE :programmeNumber)";
     	hasWhere=true;
     }
     if(imageStatus!=null){
@@ -411,6 +460,12 @@ public String getImageSelectQuery(){
 		}
 		if(this.programmeNumber!=null){
 			 typedQuery.setParameter("programmeNumber",programmeNumber);
+		}
+		if(this.minNumberOfImageSets!=null){
+			 typedQuery.setParameter("minNumberOfImageSets",minNumberOfImageSets);
+		}
+		if(this.nunberOfImageSets!=null){
+			typedQuery.setParameter("nunberOfImageSets",nunberOfImageSets);
 		}
 		if(this.from!=null){
 			try{
