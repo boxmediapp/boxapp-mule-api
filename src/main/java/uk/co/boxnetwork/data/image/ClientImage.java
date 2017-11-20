@@ -13,6 +13,7 @@ public class ClientImage {
 		private String episodeNumber;
 		private String tags;
 		private String title;
+		private Date lastModifiedAt;
 		
 		public Long getId() {
 			return id;
@@ -64,6 +65,13 @@ public class ClientImage {
 		public void setTitle(String title) {
 			this.title = title;
 		}
+		
+		public Date getLastModifiedAt() {
+			return lastModifiedAt;
+		}
+		public void setLastModifiedAt(Date lastModifiedAt) {
+			this.lastModifiedAt = lastModifiedAt;
+		}
 		public ClientImage(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 			this.id=image.getId();						
 			this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();	
@@ -71,6 +79,7 @@ public class ClientImage {
 			this.height=image.getHeight();
 			this.tags=image.getTags();
 			this.title=image.getImageSet().getTitle();
+			this.lastModifiedAt=image.getLastModifiedAt();
 			if(image.getImageSet()!=null && image.getImageSet().getBoxEpisode()!=null){
 				String programmeNumber=image.getImageSet().getBoxEpisode().getProgrammeNumber();
 				if(programmeNumber!=null&& programmeNumber.length()>0){
