@@ -12,6 +12,7 @@ import uk.co.boxnetwork.components.ImportC4ScheduleService;
 import uk.co.boxnetwork.components.TimedTaskService;
 import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
+import uk.co.boxnetwork.model.ImportScheduleType;
 import uk.co.boxnetwork.model.TimedTask;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
@@ -49,9 +50,17 @@ public class TimedTaskServiceTransformer extends BoxRestTransformer{
 	 protected Object processGET(MuleMessage message, String outputEncoding){
 		    ParameterMap queryparams=message.getInboundProperty("http.query.params");
 		    String channel=queryparams.get("channel");
+		    String importScheduleType=queryparams.get("importScheduleType");
 		    if(channel!=null && channel.trim().length()>0){
 		    	logger.info("***findAllTimedTasksByChannelId:"+channel);
 		    	List<TimedTask> tasks=timedTaskService.findAllTimedTasksByChannelId(channel.trim());		
+				return tasks;
+		    }
+		    else if(importScheduleType!=null && importScheduleType.trim().length()>0){
+		    	logger.info("***findAllTimedTasksBy:importScheduleType:"+importScheduleType);
+		    	List<TimedTask> tasks=timedTaskService.findAllTimedTasksByImportScheduleType(ImportScheduleType.valueOf(importScheduleType.trim()));
+		    	
+		    	
 				return tasks;
 		    }
 		    else{

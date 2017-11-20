@@ -1,5 +1,6 @@
 package uk.co.boxnetwork.components;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,16 @@ public class TimedTaskService {
 		   query.setParameter("channelId",channelId);		   
 		   return query.getResultList();
 	 }
+	public List<TimedTask> findAllTimedTasksByImportScheduleType(ImportScheduleType importScheduleType){
+		   if(importScheduleType==null){
+			   List<TimedTask> ret=new ArrayList<TimedTask>();
+			   return ret;
+		   }
+		   TypedQuery<TimedTask> query=entityManager.createQuery("SELECT e FROM timed_task e where e.importScheduleTask.importScheduleType=:importScheduleType", TimedTask.class);
+		   query.setParameter("importScheduleType",importScheduleType);		   
+		   return query.getResultList();
+	}
+	
 	
 	
 	@Transactional

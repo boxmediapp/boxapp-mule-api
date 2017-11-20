@@ -54,6 +54,8 @@ public class SearchParam {
 	
 	private Integer nunberOfImageSets=null;
 	private Integer minNumberOfImageSets=null;
+	private Long lastModifiedFrom=null;
+	
 	
 	
 	
@@ -295,6 +297,15 @@ public class SearchParam {
 						logger.error(e+" while converting the minNumberOfImageSets to Integer",e);
 					}
 				}
+				String lastModifiedFrom=queryparams.get("lastModifiedFrom");
+				if(lastModifiedFrom!=null){
+					try{
+						this.lastModifiedFrom=Long.valueOf(lastModifiedFrom);
+					}
+					catch(Exception e){
+						logger.error(e+" while converting the lastModifiedFrom to Long",e);
+					}
+				}
 				
 				
 		}
@@ -403,6 +414,16 @@ public String getImageSelectQuery(){
     	}
     	else{
     		query+=" where (e.imageStatus=:imageStatus)";
+    		hasWhere=true;
+    	}
+    }
+    if(lastModifiedFrom!=null){
+    	if(hasWhere){
+    		query+=" and e.lastModifiedAt >=:lastModifiedFrom";    		
+    	}
+    	else{
+    		query+=" where (e.imageStatus >=:lastModifiedFrom)";
+    		hasWhere=true;
     	}
     }
     return query;
@@ -466,6 +487,9 @@ public String getImageSelectQuery(){
 		}
 		if(this.nunberOfImageSets!=null){
 			typedQuery.setParameter("nunberOfImageSets",nunberOfImageSets);
+		}
+		if(this.lastModifiedFrom!=null){
+			typedQuery.setParameter("lastModifiedFrom",new Date(lastModifiedFrom));
 		}
 		if(this.from!=null){
 			try{

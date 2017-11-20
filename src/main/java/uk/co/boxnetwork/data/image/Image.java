@@ -12,6 +12,7 @@ import uk.co.boxnetwork.model.ImageStatus;
 public class Image {
     private Long id;			
 	private Date createdAt;	
+	private Date lastModifiedAt;
 	private String filename;	
 	private String s3BaseURL;
 	
@@ -93,6 +94,13 @@ public class Image {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public Date getLastModifiedAt() {
+		return lastModifiedAt;
+	}
+	public void setLastModifiedAt(Date lastModifiedAt) {
+		this.lastModifiedAt = lastModifiedAt;
+	}
 	public Image(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 		this.id=image.getId();		
 		this.createdAt=image.getCreatedAt();					
@@ -102,7 +110,8 @@ public class Image {
 		this.height=image.getHeight();
 		this.tags=image.getTags();
 		this.imageStatus=image.getImageStatus();
-		this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();		
+		this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();
+		this.lastModifiedAt=image.getLastModifiedAt();
 	}	
 	public void update(uk.co.boxnetwork.model.Image image){		
 		image.setFilename(this.filename);		
