@@ -39,6 +39,26 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
                                  		
     </flow>
     
+    <flow name="dbbox-video-service">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.dbboxvideo.path}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="dbboxVideoTransformer" doc:name="Box Video"/>    	
+	        </otherwise>
+	    </choice>
+        
+        
+                                 		
+    </flow>
+    
+    
+    
+    
+    
     <flow name="presigned">
         <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.presigned.path}" doc:name="HTTP"/>
          <choice doc:name="Choice">

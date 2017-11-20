@@ -50,6 +50,10 @@ public class BoxMedataRepository {
 	private static final Logger logger=LoggerFactory.getLogger(BoxMedataRepository.class);
       @Autowired	
 	  private EntityManager entityManager;
+      
+      @Autowired
+      S3TableRepository s3TableRepository;
+      
 
        @Transactional
 	   public void importBoxEpisode(Episode episode){
@@ -152,6 +156,7 @@ public class BoxMedataRepository {
     	   
        		}
     	   importBoxEpisode(episode);
+    	   s3TableRepository.linkEpisode(episode);
 		}
        @Transactional
        public void updateEpisode(Episode episode){
@@ -278,6 +283,7 @@ public class BoxMedataRepository {
     	   if(episode.getEpisodeStatus()!=null){
     		   entityManager.remove(episode.getEpisodeStatus());
     	   }
+    	   s3TableRepository.unlinkEpisode(episode);    	   
        }
        
        public void persisMediaTag(MediaTag mediaTag){

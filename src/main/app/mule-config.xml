@@ -225,6 +225,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.S3NotificationTransformer" name="s3NotificationTransformer" doc:name="S3 Notification"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.S3VideoBucketTransformer" name="s3VideoBucketTransformer" doc:name="S3 VideoBucket Transformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.BoxVideoTransformer" name="boxVideoTransformer" doc:name="BoxVideoTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.DBBoxVideoTransformer" name="dbboxVideoTransformer" doc:name="DBBoxVideoTransformer"/>
+   
+   
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.PresignedURLTransformer" name="presignedURLTransformer" doc:name="presignedURLTransformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.BoxMasterImageTransformer" name="boxMasterImageTransfoer" doc:name="boxImageTransformer"/>
    
