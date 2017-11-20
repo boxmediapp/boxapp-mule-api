@@ -303,6 +303,25 @@ public class S3BucketService {
 		return videoFileList;
 	}
 	
+	public VideoFileItem buildVideoFileItem(String filename){
+		VideoFileItem vitem=new VideoFileItem();
+		vitem.setFile(filename);	
+		vitem.setLastModifidDate(new Date());
+		String materialId=GenericUtilities.fileNameToMaterialID(filename);
+		List<Episode> matchedEpisodes=boxMetadataRepository.findEpisodesByMatId(materialId+"%");
+		if(matchedEpisodes.size()>0){
+			vitem.setEpisodeTitle(matchedEpisodes.get(0).getTitle());
+			vitem.setEpisodeId(matchedEpisodes.get(0).getId());
+			vitem.setProgrammeNumber(matchedEpisodes.get(0).getCtrPrg());
+			Double scheduledDuration=matchedEpisodes.get(0).getDurationScheduled();
+			Double uploadedDuration=matchedEpisodes.get(0).getDurationUploaded();
+			if(scheduledDuration!=null && uploadedDuration!=null){
+				Double errorValue=(uploadedDuration-scheduledDuration);
+				vitem.setDurationError(errorValue.longValue());
+			}
+		}
+		return vitem;
+	}
 	public MediaFilesLocation listMasterImageItem(String prefix, int startIndex, int numberOfRecords){		
 		return listMasterImagesInImagesBucket(prefix,startIndex,numberOfRecords);		
 	}

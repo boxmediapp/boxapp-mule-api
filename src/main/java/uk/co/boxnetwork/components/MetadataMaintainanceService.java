@@ -28,6 +28,8 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.data.s3.FileItem;
+import uk.co.boxnetwork.data.s3.VideoFileItem;
+import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
@@ -81,6 +83,8 @@ public class MetadataMaintainanceService {
 	private CommandServices commandService; 
 
 	
+	@Autowired
+	private S3TableRepository s3TableRepository;
 	
 	private static final Logger logger=LoggerFactory.getLogger(MetadataMaintainanceService.class);
 	
@@ -490,6 +494,9 @@ logger.info("adding the default availability window......");
 		}     	
     }
     
+    
+    
+    
     public void checkAllRecordsConsistency(){
     	
 
@@ -834,5 +841,13 @@ public void calculateUploadedDuration(){
     	DataReport report=new DataReport();    	
     	repository.report(report);    	    	
     	return report;    	
+    }
+    
+    
+   public void syncS3VideoItems(){    	
+	   
+	   VideoFileList videolist=s3uckerService.listVideoFileItem(null,0,Integer.MAX_VALUE);
+	   List<VideoFileItem> videofiles=videolist.getFiles();
+	   s3TableRepository.syncS3VideoFileItems(videofiles);       	
     }
  }

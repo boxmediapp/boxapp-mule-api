@@ -1,0 +1,12 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "136204a5-ed8d-5937-a65c-5628a5079251",
+  "TopicArn" : "arn:aws:sns:eu-west-1:764954741168:dilshat-video",
+  "Subject" : "Amazon S3 Notification",
+  "Message" : "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"eu-west-1\",\"eventTime\":\"2017-11-20T21:16:58.434Z\",\"eventName\":\"ObjectRemoved:Delete\",\"userIdentity\":{\"principalId\":\"A35I7ZLJGVGEC5\"},\"requestParameters\":{\"sourceIPAddress\":\"81.107.11.131\"},\"responseElements\":{\"x-amz-request-id\":\"54849CB58313D8EE\",\"x-amz-id-2\":\"1zUBM+mdTD41pZgusFiGTHLlXfAwAk7ibaGE49wTq9T6xygDVoiqjCfLcKLoA6e0LlNKL+/CwGY=\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"dilshat-video\",\"bucket\":{\"name\":\"dilshat-test-video\",\"ownerIdentity\":{\"principalId\":\"A35I7ZLJGVGEC5\"},\"arn\":\"arn:aws:s3:::dilshat-test-video\"},\"object\":{\"key\":\"V_dilshat600_003.mp4\",\"sequencer\":\"005A13464A526A2394\"}}}]}",
+  "Timestamp" : "2017-11-20T21:16:58.490Z",
+  "SignatureVersion" : "1",
+  "Signature" : "iCEe1BA0APjN6PC5QDInucnALfCP2vFUnYjKRrr6qJ+hp9zHi+l1FBotkxzn1CI+fvJTSMDm34JmXFNrplD3A67Cmy3praSovirlwcUM53Q7ndhu/0rnwEVXY1k1AmkRL+YOoohUTXGf93mQO9qqxJLkmAv8qQkXiytoQ3KlWcmjA2nDQcq31Nc8ZTj6pScEzpkmCnmwuoup0vLZ7CwfQP2jO7/OR4t+T+Kkt7QktApdcTkwR+IfIG+pCTf5Z1ww9WNvzAzUUKh72hQapnSxZJc96q9CbVKuALmDAuvJ8ZQR7ov3VqYzVhfSUh4JKLWKPSnK9d9zVSe7QRWTaCXq6Q==",
+  "SigningCertURL" : "https://sns.eu-west-1.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
+  "UnsubscribeURL" : "https://sns.eu-west-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-1:764954741168:dilshat-video:474160bb-8f08-46f3-8e0f-91aab3a8ff6b"
+}

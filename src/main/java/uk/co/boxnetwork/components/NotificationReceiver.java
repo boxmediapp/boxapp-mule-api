@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
-
+import uk.co.boxnetwork.data.s3.VideoFileItem;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -32,7 +32,11 @@ public class NotificationReceiver {
 	@Autowired
 	S3BucketService s3Service;
 	
+	@Autowired
+	S3TableRepository s3TableRepository;
 	
+	@Autowired
+	S3BucketService s3BucketService;
 	
 	private String getBucketName(Map<String, Object> messageMap){
 		return GenericUtilities.getValueInMap(messageMap,"Records[0].s3.bucket.name");
@@ -149,7 +153,8 @@ public class NotificationReceiver {
    private void onVideoBucketUpload(String file){
 	   logger.info("Uploaded to the video bucket:"+file);
 	   metadataService.bindVideoFile(file);
-	   
+	   VideoFileItem videoFileItem=s3BucketService.buildVideoFileItem(file);
+	   s3TableRepository.createS3VideoFileItem(videoFileItem);
 	}
    
    private void onTranscodeBucketUpload(String bucketName,String file){		
@@ -190,6 +195,7 @@ public class NotificationReceiver {
 				
 	}
 	private void onVideoBucketFileDeleted(String file){
+		s3TableRepository.onVideoFileDeleted(file);	
 		logger.info("video file is deleted:"+file);		
 	}
 }
