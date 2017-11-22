@@ -17,6 +17,8 @@ import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
+import uk.co.boxnetwork.model.OperationLogType;
+import uk.co.boxnetwork.model.OperationLogs;
 
 
 
@@ -33,7 +35,8 @@ public class ImageService {
 	@Autowired
 	S3BucketService s3BucketService;
 	
-
+    @Autowired
+    OperationalLogRepository operationalLogRepository;
 	
 	public List<uk.co.boxnetwork.data.image.Episode> findBoxEpisodes(SearchParam searchParam){
 		return toDataEpisodes(imageRepository.findBoxEpisodes(searchParam),appConfig);
@@ -107,21 +110,23 @@ public class ImageService {
        image.update(dbImage);
 		imageRepository.persist(dbImage);
 	}
-	public uk.co.boxnetwork.data.image.ImageSet deleteImageSetById(Long id){
+	public uk.co.boxnetwork.data.image.ImageSet deleteImageSetById(Long id, String deletedBy){
 		ImageSet dbImageSet=imageRepository.findImageSetById(id);
 		uk.co.boxnetwork.data.image.ImageSet imageSet=toData(dbImageSet);
 		List<Image> dbImages=imageRepository.findImagesByImageSet(dbImageSet);
 		for(Image img:dbImages){
-			deleteImageById(img.getId());
+			deleteImageById(img.getId(),deletedBy);
 		}
 		imageRepository.deleteImageSetById(id);	
 		return imageSet;
 	}
-	public uk.co.boxnetwork.data.image.Image deleteImageById(Long id){
+	
+	public uk.co.boxnetwork.data.image.Image deleteImageById(Long id, String deletedBy){
 		Image dbimage=imageRepository.findImageById(id);
 		uk.co.boxnetwork.data.image.Image image=toData(dbimage);
-		imageRepository.deleteImageById(id);
-		logger.info("The image is deleted:"+image);
+		imageRepository.deleteImageById(id,deletedBy);
+		
+		logger.info("The image is deleted:"+image+" by:"+deletedBy);
 		String path=image.getFilename().trim();
 		if(path.length()==0){
 			logger.warn("the image to be deleted does not have filename:"+image);

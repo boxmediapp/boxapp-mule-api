@@ -3,6 +3,7 @@ package uk.co.boxnetwork.components;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -20,6 +21,7 @@ import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
+import uk.co.boxnetwork.model.OperationLogs;
 import uk.co.boxnetwork.model.ScheduleEvent;
 
 @Repository
@@ -89,11 +91,19 @@ public class ImageRepository {
 	   return entityManager.find(Image.class, id);		   
   }
   @Transactional
-  public void deleteImageById(Long id){
+  public void deleteImageById(Long id, String deletedBy){
 	  Image image=findImageById(id);
-	  entityManager.remove(image);
+	  entityManager.remove(image);	  
+      OperationLogs logrecord=OperationLogs.buildImageDeleted(deletedBy, id);
+	  entityManager.persist(logrecord);
+	   
+	       
+		   
+	   
+	  	  
   }
 
+  
   public List<ImageSet> findImageSet(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSetSelectQuery();
 	   queryString=searchParam.addSortByToQuery(queryString, "e");

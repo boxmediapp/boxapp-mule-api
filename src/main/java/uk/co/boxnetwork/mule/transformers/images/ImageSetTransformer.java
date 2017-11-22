@@ -12,7 +12,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.Image;
 import uk.co.boxnetwork.data.image.ImageSet;
 import uk.co.boxnetwork.model.AppConfig;
-
+import uk.co.boxnetwork.mule.model.ClientRequestInfo;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -72,8 +72,9 @@ public class ImageSetTransformer extends BoxRestTransformer{
 		if(imgsetid==null || imgsetid.length()==0){
 			return returnError("DELETE not supoorted for pulural", message);
 		}
-		else{				
-				return imageService.deleteImageSetById(Long.valueOf(imgsetid));
+		else{
+				ClientRequestInfo userinfo=new ClientRequestInfo(message);
+				return imageService.deleteImageSetById(Long.valueOf(imgsetid),userinfo.getUsername());
 				
 			}
 			
