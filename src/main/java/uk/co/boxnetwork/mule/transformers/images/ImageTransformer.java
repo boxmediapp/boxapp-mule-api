@@ -12,6 +12,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.Image;
 
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.ClientRequestInfo;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -83,12 +84,16 @@ public class ImageTransformer extends BoxRestTransformer{
 	
 	@Override
 	protected Object processDELETE(MuleMessage message, String outputEncoding){
+		
 		String imgid=MuleRestUtil.getPathPath(message);
 		if(imgid==null || imgid.length()==0){
 			return returnError("DELETE not supoorted for pulural", message);
 		}
-		else{				
-				return imageService.deleteImageById(Long.valueOf(imgid));				   
+		else{		
+					ClientRequestInfo userinfo=new ClientRequestInfo(message);
+					uk.co.boxnetwork.data.image.Image image=imageService.deleteImageById(Long.valueOf(imgid),userinfo.getUsername());					
+					return image;
+				
 			}
 			
 		

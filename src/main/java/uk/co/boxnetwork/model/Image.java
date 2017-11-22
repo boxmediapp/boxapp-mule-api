@@ -33,9 +33,9 @@ public class Image {
 	
 
 	
-	private int width;
+	private Integer width;
 	
-	private int height;
+	private Integer height;
 	 
 	
 	private String tags;
@@ -75,19 +75,19 @@ public class Image {
 		this.filename = filename;
 	}
 
-	public int getWidth() {
+	public Integer getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(Integer width) {
 		this.width = width;
 	}
 
-	public int getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 

@@ -187,6 +187,8 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageTransformer" name="imageTransformer" doc:name="imageTransformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.ImageSummariesTransformer" name="imageSummaries" doc:name="simageSummaries"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.AllClientImageTransformer" name="allClientTransformer" doc:name="allClientTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.DeletedImageTransformer" name="deletedImageTransformer" doc:name="deletedImageTransformer"/>
+   
    
    
    

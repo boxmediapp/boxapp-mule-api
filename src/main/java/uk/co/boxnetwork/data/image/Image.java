@@ -16,8 +16,8 @@ public class Image {
 	private String filename;	
 	private String s3BaseURL;
 	
-	private int width;	
-	private int height;
+	private Integer width;	
+	private Integer height;
 	private String tags;
 	private ImageSet imageSet;
 	private ImageStatus imageStatus;
@@ -51,16 +51,16 @@ public class Image {
 	public void setS3BaseURL(String s3BaseURL) {
 		this.s3BaseURL = s3BaseURL;
 	}
-	public int getWidth() {
+	public Integer getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
+	public void setWidth(Integer width) {
 		this.width = width;
 	}
-	public int getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 	public Image(){
