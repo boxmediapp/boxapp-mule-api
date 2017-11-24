@@ -27,6 +27,9 @@ public class BoxEpisode {
 	@Column(name="created_at")
 	private Date createdAt;
 	
+	@Column(name="last_modified_at")
+	private Date lastModifiedAt;
+		
 	
 	@OneToMany(mappedBy="boxEpisode", fetch=FetchType.EAGER)	
 	private Set<ImageSet> imageSets;
@@ -67,6 +70,14 @@ public class BoxEpisode {
 		this.createdAt = createdAt;
 	}
 	
+	public Date getLastModifiedAt() {
+		return lastModifiedAt;
+	}
+
+	public void setLastModifiedAt(Date lastModifiedAt) {
+		this.lastModifiedAt = lastModifiedAt;
+	}
+
 	public void copyFrom(Episode episode){
 		this.title=episode.getTitle();
 		if(this.title==null|| this.title.trim().length()==0){
@@ -81,6 +92,14 @@ public class BoxEpisode {
 
 	public void setImageSets(Set<ImageSet> imageSets) {
 		this.imageSets = imageSets;
+	}
+
+	public Date getScheduleTimestamp() {
+		return scheduleTimestamp;
+	}
+
+	public void setScheduleTimestamp(Date scheduleTimestamp) {
+		this.scheduleTimestamp = scheduleTimestamp;
 	}
 	
 }

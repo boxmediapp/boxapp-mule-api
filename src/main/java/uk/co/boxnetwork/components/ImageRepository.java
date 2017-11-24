@@ -30,7 +30,11 @@ public class ImageRepository {
 	@Autowired	
 	private EntityManager entityManager;
 	
-	       
+	
+	@Transactional
+	public void updateBoxEpisode(BoxEpisode boxepisode){
+		entityManager.merge(boxepisode);
+	}
 	
 	public List<BoxEpisode> findBoxEpisodes(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getNewBoxEpisodeSelectQuery();

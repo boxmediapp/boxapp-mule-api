@@ -3,6 +3,7 @@ package uk.co.boxnetwork.data.image;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import uk.co.boxnetwork.model.ImageStatus;
@@ -16,7 +17,8 @@ public class Episode {
 	private String contractNumber;
 	private String episodeNumber;
 	private String programmeNumber;
-	
+	private Date scheduleTimestamp;  
+	private Date lastModifiedAt;
 	
 	private List<ImageSet> imageSets;	
 	
@@ -62,6 +64,20 @@ public class Episode {
 		this.imageSets = imageSets;
 	}
 	
+	
+	public Date getScheduleTimestamp() {
+		return scheduleTimestamp;
+	}
+	public void setScheduleTimestamp(Date scheduleTimestamp) {
+		this.scheduleTimestamp = scheduleTimestamp;
+	}
+	
+	public Date getLastModifiedAt() {
+		return lastModifiedAt;
+	}
+	public void setLastModifiedAt(Date lastModifiedAt) {
+		this.lastModifiedAt = lastModifiedAt;
+	}
 	public Episode(uk.co.boxnetwork.model.BoxEpisode episode){
 		this.id=episode.getId();
 		this.title = episode.getTitle();	
@@ -72,8 +88,11 @@ public class Episode {
 			if(matParts.length>1){
 				this.episodeNumber=matParts[1];				
 			}
-		}				
+		}
+		this.scheduleTimestamp=episode.getScheduleTimestamp();
+		this.lastModifiedAt=episode.getLastModifiedAt();
 	}
+	
 	
 	
 }

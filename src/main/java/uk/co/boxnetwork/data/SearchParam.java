@@ -379,9 +379,20 @@ public String getNewBoxEpisodeSelectQuery(){
 			 query+=" and (e.programmeNumber LIKE :programmeNumber)";
 		 }
 		 else{
-			 query+=" where (e.programmeNumber LIKE :search)";			 
+			 query+=" where (e.programmeNumber LIKE :search)";	
+			 addedWhere=true;
 		 }		 		 
 	 }
+	 if(this.from!=null){		
+		 if(addedWhere){
+			 query+=" and (e.scheduleTimestamp >= :from) and  (e.scheduleTimestamp <= :to)";
+		 }
+		 else{
+			 query+=" where (e.scheduleTimestamp >= :from) and  (e.scheduleTimestamp <= :to)";	
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 
 	 
 	 
 	return query;	
