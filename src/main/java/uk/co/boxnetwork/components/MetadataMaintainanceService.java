@@ -31,6 +31,7 @@ import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.VideoFileItem;
 import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
 import uk.co.boxnetwork.model.MediaCommand;
@@ -86,11 +87,13 @@ public class MetadataMaintainanceService {
 	@Autowired
 	private S3TableRepository s3TableRepository;
 	
+	@Autowired
+	private ImageRepository imageRepository;
 	private static final Logger logger=LoggerFactory.getLogger(MetadataMaintainanceService.class);
 	
 	
 	
-	public void importBoxEpisodesFronEpsiodes(){
+	public void importBoxEpisodesFromEpsiodes(){
 		logger.info("importing box episodes......");
 		
 		int rcordLimit=appConfig.getRecordLimit();
@@ -106,6 +109,34 @@ public class MetadataMaintainanceService {
 				}
 				for(Episode episode:episodes){
 					repository.importBoxEpisode(episode);			
+				}
+				if(searchParam.isEnd(episodes.size())){
+					break;
+				}
+				else{
+					searchParam.nextBatch();
+				}
+		}
+	}
+	public void setLastModoifiedOfBoxEpisodes(){
+		logger.info("Setting last modified of box episodes......");
+		
+		int rcordLimit=appConfig.getRecordLimit();
+		if(rcordLimit<1){
+			rcordLimit=Integer.MAX_VALUE;
+		}
+		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
+		
+		while(true){
+				List<BoxEpisode> episodes=imageRepository.findBoxEpisodes(searchParam);
+				if(episodes.size()==0){
+					break;
+				}
+				for(BoxEpisode episode:episodes){
+					if(episode.getLastModifiedAt()==null){
+						episode.setLastModifiedAt(episode.getCreatedAt());
+						imageRepository.updateBoxEpisode(episode);						
+					}
 				}
 				if(searchParam.isEnd(episodes.size())){
 					break;

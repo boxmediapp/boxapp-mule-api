@@ -73,8 +73,49 @@ public class BoxMedataRepository {
 		   BoxEpisode boxEpisode=new BoxEpisode();
 		   boxEpisode.copyFrom(episode);
 		   boxEpisode.setCreatedAt(new Date());
+		   boxEpisode.setLastModifiedAt(new Date());
 		   entityManager.persist(boxEpisode);		   
 	   }
+       
+       @Transactional
+       public void updateBoxEpisodeWithScheduleEvent(ScheduleEvent evt){
+    	   if(evt==null || evt.getEpisode()==null){
+    		   return;
+    	   }    	   
+    	   updateBoxEpisodeTxtDate(evt.getEpisode().getCtrPrg(),evt.getScheduleTimestamp());    	   
+       }
+       @Transactional
+       public void updateBoxEpisodeTxtDate(String programmeNumber, Date txDate){
+    	   if(programmeNumber==null||txDate==null){
+			   return;
+		   }
+		   programmeNumber=programmeNumber.trim();
+		   if(programmeNumber.length()==0){
+			   return;
+		   }
+		   TypedQuery<BoxEpisode> query=entityManager.createQuery("SELECT b FROM box_episode b where b.programmeNumber=:programmeNumber", BoxEpisode.class);
+		   List<BoxEpisode> matchedEpisodes=query.setParameter("programmeNumber",programmeNumber).getResultList();
+		   if(matchedEpisodes.size()==0){
+			   return;
+		   }
+		   Date now=new Date();
+		   BoxEpisode matchedEpisode=matchedEpisodes.get(0);
+		   if(matchedEpisode.getScheduleTimestamp()==null){
+			   matchedEpisode.setScheduleTimestamp(txDate);
+		   }
+		   else if(now.getTime()<matchedEpisode.getScheduleTimestamp().getTime()){
+			   matchedEpisode.setScheduleTimestamp(txDate);				   
+		   }
+		   
+		   else if(matchedEpisode.getScheduleTimestamp().getTime()>txDate.getTime()){			   
+				   matchedEpisode.setScheduleTimestamp(txDate);				   			   			   
+		   }
+		   else {
+			   return;
+		   }		   
+		   matchedEpisode.setLastModifiedAt(new Date());
+		   entityManager.merge(matchedEpisode);
+       }
        public void persisEvent(ScheduleEvent newEvent){
     	   	Date lastModifiedAt=new Date();
 			newEvent.setLastModifiedAt(lastModifiedAt);
