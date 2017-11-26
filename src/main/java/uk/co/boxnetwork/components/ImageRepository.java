@@ -153,8 +153,8 @@ public class ImageRepository {
 	  
 	  sql = "SELECT COUNT(s.id) FROM  image_set s";
 	  q = entityManager.createQuery(sql, Long.class);
-	  Long nunberOfImageSets = (Long)q.getSingleResult();
-	  ret.setNumberOfImageSets(nunberOfImageSets);
+	  Long numberOfImageSets = (Long)q.getSingleResult();
+	  ret.setNumberOfImageSets(numberOfImageSets);
 
 	  sql="SELECT COUNT(e.id) FROM box_episode e where SIZE(e.imageSets)=0";
 	  q = entityManager.createQuery(sql, Long.class);

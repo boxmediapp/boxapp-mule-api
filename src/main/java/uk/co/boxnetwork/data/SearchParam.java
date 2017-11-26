@@ -52,7 +52,7 @@ public class SearchParam {
 	private ImageStatus  imageStatus=null;
 	private String programmeNumber=null;
 	
-	private Integer nunberOfImageSets=null;
+	private Integer numberOfImageSets=null;
 	private Integer minNumberOfImageSets=null;
 	private Long lastModifiedFrom=null;
 	
@@ -279,13 +279,13 @@ public class SearchParam {
 								this.programmeNumber=programmeNumber;
 							}
 				}
-				String imageSets=queryparams.get("nunberOfImageSets");
+				String imageSets=queryparams.get("numberOfImageSets");
 				if(imageSets!=null){
 					try{
-							this.nunberOfImageSets=Integer.valueOf(imageSets);
+							this.numberOfImageSets=Integer.valueOf(imageSets);
 					}
 					catch(Exception e){
-						logger.error(e+" while converting the nunberOfImageSets to Integer",e);
+						logger.error(e+" while converting the numberOfImageSets to Integer",e);
 					}
 				}				
 				String minNumberOfImageSets=queryparams.get("minNumberOfImageSets");
@@ -357,8 +357,8 @@ public String getNewBoxEpisodeSelectQuery(){
 	 String query="SELECT e FROM box_episode e";
 	 boolean addedWhere=false;
 	 
-	 if(this.nunberOfImageSets!=null){
-		 query+=" where SIZE(e.imageSets) = :nunberOfImageSets ";
+	 if(this.numberOfImageSets!=null){
+		 query+=" where SIZE(e.imageSets) = :numberOfImageSets ";
 		 addedWhere=true;
 	 }
 	 else if(this.minNumberOfImageSets!=null){
@@ -496,8 +496,8 @@ public String getImageSelectQuery(){
 		if(this.minNumberOfImageSets!=null){
 			 typedQuery.setParameter("minNumberOfImageSets",minNumberOfImageSets);
 		}
-		if(this.nunberOfImageSets!=null){
-			typedQuery.setParameter("nunberOfImageSets",nunberOfImageSets);
+		if(this.numberOfImageSets!=null){
+			typedQuery.setParameter("numberOfImageSets",numberOfImageSets);
 		}
 		if(this.lastModifiedFrom!=null){
 			typedQuery.setParameter("lastModifiedFrom",new Date(lastModifiedFrom));

@@ -53,7 +53,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		metadataMaintainanceService.syncAppConfigWithDatabase();
 		metadataMaintainanceService.syncS3VideoItems();
 		
-		metadataMaintainanceService.setLastModoifiedOfBoxEpisodes();
+		//metadataMaintainanceService.setLastModoifiedOfBoxEpisodes();
 		//metadataMaintainanceService.importBoxEpisodesFromEpsiodes();
 		
 		//metadataMaintainanceService.updateSeriesNextEpisodeNumber();

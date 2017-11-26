@@ -41,6 +41,8 @@ public class Image {
 	private String tags;
 	
 	
+	
+	
 	@Column(name="image_status")
 	private ImageStatus imageStatus=ImageStatus.WAITING_APPROVE;
 	
@@ -49,6 +51,10 @@ public class Image {
 	@JoinColumn( name = "image_set_id", nullable = false )	
 	private ImageSet imageSet;
 
+	
+	@Column(name="image_box_media_status")
+	private ImageBoxMediaStatus imageBoxMediaStatus;
+	
 	public Long getId() {
 		return id;
 	}
@@ -130,6 +136,15 @@ public class Image {
 	public void setImageStatus(ImageStatus imageStatus) {
 		this.imageStatus = imageStatus;
 	}
+
+	public ImageBoxMediaStatus getImageBoxMediaStatus() {
+		return imageBoxMediaStatus;
+	}
+
+	public void setImageBoxMediaStatus(ImageBoxMediaStatus imageBoxMediaStatus) {
+		this.imageBoxMediaStatus = imageBoxMediaStatus;
+	}
+
 
 		
 	
