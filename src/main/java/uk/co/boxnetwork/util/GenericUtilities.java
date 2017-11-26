@@ -55,6 +55,8 @@ import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.CuePoint;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.model.Image;
+import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.MatchAdvertBreakType;
 import uk.co.boxnetwork.model.MatchContentType;
 import uk.co.boxnetwork.model.MetadataStatus;
@@ -1014,6 +1016,18 @@ public class GenericUtilities {
 	    	return null;
 	    }
 	    
-	    
+	 public static void  processImageBoxMediaStatus(Image dbImage){
+		 if(dbImage==null){
+			 return;
+		 }
+		 if(dbImage.getImageBoxMediaStatus()==null){
+				if(dbImage.getWidth()==null || dbImage.getHeight()==null ){
+					return;
+				}
+				if(dbImage.getWidth()==1920 && dbImage.getHeight()==1080 ){
+					dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.CAN_UPLOAD);
+				}
+		}
+	 }
 }
 

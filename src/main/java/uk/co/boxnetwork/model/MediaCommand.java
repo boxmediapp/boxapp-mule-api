@@ -21,6 +21,8 @@ public class MediaCommand {
 	public static String PUSH_CHANGES_ON_NEEDS_TO_PUBLISH="published_changes_on_needs_publish";
 	public static String INSPECT_VIDEO_FILE="inspect_video_file";
 	public static String INVALIDATE_CDN_CLIENT_IMAGE_CACHE="invalidate-client-image-cdn-cache";
+	public static String COPY_IMAGE_TO_BOX_MEDIA_APP="copy-image-to-box-media-app";
+	
 	
 	@Id
 	@GeneratedValue
@@ -45,6 +47,9 @@ public class MediaCommand {
 	  private String contractNumber;
 	  
 	  private String episodeNumber;
+	  
+	  private Long imageId;
+	  
 	  
 	  public String getCommand() {
 		return command;
@@ -119,10 +124,19 @@ public class MediaCommand {
 	public void setSecondsAt(Double secondsAt) {
 		this.secondsAt = secondsAt;
 	}
+	
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
 
 	@Override
 	public String toString() {
-		return "MediaCommand [id=" + id + ", command=" + command + ", episodeid=" + episodeid + ", filename=" + filename
+		return "MediaCommand [id=" + id + ", command=" + command + ", episodeid=" + episodeid + ", filename=" + filename+". imageId="+imageId
 				+ "]";
 	}
 	

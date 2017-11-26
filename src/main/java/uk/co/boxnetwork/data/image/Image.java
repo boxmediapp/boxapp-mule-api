@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.ImageStatus;
 
 public class Image {
@@ -23,7 +24,7 @@ public class Image {
 	private ImageStatus imageStatus;
 	private String url;
 	
-	
+	private ImageBoxMediaStatus imageBoxMediaStatus;
 	
 	
 	
@@ -101,6 +102,14 @@ public class Image {
 	public void setLastModifiedAt(Date lastModifiedAt) {
 		this.lastModifiedAt = lastModifiedAt;
 	}
+	
+	
+	public ImageBoxMediaStatus getImageBoxMediaStatus() {
+		return imageBoxMediaStatus;
+	}
+	public void setImageBoxMediaStatus(ImageBoxMediaStatus imageBoxMediaStatus) {
+		this.imageBoxMediaStatus = imageBoxMediaStatus;
+	}
 	public Image(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 		this.id=image.getId();		
 		this.createdAt=image.getCreatedAt();					
@@ -112,6 +121,7 @@ public class Image {
 		this.imageStatus=image.getImageStatus();
 		this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();
 		this.lastModifiedAt=image.getLastModifiedAt();
+		this.imageBoxMediaStatus=image.getImageBoxMediaStatus();
 	}	
 	public void update(uk.co.boxnetwork.model.Image image){		
 		image.setFilename(this.filename);		
@@ -122,7 +132,7 @@ public class Image {
 		image.setImageStatus(this.imageStatus);
 	}
 	public String toString(){
-		return "id=["+id+"]createdAt=["+createdAt+"]filename=["+filename+"]s3BaseURL=["+s3BaseURL+"]tags=["+tags+"]";
+		return "id=["+id+"]createdAt=["+createdAt+"]filename=["+filename+"]s3BaseURL=["+s3BaseURL+"]tags=["+tags+"]imageBoxMediaStatus=["+imageBoxMediaStatus+"]";
 	}
 	
 }

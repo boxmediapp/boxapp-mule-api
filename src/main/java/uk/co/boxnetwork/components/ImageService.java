@@ -15,10 +15,13 @@ import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
+import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
+import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.OperationLogType;
 import uk.co.boxnetwork.model.OperationLogs;
+import uk.co.boxnetwork.util.GenericUtilities;
 
 
 
@@ -101,7 +104,8 @@ public class ImageService {
 		image.update(dbImage);
 		Long  imgSetId=image.getImageSet().getId();
 		ImageSet imageSet=imageRepository.findImageSetById(imgSetId);
-		dbImage.setImageSet(imageSet);
+		dbImage.setImageSet(imageSet);		
+		GenericUtilities.processImageBoxMediaStatus(dbImage);		
 		imageRepository.persist(dbImage);
 		return toData(dbImage);
 	}
@@ -216,5 +220,54 @@ public class ImageService {
 		
 	}
 	 
+	public void copyImageToBoxMediaApp(MediaCommand mediaCommand){		
+		Long imageid=mediaCommand.getImageId();
+		if(imageid==null){
+			logger.error("imageid is null in the mediacommand:"+mediaCommand);
+			return;
+		}
+		Image dbImage=imageRepository.findImageById(imageid);
+		String sourcepath=dbImage.getFilename();
+		if(sourcepath==null){
+			logger.error("failed to upload to media app:imagefile is null in the dbImage:"+dbImage);
+			return;
+		}
+		int ib=sourcepath.lastIndexOf(".");
+		if(ib<=0 || (ib+1)>=sourcepath.length()){
+			logger.error("failed to upload to media app:imagefie extension is is null in the dbImage:"+dbImage);
+			return;
+		}
+		String fileextension=sourcepath.substring(ib+1);
+		
+		if(dbImage.getImageSet()==null){
+			logger.error("failed to upload to media app:imageset is null in the dbImage:"+dbImage);
+			return;
+		}
+		if(dbImage.getImageSet()==null){
+			logger.error("failed to upload to media app:imageset is null in the dbImage:"+dbImage);
+			return;
+		}
+		
+		if(dbImage.getImageSet().getBoxEpisode()==null){
+			logger.error("failed to upload to media app:boxpeisode is null in the dbImage:"+dbImage);
+			return;
+		}
+		String imageBucket=appConfig.getImageBucket();
+		String programmeNumber=dbImage.getImageSet().getBoxEpisode().getProgrammeNumber();
+		if(programmeNumber==null){
+			logger.error("failed to upload to media app:programme number is null in the dbImage:"+dbImage);
+			return;
+		}
+		String programmeNumberparts[]=programmeNumber.split("/");
+		if(programmeNumberparts.length!=2){
+			logger.error("failed to upload to media app:programme number part is in wrong format in the dbImage:"+dbImage);
+			return;
+		}
+		String destfilename=programmeNumberparts[0]+"_"+programmeNumberparts[1]+"_001."+fileextension;		
+		String destfilepath=appConfig.getImageMasterFolder()+"/"+destfilename;
+		s3BucketService.copyFile(imageBucket, sourcepath, imageBucket, destfilepath);
+		dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.UPLOADED);
+		imageRepository.persist(dbImage);
+	}
 	
 }
