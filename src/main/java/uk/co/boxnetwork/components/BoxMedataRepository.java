@@ -17,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import uk.co.boxnetwork.BoxScheduleEvent;
 import uk.co.boxnetwork.data.DataReport;
+import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AdvertisementRule;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
+import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.CertificationCategory;
@@ -78,43 +81,77 @@ public class BoxMedataRepository {
 	   }
        
        @Transactional
-       public void updateBoxEpisodeWithScheduleEvent(ScheduleEvent evt){
+       public void updateBoxEpisodeWithScheduleEvent(ScheduleEvent evt, ImportScheduleRequest request){
     	   if(evt==null || evt.getEpisode()==null){
     		   return;
     	   }    	   
-    	   updateBoxEpisodeTxtDate(evt.getEpisode().getCtrPrg(),evt.getScheduleTimestamp());    	   
-       }
-       @Transactional
-       public void updateBoxEpisodeTxtDate(String programmeNumber, Date txDate){
-    	   if(programmeNumber==null||txDate==null){
+    	   String programmeNumber=evt.getEpisode().getCtrPrg();
+    	       	  
+    	   if(programmeNumber==null||evt.getScheduleTimestamp()==null){    		   
 			   return;
 		   }
 		   programmeNumber=programmeNumber.trim();
 		   if(programmeNumber.length()==0){
 			   return;
 		   }
+		   
 		   TypedQuery<BoxEpisode> query=entityManager.createQuery("SELECT b FROM box_episode b where b.programmeNumber=:programmeNumber", BoxEpisode.class);
 		   List<BoxEpisode> matchedEpisodes=query.setParameter("programmeNumber",programmeNumber).getResultList();
 		   if(matchedEpisodes.size()==0){
+			   logger.error("failed to import box schedule, episode not found:programmeNumber="+programmeNumber);
 			   return;
 		   }
-		   Date now=new Date();
 		   BoxEpisode matchedEpisode=matchedEpisodes.get(0);
-		   if(matchedEpisode.getScheduleTimestamp()==null){
-			   matchedEpisode.setScheduleTimestamp(txDate);
+		   BoxScheduleEvent boxScheduleEvent=null;
+		   
+		   
+		   if(request.getChannelId()!=null){
+			   BoxChannel foundChannel=entityManager.find(BoxChannel.class, request.getChannelId());
+			   if(foundChannel!=null){
+				   TypedQuery<BoxScheduleEvent> schedleQuery=entityManager.createQuery("SELECT e FROM box_schedule_event e where b.boxEpisode=:boxEpisode and b.scheduleTimestamp =:scheduleTimestamp and b.boxChannel=:boxChannel", BoxScheduleEvent.class);
+				   schedleQuery.setParameter("boxEpisode",matchedEpisode);
+				   schedleQuery.setParameter("scheduleTimestamp",evt.getScheduleTimestamp());
+				   schedleQuery.setParameter("boxChannel",foundChannel);
+				   List<BoxScheduleEvent> matchedSchdules=schedleQuery.getResultList();
+				   if(matchedSchdules.size()==0){
+					   boxScheduleEvent=new BoxScheduleEvent();
+					   boxScheduleEvent.setBoxChannel(foundChannel);
+					   boxScheduleEvent.setBoxEpisode(matchedEpisode);
+					   boxScheduleEvent.setScheduleTimestamp(evt.getScheduleTimestamp());
+					   entityManager.persist(boxScheduleEvent);
+				   }
+				   else{
+					   boxScheduleEvent=matchedSchdules.get(0);					   
+				   }
+			   }
+			   else{
+				   logger.error("failed to import box schedule, channelid is not found in database:"+request.getChannelId());
+				   return;
+			   }
 		   }
-		   else if(now.getTime()<matchedEpisode.getScheduleTimestamp().getTime()){
-			   matchedEpisode.setScheduleTimestamp(txDate);				   
+		   else{
+			   logger.error("failed to import box schedule, channelid is mossing");
+			   return;
 		   }
 		   
-		   else if(matchedEpisode.getScheduleTimestamp().getTime()>txDate.getTime()){			   
-				   matchedEpisode.setScheduleTimestamp(txDate);				   			   			   
+		   Date now=new Date();
+		   
+		   if(matchedEpisode.getBoxSchedule()==null){
+			   matchedEpisode.setBoxSchedule(boxScheduleEvent);
+			   matchedEpisode.setLastModifiedAt(new Date());
+			   entityManager.merge(matchedEpisode);
 		   }
-		   else {
-			   return;
-		   }		   
-		   matchedEpisode.setLastModifiedAt(new Date());
-		   entityManager.merge(matchedEpisode);
+		   else if(now.getTime()<matchedEpisode.getBoxSchedule().getScheduleTimestamp().getTime()){
+			   matchedEpisode.setBoxSchedule(boxScheduleEvent);
+			   matchedEpisode.setLastModifiedAt(new Date());
+			   entityManager.merge(matchedEpisode);
+		   }
+		   
+		   else if(matchedEpisode.getBoxSchedule().getScheduleTimestamp().getTime()>boxScheduleEvent.getScheduleTimestamp().getTime()){			   
+				   matchedEpisode.setBoxSchedule(boxScheduleEvent);
+				   matchedEpisode.setLastModifiedAt(new Date());
+				   entityManager.merge(matchedEpisode);
+		   }
        }
        public void persisEvent(ScheduleEvent newEvent){
     	   	Date lastModifiedAt=new Date();

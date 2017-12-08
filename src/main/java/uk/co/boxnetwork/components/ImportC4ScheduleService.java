@@ -165,7 +165,7 @@ public class ImportC4ScheduleService {
 			C4Metadata c4metadata=c4SchedulerParser.parse(schedule);
 			for(ScheduleEvent event: c4metadata.getScheduleEvents()){
 				boxMetadataRepository.importBoxEpisode(event.getEpisode());
-				boxMetadataRepository.updateBoxEpisodeWithScheduleEvent(event);				
+				boxMetadataRepository.updateBoxEpisodeWithScheduleEvent(event, request);				
 			}
 			
 		} catch (DocumentException e) {
