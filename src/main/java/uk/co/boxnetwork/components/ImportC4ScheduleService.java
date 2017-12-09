@@ -151,6 +151,7 @@ public class ImportC4ScheduleService {
  
  public void importOnDemandSchedule(ImportScheduleRequest request){	 	 
 	 String schedule=requestSchedulService(request);
+	 logger.info("Import ondemand episodes:"+schedule);
 	 try{
 		 parseAndImport(schedule);
 	 }
@@ -161,6 +162,7 @@ public class ImportC4ScheduleService {
  }
  public void importBoxEpisodes(ImportScheduleRequest request){
 	 String schedule=requestSchedulService(request);
+	 logger.info("Import Box episodes:"+schedule);
 	 try {			
 			C4Metadata c4metadata=c4SchedulerParser.parse(schedule);
 			for(ScheduleEvent event: c4metadata.getScheduleEvents()){
