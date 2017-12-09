@@ -75,23 +75,31 @@ public class TimedTask {
 	public void setRunOnTime(String runOnTime) {
 		this.runOnTime = runOnTime;
 	}
-    public Date calculateExpectedTime(){    	
-    	Calendar calendar=Calendar.getInstance();
-    	Date expectedTime=calendar.getTime();
-    	if(getRunOnTime()!=null){
-    		DateFormat localFormatDate = new SimpleDateFormat("yyyy-MM-dd");
-    		DateFormat localFormatFull = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    		String datepart=localFormatDate.format(expectedTime);
-    		try {
-    			localFormatFull.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
-				expectedTime=localFormatFull.parse(datepart+" "+getRunOnTime());
-			} catch (ParseException e) {
-				throw new RuntimeException("The Runtime format is wrong:"+getRunOnTime(),e);
-			}   
-    		
+    public Date calculateExpectedTime(){
+    	
+    	Calendar calendar=Calendar.getInstance();    	    	
+    	
+    	if(getRunOnTime()==null){
+    		return calendar.getTime();    		
     	}
-    	return expectedTime;
-    	    	
+    	String[] timeparts=getRunOnTime().trim().split(":");
+    	if(timeparts.length>0){
+    		int hour=Integer.parseInt(timeparts[0]);
+    		calendar.set(Calendar.HOUR_OF_DAY, hour);
+    	}
+    	if(timeparts.length>1){
+    		int minute=Integer.parseInt(timeparts[1]);
+    		calendar.set(Calendar.MINUTE, minute);
+    	}
+    	if(timeparts.length>1){
+    		int minute=Integer.parseInt(timeparts[1]);
+    		calendar.set(Calendar.MINUTE, minute);
+    	}
+    	if(timeparts.length>2){
+    		int seconds=Integer.parseInt(timeparts[2]);
+    		calendar.set(Calendar.SECOND, seconds);
+    	}
+    	return calendar.getTime();
     }
 	
 	public ImportScheduleTask getImportScheduleTask() {

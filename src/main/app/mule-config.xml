@@ -190,6 +190,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.DeletedImageTransformer" name="deletedImageTransformer" doc:name="deletedImageTransformer"/>
    
    
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.BoxChannelTransformer" name="boxChannelService" doc:name="BoxChannelServiceTransformer"/>
+   
+   
    
    
    

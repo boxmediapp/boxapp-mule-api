@@ -31,6 +31,7 @@ import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.VideoFileItem;
 import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
@@ -881,4 +882,19 @@ public void calculateUploadedDuration(){
 	   List<VideoFileItem> videofiles=videolist.getFiles();
 	   s3TableRepository.syncS3VideoFileItems(videofiles);       	
     }
+   
+   public void createBoxChannels(){	   	   
+	   imageRepository.createBoxChannel(new BoxChannel("1865244993", "On Demand"));  
+	   imageRepository.createBoxChannel(new BoxChannel("1824133004", "4Music"));
+	   imageRepository.createBoxChannel(new BoxChannel("1859498504", "Kerrang"));
+	   imageRepository.createBoxChannel(new BoxChannel("1859498506", "The Box"));
+	   imageRepository.createBoxChannel(new BoxChannel("1859498507", "Kiss"));
+	   imageRepository.createBoxChannel(new BoxChannel("1859498509", "Magic"));
+	   imageRepository.createBoxChannel(new BoxChannel("1865247002", "Box Hits"));
+	   imageRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));
+	   
+	   
+	   
+	   
+   }
  }

@@ -20,12 +20,21 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	        	<transformer ref="scheduleService" doc:name="Transformer Schedule Service"/>    	
 	        </otherwise>
 	    </choice>
+    </flow>
+    
+    
+    <flow name="channel-servicesFlow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.boxchannels}/*" doc:name="HTTP"/>
         
-        
-        
-         
-       
-        
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<transformer ref="boxChannelService" doc:name="Transformer Schedule Service"/>    	
+	        </otherwise>
+	    </choice>
     </flow>
     
     

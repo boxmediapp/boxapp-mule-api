@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import uk.co.boxnetwork.BoxScheduleEvent;
 
 @Entity(name="box_episode")
 public class BoxEpisode {
@@ -34,8 +38,12 @@ public class BoxEpisode {
 	@OneToMany(mappedBy="boxEpisode", fetch=FetchType.EAGER)	
 	private Set<ImageSet> imageSets;
 	
-	@Column(name="schedule_timestamp")
-	private Date scheduleTimestamp;
+	
+	@ManyToOne(optional=true, fetch=FetchType.EAGER)
+	@JoinColumn( name = "schedule_id", nullable = true )
+	private BoxScheduleEvent boxSchedule;
+	
+	
 	
 
 	public Long getId() {
@@ -94,12 +102,15 @@ public class BoxEpisode {
 		this.imageSets = imageSets;
 	}
 
-	public Date getScheduleTimestamp() {
-		return scheduleTimestamp;
+	public BoxScheduleEvent getBoxSchedule() {
+		return boxSchedule;
 	}
 
-	public void setScheduleTimestamp(Date scheduleTimestamp) {
-		this.scheduleTimestamp = scheduleTimestamp;
+	public void setBoxSchedule(BoxScheduleEvent boxSchedule) {
+		this.boxSchedule = boxSchedule;
 	}
+	
+
+	
 	
 }

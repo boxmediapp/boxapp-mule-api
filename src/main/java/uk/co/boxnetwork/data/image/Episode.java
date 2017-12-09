@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import uk.co.boxnetwork.BoxScheduleEvent;
 import uk.co.boxnetwork.model.ImageStatus;
 
 
@@ -17,7 +18,8 @@ public class Episode {
 	private String contractNumber;
 	private String episodeNumber;
 	private String programmeNumber;
-	private Date scheduleTimestamp;  
+	private BoxScheduleEvent schedule;
+	
 	private Date lastModifiedAt;
 	
 	private List<ImageSet> imageSets;	
@@ -65,13 +67,14 @@ public class Episode {
 	}
 	
 	
-	public Date getScheduleTimestamp() {
-		return scheduleTimestamp;
-	}
-	public void setScheduleTimestamp(Date scheduleTimestamp) {
-		this.scheduleTimestamp = scheduleTimestamp;
-	}
 	
+	
+	public BoxScheduleEvent getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(BoxScheduleEvent schedule) {
+		this.schedule = schedule;
+	}
 	public Date getLastModifiedAt() {
 		return lastModifiedAt;
 	}
@@ -89,7 +92,7 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}
-		this.scheduleTimestamp=episode.getScheduleTimestamp();
+		this.schedule=episode.getBoxSchedule();		
 		this.lastModifiedAt=episode.getLastModifiedAt();
 	}
 	
