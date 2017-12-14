@@ -42,7 +42,7 @@ public class ClientRequestInfo {
 	}
 	@Override
 	public String toString(){
-		return "httpmethod=["+httpmethod+"]requesturi=["+requesturi+"] clientIPAdress=["+clientIPAdress+"]realip=["+realip+"]username=["+username+"]referer:"+referer+"]";
+		return "httpmethod=["+httpmethod+"]requesturi=["+requesturi+"] clientIPAdress=["+clientIPAdress+"]realip=["+realip+"]username=["+username+"]referer:"+referer+"]authorization=["+authorization+"]";
 	}
 	public String getHttpmethod() {
 		return httpmethod;

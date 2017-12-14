@@ -108,7 +108,7 @@ public class BoxMedataRepository {
 		   if(request.getChannelId()!=null){
 			   BoxChannel foundChannel=entityManager.find(BoxChannel.class, request.getChannelId());
 			   if(foundChannel!=null){
-				   TypedQuery<BoxScheduleEvent> schedleQuery=entityManager.createQuery("SELECT e FROM box_schedule_event e where b.boxEpisode=:boxEpisode and b.scheduleTimestamp =:scheduleTimestamp and b.boxChannel=:boxChannel", BoxScheduleEvent.class);
+				   TypedQuery<BoxScheduleEvent> schedleQuery=entityManager.createQuery("SELECT e FROM box_schedule_event e where e.boxEpisode=:boxEpisode and e.scheduleTimestamp =:scheduleTimestamp and e.boxChannel=:boxChannel", BoxScheduleEvent.class);
 				   schedleQuery.setParameter("boxEpisode",matchedEpisode);
 				   schedleQuery.setParameter("scheduleTimestamp",evt.getScheduleTimestamp());
 				   schedleQuery.setParameter("boxChannel",foundChannel);

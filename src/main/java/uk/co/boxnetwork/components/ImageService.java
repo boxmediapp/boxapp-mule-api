@@ -1,7 +1,6 @@
 package uk.co.boxnetwork.components;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,15 +11,13 @@ import org.springframework.stereotype.Service;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.AppConfig;
-import uk.co.boxnetwork.model.BoxEpisode;
-import uk.co.boxnetwork.model.Episode;
+
+
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.MediaCommand;
-import uk.co.boxnetwork.model.OperationLogType;
-import uk.co.boxnetwork.model.OperationLogs;
 import uk.co.boxnetwork.util.GenericUtilities;
 
 
@@ -41,18 +38,18 @@ public class ImageService {
     @Autowired
     OperationalLogRepository operationalLogRepository;
 	
-	public List<uk.co.boxnetwork.data.image.Episode> findBoxEpisodes(SearchParam searchParam){
+	public List<uk.co.boxnetwork.data.image.BoxEpisodeData> findBoxEpisodes(SearchParam searchParam){
 		return toDataEpisodes(imageRepository.findBoxEpisodes(searchParam),appConfig);
 	}
-	private  List<uk.co.boxnetwork.data.image.Episode>  toDataEpisodes(List<BoxEpisode> eposides, AppConfig appConfig){
-		List<uk.co.boxnetwork.data.image.Episode> ret=new ArrayList<uk.co.boxnetwork.data.image.Episode>();		
-		for(BoxEpisode episode:eposides){
+	private  List<uk.co.boxnetwork.data.image.BoxEpisodeData>  toDataEpisodes(List<uk.co.boxnetwork.model.BoxEpisode> eposides, AppConfig appConfig){
+		List<uk.co.boxnetwork.data.image.BoxEpisodeData> ret=new ArrayList<uk.co.boxnetwork.data.image.BoxEpisodeData>();		
+		for(uk.co.boxnetwork.model.BoxEpisode episode:eposides){
 			ret.add(toData(episode));			
 		}
 		return ret;
 	}
-	private uk.co.boxnetwork.data.image.Episode toData(BoxEpisode episode){
-		uk.co.boxnetwork.data.image.Episode dep=new uk.co.boxnetwork.data.image.Episode(episode);
+	private uk.co.boxnetwork.data.image.BoxEpisodeData toData(uk.co.boxnetwork.model.BoxEpisode episode){
+		uk.co.boxnetwork.data.image.BoxEpisodeData dep=new uk.co.boxnetwork.data.image.BoxEpisodeData(episode);
 		
 		if(episode.getImageSets().size()>0){
 			List<uk.co.boxnetwork.data.image.ImageSet> imageSets =new ArrayList<uk.co.boxnetwork.data.image.ImageSet>();
@@ -65,8 +62,8 @@ public class ImageService {
 		
 	}
 	
-	public  uk.co.boxnetwork.data.image.Episode findEpisodeById(Long id){
-		BoxEpisode episode=imageRepository.findEpisodeById(id);		
+	public  uk.co.boxnetwork.data.image.BoxEpisodeData findEpisodeById(Long id){
+		uk.co.boxnetwork.model.BoxEpisode episode=imageRepository.findEpisodeById(id);		
 		if(episode!=null){
 			return toData(episode);			
 		}
@@ -88,7 +85,7 @@ public class ImageService {
 	
 	public  uk.co.boxnetwork.data.image.ImageSet createImageSet(uk.co.boxnetwork.data.image.ImageSet imageSet){
 		uk.co.boxnetwork.model.ImageSet dbImageSet=new uk.co.boxnetwork.model.ImageSet();
-		BoxEpisode episode=imageRepository.findEpisodeByProgrammeNumber(imageSet.getProgrammeNumber());
+		uk.co.boxnetwork.model.BoxEpisode episode=imageRepository.findEpisodeByProgrammeNumber(imageSet.getProgrammeNumber());
 		if(episode==null){
 			throw new RuntimeException("failed to create Image Asset for attached episode not found imageSet=["+imageSet+"]");
 		}		
