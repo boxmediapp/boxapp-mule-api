@@ -1,4 +1,4 @@
-package uk.co.boxnetwork;
+package uk.co.boxnetwork.model;
 
 import java.util.Date;
 

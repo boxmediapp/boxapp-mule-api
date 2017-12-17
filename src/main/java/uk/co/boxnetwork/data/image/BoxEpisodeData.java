@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import uk.co.boxnetwork.BoxScheduleEvent;
+
 import uk.co.boxnetwork.model.ImageStatus;
 
 
-public class Episode {
+public class BoxEpisodeData {
 	
 		
 	private Long id;
@@ -18,7 +18,7 @@ public class Episode {
 	private String contractNumber;
 	private String episodeNumber;
 	private String programmeNumber;
-	private BoxScheduleEvent schedule;
+	private BoxScheduleEventData schedule;
 	
 	private Date lastModifiedAt;
 	
@@ -69,10 +69,10 @@ public class Episode {
 	
 	
 	
-	public BoxScheduleEvent getSchedule() {
+	public BoxScheduleEventData getSchedule() {
 		return schedule;
 	}
-	public void setSchedule(BoxScheduleEvent schedule) {
+	public void setSchedule(BoxScheduleEventData schedule) {
 		this.schedule = schedule;
 	}
 	public Date getLastModifiedAt() {
@@ -81,7 +81,7 @@ public class Episode {
 	public void setLastModifiedAt(Date lastModifiedAt) {
 		this.lastModifiedAt = lastModifiedAt;
 	}
-	public Episode(uk.co.boxnetwork.model.BoxEpisode episode){
+	public BoxEpisodeData(uk.co.boxnetwork.model.BoxEpisode episode){
 		this.id=episode.getId();
 		this.title = episode.getTitle();	
 		this.programmeNumber=episode.getProgrammeNumber();
@@ -92,7 +92,10 @@ public class Episode {
 				this.episodeNumber=matParts[1];				
 			}
 		}
-		this.schedule=episode.getBoxSchedule();		
+		if(episode.getBoxSchedule()!=null){
+			this.schedule=new BoxScheduleEventData(episode.getBoxSchedule());
+		}
+				
 		this.lastModifiedAt=episode.getLastModifiedAt();
 	}
 	

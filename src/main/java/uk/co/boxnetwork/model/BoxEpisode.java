@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import uk.co.boxnetwork.BoxScheduleEvent;
+
 
 @Entity(name="box_episode")
 public class BoxEpisode {
@@ -42,6 +42,7 @@ public class BoxEpisode {
 	@ManyToOne(optional=true, fetch=FetchType.EAGER)
 	@JoinColumn( name = "schedule_id", nullable = true )
 	private BoxScheduleEvent boxSchedule;
+	
 	
 	
 	
