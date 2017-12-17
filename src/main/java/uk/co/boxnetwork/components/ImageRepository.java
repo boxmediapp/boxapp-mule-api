@@ -3,9 +3,9 @@ package uk.co.boxnetwork.components;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
+
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
 import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
@@ -14,17 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import uk.co.boxnetwork.BoxScheduleEvent;
+
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
-import uk.co.boxnetwork.model.Episode;
+
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.OperationLogs;
-import uk.co.boxnetwork.model.ScheduleEvent;
+
 
 @Repository
 public class ImageRepository {

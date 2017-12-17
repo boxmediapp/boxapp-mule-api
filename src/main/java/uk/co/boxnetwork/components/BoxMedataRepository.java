@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import uk.co.boxnetwork.BoxScheduleEvent;
+
 import uk.co.boxnetwork.data.DataReport;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.data.SearchParam;
@@ -26,6 +26,7 @@ import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
+import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.CertificationCategory;
 import uk.co.boxnetwork.model.CertificationTime;

@@ -55,6 +55,8 @@ public class SearchParam {
 	private Integer numberOfImageSets=null;
 	private Integer minNumberOfImageSets=null;
 	private Long lastModifiedFrom=null;
+	private String channelId=null;
+	
 	
 	
 	
@@ -112,6 +114,7 @@ public class SearchParam {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
 	
 	
 	
@@ -306,7 +309,10 @@ public class SearchParam {
 						logger.error(e+" while converting the lastModifiedFrom to Long",e);
 					}
 				}
-				
+				String channelId=queryparams.get("channelId");
+				if(channelId!=null && channelId.trim().length()>0){
+					this.channelId=channelId;
+				}
 				
 		}
 		
@@ -385,6 +391,69 @@ public String getNewBoxEpisodeSelectQuery(){
 	 }
 	 if(this.from!=null){		
 		 if(addedWhere){
+			 query+=" and (e.boxSchedule.scheduleTimestamp >= :from)";
+		 }
+		 else{
+			 query+=" where (e.boxSchedule.scheduleTimestamp >= :from)";	
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 if(this.to!=null){		
+		 if(addedWhere){
+			 query+=" and  (e.boxSchedule.scheduleTimestamp <= :to)";
+		 }
+		 else{
+			 query+=" where (e.boxSchedule.scheduleTimestamp <= :to)";	
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 if(this.channelId!=null){
+		 if(addedWhere){
+			 query+=" and e.boxSchedule.boxChannel.channelId = :channelId ";
+		 }
+		 else{
+			 query+=" where (e.boxSchedule.boxChannel.channelId = :channelId) ";	
+			 addedWhere=true;
+		 }
+	 }
+	 
+	 
+	return query;	
+}
+
+public String getBoxScheduleSelectQuery(){
+	 
+	 String query="SELECT e FROM box_schedule_event e";
+	 boolean addedWhere=false;
+	 
+	 if(this.numberOfImageSets!=null){
+		 query+=" where SIZE(e.boxEpisode.imageSets) = :numberOfImageSets ";
+		 addedWhere=true;
+	 }
+	 else if(this.minNumberOfImageSets!=null){
+		 query+=" where SIZE(e.boxEpisode.imageSets) >= :minNumberOfImageSets ";
+		 addedWhere=true;
+	 }
+	 if(this.search!=null){		
+		 if(addedWhere){
+			 query+=" and (e.boxEpisode.title LIKE :search OR e.boxEpisode.programmeNumber LIKE :search)";
+		 }
+		 else{
+			 query+=" where (e.boxEpisode.title LIKE :search OR e.boxEpisode.programmeNumber LIKE :search)";
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 if(this.programmeNumber!=null){		
+		 if(addedWhere){
+			 query+=" and (e.boxEpisode.programmeNumber LIKE :programmeNumber)";
+		 }
+		 else{
+			 query+=" where (e.boxEpisode.programmeNumber LIKE :search)";	
+			 addedWhere=true;
+		 }		 		 
+	 }
+	 if(this.from!=null){		
+		 if(addedWhere){
 			 query+=" and (e.scheduleTimestamp >= :from) and  (e.scheduleTimestamp <= :to)";
 		 }
 		 else{
@@ -392,11 +461,20 @@ public String getNewBoxEpisodeSelectQuery(){
 			 addedWhere=true;
 		 }		 		 
 	 }
-	 
+	 if(this.channelId!=null){
+		 if(addedWhere){
+			 query+=" and e.boxChannel.channelId = :channelId ";
+		 }
+		 else{
+			 query+=" where (e.boxChannel.channelId = :channelId) ";	
+			 addedWhere=true;
+		 }
+	 }
 	 
 	 
 	return query;	
 }
+
 public String getImageSetSelectQuery(){
 	String query="SELECT e FROM image_set e";	
     if(this.search!=null){		
@@ -502,6 +580,9 @@ public String getImageSelectQuery(){
 		if(this.lastModifiedFrom!=null){
 			typedQuery.setParameter("lastModifiedFrom",new Date(lastModifiedFrom));
 		}
+		if(this.channelId!=null){
+			typedQuery.setParameter("channelId",this.channelId);
+		}
 		if(this.from!=null){
 			try{
 				Long from=Long.valueOf(this.from);
@@ -522,6 +603,7 @@ public String getImageSelectQuery(){
 				logger.error(e+" while parsing the from query parameter: to=["+to+"]",e);
 			}
 		}
+		
 		if(this.start!=null && this.start>0){
 			  typedQuery.setFirstResult(this.start);			   
 		   }

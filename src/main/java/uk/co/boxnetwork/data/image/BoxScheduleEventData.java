@@ -2,9 +2,10 @@ package uk.co.boxnetwork.data.image;
 
 import java.util.Date;
 
-import uk.co.boxnetwork.BoxScheduleEvent;
+
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
+import uk.co.boxnetwork.model.BoxScheduleEvent;
 
 public class BoxScheduleEventData {
 	
