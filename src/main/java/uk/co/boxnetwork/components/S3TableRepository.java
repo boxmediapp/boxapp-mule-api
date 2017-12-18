@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.s3.MediaFilesLocation;
 import uk.co.boxnetwork.data.s3.VideoFileItem;
 import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.MediaCommand;
@@ -99,25 +101,15 @@ public class S3TableRepository {
 			entityManager.merge(item);
 		}
 	}
-	public VideoFileList listVideoFileItem(String search, Integer startIndex, Integer numberOfRecords){
+	public VideoFileList listVideoFileItem(SearchParam searchParam){
 		VideoFileList videoFileList=new VideoFileList();
 		videoFileList.setBaseUrl(appConfig.getS3videoURL());
 		
-		String queryString="SELECT m FROM s3_video_file_item m";
+		String queryString=searchParam.getS3videoSelectQuery();
+		queryString=searchParam.addSortByToQuery(queryString, "m");
 		
-		if(search!=null){
-			queryString+=" WHERE m.file LIKE :search OR m.episodeTitle LIKE :search OR m.programmeNumber LIKE :search";			 
-		}
 		TypedQuery<S3VideoFileItem> query=entityManager.createQuery(queryString, S3VideoFileItem.class);
-		if(search!=null){
-			query.setParameter("search",search+"%");
-		}
-		if(startIndex!=null && startIndex>0){
-			query.setFirstResult(startIndex);			   
-		 }
-		 if(numberOfRecords!=null && numberOfRecords>=0){
-			 query.setMaxResults(numberOfRecords);
-		   }
+		searchParam.config(query);			
 		  List<S3VideoFileItem> matchedItems=query.getResultList();		  		  
 		  List<VideoFileItem> videos=new ArrayList<VideoFileItem>();
 		  for(S3VideoFileItem s3videofile:matchedItems){
@@ -126,8 +118,20 @@ public class S3TableRepository {
 			  videos.add(video);
 		  }
 		  videoFileList.setFiles(videos);
-		return videoFileList;
-		
+		return videoFileList;		
 		
 	}
+
+	/*
+	public List<BoxEpisode> findBoxEpisodes(SearchParam searchParam){		   		   
+		   String queryString=searchParam.getNewBoxEpisodeSelectQuery();
+		   queryString=searchParam.addSortByToQuery(queryString, "e");
+		   TypedQuery<BoxEpisode> query=entityManager.createQuery(queryString, BoxEpisode.class);		   
+		   searchParam.config(query);		   		   
+		   return query.getResultList();		   
+	}
+*/
+
 }
+
+
