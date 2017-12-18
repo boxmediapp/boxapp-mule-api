@@ -37,7 +37,7 @@ public class DBBoxVideoTransformer extends BoxRestTransformer{
 	
 	protected Object processGET(MuleMessage message, String outputEncoding){
 		
-		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.S3ITEM);					
+		SearchParam searchParam=new SearchParam(message,appConfig,null);					
 	    return s3TableRepository.listVideoFileItem(searchParam);		
 				
 	}
