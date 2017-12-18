@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.PublishedStatus;
+import uk.co.boxnetwork.model.S3VideoFileItem;
 
 
 public class SearchParam {
@@ -421,6 +422,16 @@ public String getNewBoxEpisodeSelectQuery(){
 	return query;	
 }
 
+public String getS3videoSelectQuery(){
+	String queryString="SELECT m FROM s3_video_file_item m";	
+	boolean addedWhere=false;
+	
+	if(this.search!=null){
+		queryString+=" WHERE m.file LIKE :search OR m.episodeTitle LIKE :search OR m.programmeNumber LIKE :search";
+		addedWhere=true;
+	}
+	return queryString;
+}
 public String getBoxScheduleSelectQuery(){
 	 
 	 String query="SELECT e FROM box_schedule_event e";

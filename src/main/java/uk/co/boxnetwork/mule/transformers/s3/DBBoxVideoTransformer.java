@@ -37,23 +37,8 @@ public class DBBoxVideoTransformer extends BoxRestTransformer{
 	
 	protected Object processGET(MuleMessage message, String outputEncoding){
 		
-		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.S3ITEM);
-		int start=0;
-		int numberOfRecords=-1;
-		if(searchParam.getStart()!=null){
-			start=searchParam.getStart();
-		}
-		if(searchParam.getLimit()!=null){
-			numberOfRecords=searchParam.getLimit();
-		}		
-		String searchText=searchParam.getPrefix();
-		if(searchText!=null){
-			searchText=searchText.trim();
-		}
-		if(searchText==null|| searchText.length()==0){
-			searchText=searchParam.getPrefix();			
-		}				
-	    return s3TableRepository.listVideoFileItem(searchParam.getPrefix(),start,numberOfRecords);		
+		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.S3ITEM);					
+	    return s3TableRepository.listVideoFileItem(searchParam);		
 				
 	}
 	protected Object processPOST(MuleMessage message, String outputEncoding){
