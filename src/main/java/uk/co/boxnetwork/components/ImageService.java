@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.co.boxnetwork.data.SearchParam;
+import uk.co.boxnetwork.data.image.BoxScheduleEventData;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.AppConfig;
-
-
+import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.ImageSet;
@@ -41,6 +41,18 @@ public class ImageService {
 	public List<uk.co.boxnetwork.data.image.BoxEpisodeData> findBoxEpisodes(SearchParam searchParam){
 		return toDataEpisodes(imageRepository.findBoxEpisodes(searchParam),appConfig);
 	}
+	public List<uk.co.boxnetwork.data.image.BoxEpisodeData> findBoxEpisodesByBoxScheduleEvent(SearchParam searchParam){		
+		List<BoxScheduleEvent> schdulesEvents=imageRepository.findBoxScheduleEvent(searchParam);
+		List<uk.co.boxnetwork.data.image.BoxEpisodeData> episodes=new ArrayList<uk.co.boxnetwork.data.image.BoxEpisodeData>();
+		for(BoxScheduleEvent event:schdulesEvents){
+			BoxScheduleEventData scheduledata=new BoxScheduleEventData(event);			
+			uk.co.boxnetwork.data.image.BoxEpisodeData boxEpidode=toData(event.getBoxEpisode());			 			
+			boxEpidode.setSchedule(scheduledata);
+			episodes.add(boxEpidode);
+		}
+		return episodes;
+	}
+	
 	private  List<uk.co.boxnetwork.data.image.BoxEpisodeData>  toDataEpisodes(List<uk.co.boxnetwork.model.BoxEpisode> eposides, AppConfig appConfig){
 		List<uk.co.boxnetwork.data.image.BoxEpisodeData> ret=new ArrayList<uk.co.boxnetwork.data.image.BoxEpisodeData>();		
 		for(uk.co.boxnetwork.model.BoxEpisode episode:eposides){
