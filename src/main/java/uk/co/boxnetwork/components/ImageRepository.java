@@ -19,7 +19,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
-
+import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
@@ -54,6 +54,13 @@ public class ImageRepository {
 		   String queryString=searchParam.getNewBoxEpisodeSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
 		   TypedQuery<BoxEpisode> query=entityManager.createQuery(queryString, BoxEpisode.class);		   
+		   searchParam.config(query);		   		   
+		   return query.getResultList();		   
+	}
+	public List<BoxScheduleEvent> findBoxScheduleEvent(SearchParam searchParam){		   		   
+		   String queryString=searchParam.getBoxScheduleSelectQuery();
+		   queryString=searchParam.addSortByToQuery(queryString, "e");
+		   TypedQuery<BoxScheduleEvent> query=entityManager.createQuery(queryString, BoxScheduleEvent.class);		   
 		   searchParam.config(query);		   		   
 		   return query.getResultList();		   
 	}
