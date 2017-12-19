@@ -14,6 +14,17 @@ public class BoxUser {
     private String password;
   
     private String roles;
+    
+    @Column(name="client_id")
+    private String clientId;
+    
+    @Column(name="client_secret")
+    private String clientSecret;
+    
+    @Column(name="secret_expires_at")
+    private Long secretExpiresAt;
+    
+    
 	public String getRoles() {
 		return roles;
 	}
@@ -37,5 +48,24 @@ public class BoxUser {
 	}
 	public void decrypt(String encryptionKey){
 		this.password=GenericUtilities.decrypt(encryptionKey, password);		
+	}
+	public String getClientId() {
+		return clientId;
+	}
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+	public String getClientSecret() {
+		return clientSecret;
+	}
+	public void setClientSecret(String clientSecret) {
+		this.clientSecret = clientSecret;
+	}
+	public Long getSecretExpiresAt() {
+		return secretExpiresAt;
+	}
+	public void setSecretExpiresAt(Long secretExpiresAt) {
+		this.secretExpiresAt = secretExpiresAt;
 	} 
+	
 }

@@ -246,6 +246,9 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.OnApppStartedTransformer" name="onAppStartdTransformer" doc:name="onAppStartdTransformer"/>
    
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.BoxUsersTransformer" name="boxUsersTransformer" doc:name="BoxUsersTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.LoginUserTransformer" name="loginTransformer" doc:name="loginTransformer"/>
+   
+   
    
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.LoadAppInformationTransformer" name="loadAppInfoTransformer" doc:name="LoadConfig"/>
    
