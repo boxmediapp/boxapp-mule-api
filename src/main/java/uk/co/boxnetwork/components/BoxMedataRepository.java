@@ -1069,6 +1069,10 @@ public class BoxMedataRepository {
     	   TypedQuery<BoxUser> query=entityManager.createQuery("SELECT u FROM user u where u.username=:username", BoxUser.class);    	   
 		   return query.setParameter("username",username).getResultList();		   
 	   }
+       public List<BoxUser> findUserByClientId(String clientId){
+    	   TypedQuery<BoxUser> query=entityManager.createQuery("SELECT u FROM user u where u.clientId=:clientId", BoxUser.class);    	   
+		   return query.setParameter("clientId",clientId).getResultList();
+       }
 	   public List<BoxUser> findAllUsers(){		   
     	   TypedQuery<BoxUser> query=entityManager.createQuery("SELECT u FROM user u", BoxUser.class);
 		   List<BoxUser> users=query.getResultList();
