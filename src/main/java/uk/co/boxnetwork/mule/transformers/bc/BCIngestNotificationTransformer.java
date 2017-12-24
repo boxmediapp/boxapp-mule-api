@@ -10,6 +10,7 @@ import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.FileIngestRequest;
 import uk.co.boxnetwork.model.BCNotification;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -20,10 +21,19 @@ public class BCIngestNotificationTransformer extends BoxRestTransformer{
 	
 	@Autowired
 	MetadataService medataService;
-	
+
+	@Override
+	protected boolean checkGETAccess(BoxOperator operator){
+	    return true;		    
+	}
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected boolean checkPOSTAccess(BoxOperator operator){
+	   return true;				 
+	}
+ 
+	@Override
+	protected Object processPOST(MuleMessage message,BoxOperator operator, String outputEncoding){
 					
 			try {
 					com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
@@ -51,7 +61,8 @@ public class BCIngestNotificationTransformer extends BoxRestTransformer{
 				   
 					
 	}
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 		
 		String jobid=MuleRestUtil.getPathPath(message);
 		if(jobid==null || jobid.length()==0){

@@ -16,6 +16,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -33,7 +34,7 @@ public class BCPlaylistTranscormer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){				
 		String playlistid=MuleRestUtil.getPathPath(message);
 		if(playlistid==null || playlistid.length()==0){
 			return getAllPlaylists(message,outputEncoding);
@@ -63,7 +64,7 @@ public class BCPlaylistTranscormer extends BoxRestTransformer{
     	 return metadataService.getVideoDataInPlaylist(playlistid, searchParam);
      }
      @Override
-     protected Object processPATCH(MuleMessage message, String outputEncoding) throws Exception{	   					
+     protected Object processPATCH(MuleMessage message, BoxOperator operator,String outputEncoding) throws Exception{	   					
     	 String playlistid=MuleRestUtil.getPathPath(message);
  		if(playlistid==null || playlistid.length()==0){
  			return returnError("patch not supported for this path",message); 			
@@ -90,7 +91,8 @@ public class BCPlaylistTranscormer extends BoxRestTransformer{
     	 return playlist;
      }
      
-     protected Object processDELETE(MuleMessage message, String outputEncoding){			
+     @Override
+     protected Object processDELETE(MuleMessage message,BoxOperator operator, String outputEncoding){			
     	 String playlistid=MuleRestUtil.getPathPath(message);
  		if(playlistid==null || playlistid.length()==0){
  			return returnError("delete not supported",message);
@@ -100,7 +102,8 @@ public class BCPlaylistTranscormer extends BoxRestTransformer{
  			
  		}
  	}
-     protected Object processPOST(MuleMessage message, String outputEncoding){
+     @Override
+     protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
     	 BCPlayList playlist=null;
     	 if(message.getPayload() instanceof BCPlayList){
     		 playlist=(BCPlayList)message.getPayload();			   

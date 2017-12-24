@@ -20,6 +20,7 @@ import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Series;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -34,7 +35,7 @@ public class SeriesTransformer  extends BoxRestTransformer{
 	
 	
 	@Override
-	protected  Object processGET(MuleMessage message, String outputEncoding){
+	protected  Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){
 			
 		String seriesid=MuleRestUtil.getPathPath(message);
 		if(seriesid==null || seriesid.length()==0){
@@ -55,7 +56,7 @@ public class SeriesTransformer  extends BoxRestTransformer{
 	}
    
     @Override	
-   protected Object processPUT(MuleMessage message, String outputEncoding) throws Exception{
+   protected Object processPUT(MuleMessage message,BoxOperator operator, String outputEncoding) throws Exception{
 	   String seriesid=MuleRestUtil.getPathPath(message);
 	   if(seriesid==null||seriesid.length()==0){
 		   return new ErrorMessage("The episodeid is missing in DELETE");
@@ -94,7 +95,7 @@ public class SeriesTransformer  extends BoxRestTransformer{
 	   						 
 	}
     @Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String seriesid=MuleRestUtil.getPathPath(message);
 		if(seriesid==null || seriesid.length()==0){
 			return returnError("Do not support delete all series",message);
@@ -110,7 +111,7 @@ public class SeriesTransformer  extends BoxRestTransformer{
    
     
     @Override
-    protected Object processPOST(MuleMessage message, String outputEncoding){
+    protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
 		try{	
     		    String episodeInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new series:"+episodeInJson+"****");

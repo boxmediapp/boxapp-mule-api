@@ -20,7 +20,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="availabilityTransformer" doc:name="Cue Service"/>    	
 	        	
 	        </otherwise>

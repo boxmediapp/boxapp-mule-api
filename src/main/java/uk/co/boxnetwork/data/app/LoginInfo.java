@@ -1,6 +1,7 @@
 package uk.co.boxnetwork.data.app;
 
 import uk.co.boxnetwork.model.BoxUser;
+import uk.co.boxnetwork.model.BoxUserRole;
 
 public class LoginInfo {
 	private String username;
@@ -8,6 +9,8 @@ public class LoginInfo {
     private String clientId;       
     private String clientSecret;
     private Long expiresAt;
+    private Long durationInSeconds;
+    
 	public String getUsername() {
 		return username;
 	}
@@ -40,14 +43,22 @@ public class LoginInfo {
 	public void setExpiresAt(Long expiresAt) {
 		this.expiresAt = expiresAt;
 	}
+	
+	public Long getDurationInSeconds() {
+		return durationInSeconds;
+	}
+	public void setDurationInSeconds(Long durationInSeconds) {
+		this.durationInSeconds = durationInSeconds;
+	}
 	public LoginInfo(){
 		super();
 	}
-	public LoginInfo(BoxUser user){
+	public LoginInfo(BoxUser user, BoxUserRole role){
 		this.username=user.getUsername();
 		this.clientId=user.getClientId();
 		this.clientSecret=user.getClientSecret();
 		this.roles=user.getRoles();
-		this.expiresAt=user.getSecretExpiresAt();		
+		this.expiresAt=user.getSecretExpiresAt();	
+		this.durationInSeconds=role.getSecretDuration();
 	}
 }

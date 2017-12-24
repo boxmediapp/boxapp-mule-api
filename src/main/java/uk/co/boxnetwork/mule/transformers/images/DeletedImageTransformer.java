@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.co.boxnetwork.components.OperationalLogRepository;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -23,8 +24,15 @@ public class DeletedImageTransformer extends BoxRestTransformer{
 
 	
 	private String[] clientIds={"virgin","freesat","ee","sky","freeview"};
+	
+	
+	
+	protected boolean checkGETAccess(BoxOperator operator){
+	    return true;		    
+	}
+	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		String path=MuleRestUtil.getPathPath(message);
 		
 		if(path==null || path.length()==0){

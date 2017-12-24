@@ -17,6 +17,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.ScheduleEvent;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -29,7 +30,7 @@ public class ScheduleTransformer extends BoxRestTransformer{
 	AppConfig appConfig;
 			
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	protected Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){
 		String schduleid=MuleRestUtil.getPathPath(message);
 		
 		if(schduleid==null){			

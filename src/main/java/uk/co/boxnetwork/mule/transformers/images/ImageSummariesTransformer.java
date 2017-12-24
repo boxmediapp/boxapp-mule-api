@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import uk.co.boxnetwork.components.ImageService;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -18,7 +19,7 @@ public class ImageSummariesTransformer extends BoxRestTransformer{
 
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		String setid=MuleRestUtil.getPathPath(message);
 		if(setid==null || setid.length()==0){
 			return buildImageSummaries(message,outputEncoding);

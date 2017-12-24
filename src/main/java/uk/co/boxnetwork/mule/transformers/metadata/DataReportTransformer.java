@@ -15,6 +15,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -32,7 +33,7 @@ public class DataReportTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 	    return metadataMaintainanceService.getDataReport();	  
 	}
 	

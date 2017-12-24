@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import uk.co.boxnetwork.components.BCVideoService;
 import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.data.FileIngestRequest;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 
 public class BCImportFromBCWithCSV extends BoxRestTransformer{
@@ -19,7 +20,7 @@ public class BCImportFromBCWithCSV extends BoxRestTransformer{
 	MetadataMaintainanceService metadataRepository;
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message,BoxOperator operator, String outputEncoding){
 			String csvContent=null;
 			
 			try {
@@ -37,7 +38,7 @@ public class BCImportFromBCWithCSV extends BoxRestTransformer{
 		   }		  		  		  		  		  	    			 
 
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 
 		try {
 			return metadataRepository.createCSVBeBoxEpisodesFrom();

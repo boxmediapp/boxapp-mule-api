@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import uk.co.boxnetwork.components.BoxMedataRepository;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -21,7 +22,7 @@ public class TagsTransformer  extends BoxRestTransformer{
 	BoxMedataRepository boxMedataRepository;
 			
 	@Override
-	protected  Object processGET(MuleMessage message, String outputEncoding){					
+	protected  Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){					
 			String[] tags=boxMedataRepository.getAllTags();
 			if(tags==null){
 				tags=new String[0];				
@@ -29,7 +30,7 @@ public class TagsTransformer  extends BoxRestTransformer{
 			return tags;
 	}      
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String tag=MuleRestUtil.getPathPath(message);
 		if(tag==null || tag.length()==0){
 			logger.info("tag is not provided to delete");
@@ -40,7 +41,8 @@ public class TagsTransformer  extends BoxRestTransformer{
 			return boxMedataRepository.removeTag(tag);
 		}			 
 	}
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
 		try{	
     		    String tagInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new tag:"+tagInJson+"****");

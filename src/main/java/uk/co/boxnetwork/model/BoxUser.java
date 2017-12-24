@@ -42,13 +42,7 @@ public class BoxUser {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public void encrypt(String encryptionKey){
-		this.password=GenericUtilities.encrypt(encryptionKey, password);		
-	}
-	public void decrypt(String encryptionKey){
-		this.password=GenericUtilities.decrypt(encryptionKey, password);		
-	}
+	}	
 	public String getClientId() {
 		return clientId;
 	}
@@ -67,5 +61,7 @@ public class BoxUser {
 	public void setSecretExpiresAt(Long secretExpiresAt) {
 		this.secretExpiresAt = secretExpiresAt;
 	} 
-	
+	public String toString(){
+		return "username=["+username+"clientId=["+clientId+"]roles=["+roles+"]";
+	}
 }

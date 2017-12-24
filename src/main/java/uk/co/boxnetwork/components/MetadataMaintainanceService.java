@@ -33,6 +33,8 @@ import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
+import uk.co.boxnetwork.model.BoxUser;
+import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
 import uk.co.boxnetwork.model.MediaCommand;
@@ -41,7 +43,7 @@ import uk.co.boxnetwork.model.Series;
 import uk.co.boxnetwork.model.SeriesGroup;
 import uk.co.boxnetwork.model.TimedTask;
 import uk.co.boxnetwork.model.VideoStatus;
-
+import uk.co.boxnetwork.security.BoxUserService;
 import uk.co.boxnetwork.util.GenericUtilities;
 
 @Service
@@ -90,6 +92,8 @@ public class MetadataMaintainanceService {
 	
 	@Autowired
 	private ImageRepository imageRepository;
+	
+	
 	private static final Logger logger=LoggerFactory.getLogger(MetadataMaintainanceService.class);
 	
 	
@@ -891,10 +895,26 @@ public void calculateUploadedDuration(){
 	   imageRepository.createBoxChannel(new BoxChannel("1859498507", "Kiss"));
 	   imageRepository.createBoxChannel(new BoxChannel("1859498509", "Magic"));
 	   imageRepository.createBoxChannel(new BoxChannel("1865247002", "Box Hits"));
-	   imageRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));
-	   
-	   
-	   
-	   
+	   imageRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));	   
+   }
+   public void createBoxUserRoles(){	   	   	   	   
+	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(36000)));	   
+	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(36000)));
+	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(36000)));
+	   repository.createBoxUserRole(new BoxUserRole("client",     "ROLE_CLIENT", "client-access", Long.valueOf(3600)));
+	   repository.createBoxUserRole(new BoxUserRole("user",       "ROLE_USER",    "no-access",Long.valueOf(36000)));	   
+   }
+   public void convertUserRoleToOperator(){
+	   List<BoxUser> allusers=repository.findAllUsers();
+	   for(BoxUser user:allusers){
+		   if(user.getUsername().equals("dilshat")){
+			   user.setRoles("admin");
+			   repository.updateUser(user);
+		   }
+		   else if(user.getRoles().equals("user")){
+			   user.setRoles("operator");
+			   repository.updateUser(user);
+		   }
+	   }	   
    }
  }

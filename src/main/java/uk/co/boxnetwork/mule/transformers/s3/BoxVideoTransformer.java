@@ -22,6 +22,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.s3.VideoFileItem;
 import uk.co.boxnetwork.data.s3.VideoFileList;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -36,7 +37,8 @@ public class BoxVideoTransformer extends BoxRestTransformer{
 	@Autowired
 	AppConfig appConfig;
 	
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){
 		
 		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.S3ITEM);
 		int start=0;
@@ -92,7 +94,8 @@ public class BoxVideoTransformer extends BoxRestTransformer{
 		}
 				
 	}
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processPOST(MuleMessage message,BoxOperator operator, String outputEncoding){
 		Set<String> attachementnames=message.getInboundAttachmentNames();
 				
 		for(String attachementname:attachementnames){
@@ -134,8 +137,8 @@ public class BoxVideoTransformer extends BoxRestTransformer{
 		return message.getPayload();		
 	}
 	
-	
-	protected Object processDELETE(MuleMessage message, String outputEncoding){			
+	@Override
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){			
 		String path=MuleRestUtil.getPathPath(message);
 		String pathcomonents[]=path.split("/");
 		logger.info("path::::"+path);

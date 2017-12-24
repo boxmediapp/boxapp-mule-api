@@ -20,6 +20,7 @@ import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.BoxScheduleEvent;
+import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageSet;
 import uk.co.boxnetwork.model.ImageStatus;
@@ -49,6 +50,7 @@ public class ImageRepository {
 		entityManager.persist(boxChannel);
 		
 	}
+	
 	
 	public List<BoxEpisode> findBoxEpisodes(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getNewBoxEpisodeSelectQuery();

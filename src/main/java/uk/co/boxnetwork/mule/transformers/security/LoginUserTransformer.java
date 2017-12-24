@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import uk.co.boxnetwork.data.ErrorMessage;
+
 import uk.co.boxnetwork.model.BoxUser;
-import uk.co.boxnetwork.mule.model.ClientRequestInfo;
+import uk.co.boxnetwork.mule.model.BoxOperator;
+
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
-import uk.co.boxnetwork.mule.util.MuleRestUtil;
+
 import uk.co.boxnetwork.security.BoxUserService;
 
 public class LoginUserTransformer extends BoxRestTransformer{
@@ -18,12 +19,14 @@ public class LoginUserTransformer extends BoxRestTransformer{
 	BoxUserService boxUserService;
 	
 		
+	protected boolean checkPOSTAccess(BoxOperator operator){
+		   return true;				 
+	}
 	
     @Override	
-	 protected Object processPOST(MuleMessage message, String outputEncoding){
+	 protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
     	
-    	try{
-    			ClientRequestInfo userinfo=new ClientRequestInfo(message);
+    	try{    			
 		    	com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
 				objectMapper.setSerializationInclusion(Include.NON_NULL);
 				String requestInJson = (String)message.getPayloadAsString();							

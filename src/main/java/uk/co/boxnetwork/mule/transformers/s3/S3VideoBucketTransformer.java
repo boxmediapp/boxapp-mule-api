@@ -13,6 +13,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.MediaFilesLocation;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 
 public class S3VideoBucketTransformer extends BoxRestTransformer{
@@ -22,8 +23,12 @@ public class S3VideoBucketTransformer extends BoxRestTransformer{
 	@Autowired
 	AppConfig appConfig;
 	
+	protected boolean checkGETAccess(BoxOperator operator){
+		return true;
+   }
 	
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 		logger.info("s3 list request is received");
 		SearchParam searchParam=new SearchParam(message,appConfig,SearchParam.SearchParamType.S3ITEM);
 		int start=0;

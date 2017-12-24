@@ -18,6 +18,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -33,9 +34,27 @@ public class SoundmouseTransformer extends BoxRestTransformer{
 	@Autowired
 	AppConfig appConfig;
 	
-	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected boolean checkGETAccess(BoxOperator operator){
+	    return true;		    
+	}
+	protected boolean checkPOSTAccess(BoxOperator operator){
+	   return true;				 
+	}	
+	protected boolean checkPUTAccess(BoxOperator operator){	
+		return true;	  
+	}
+	protected boolean checkDELETEAccess(BoxOperator operator){			
+	   return true;
+	   
+	}	
+	protected boolean checkPATCHAccess(BoxOperator operator){	   					
+	   return true;		   
+	}
+
+
+	@Override
+	protected Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){				
 		String uripath=MuleRestUtil.getPathPath(message);
 		if(uripath==null || uripath.length()==0){
 			return returnError("not supported",message);
@@ -71,7 +90,7 @@ public class SoundmouseTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
 		try{
 		    String commandInJson=(String)message.getPayloadAsString();		   
 		   logger.info("*****Received soudmouse command:"+commandInJson+"****");

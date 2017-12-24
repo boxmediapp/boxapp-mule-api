@@ -12,7 +12,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.Image;
 import uk.co.boxnetwork.data.image.ImageSet;
 import uk.co.boxnetwork.model.AppConfig;
-import uk.co.boxnetwork.mule.model.ClientRequestInfo;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -31,7 +31,7 @@ public class ImageSetTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){				
 		String setid=MuleRestUtil.getPathPath(message);
 		if(setid==null || setid.length()==0){
 			return findImageSets(message,outputEncoding);
@@ -46,7 +46,7 @@ public class ImageSetTransformer extends BoxRestTransformer{
 	   return imageService.findImageSets(searchParam);	   
 	}
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String setid=MuleRestUtil.getPathPath(message);
 		if(setid==null || setid.length()==0){
 			return createImageSet(message,outputEncoding);
@@ -56,7 +56,7 @@ public class ImageSetTransformer extends BoxRestTransformer{
 		}
 	}
 	@Override
-	protected Object processPUT(MuleMessage message, String outputEncoding){
+	protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String setid=MuleRestUtil.getPathPath(message);
 		if(setid==null || setid.length()==0){
 			return returnError("plural put not supported", message);
@@ -67,14 +67,14 @@ public class ImageSetTransformer extends BoxRestTransformer{
 		}
 	}
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){
+	protected Object processDELETE(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String imgsetid=MuleRestUtil.getPathPath(message);
 		if(imgsetid==null || imgsetid.length()==0){
 			return returnError("DELETE not supoorted for pulural", message);
 		}
 		else{
-				ClientRequestInfo userinfo=new ClientRequestInfo(message);
-				return imageService.deleteImageSetById(Long.valueOf(imgsetid),userinfo.getUsername());
+				
+				return imageService.deleteImageSetById(Long.valueOf(imgsetid),operator.getUsername());
 				
 			}
 			

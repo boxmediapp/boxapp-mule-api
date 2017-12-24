@@ -18,6 +18,7 @@ import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MetadataStatus;
 import uk.co.boxnetwork.model.PublishedStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -33,7 +34,7 @@ public class ListEpisodeTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		String episodeid=MuleRestUtil.getPathPath(message);
 		if(episodeid==null || episodeid.length()==0){
 			return getAllEpisodes(message,outputEncoding);

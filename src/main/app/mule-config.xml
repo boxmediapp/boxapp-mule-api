@@ -123,8 +123,6 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
          
          <spring:bean id="userService" class="uk.co.boxnetwork.security.BoxUserService">
          	  <spring:property name="encryptionKey" value="${boxtv_metadata_app.security.encryption}"/>
-         	  <spring:property name="defaultRootPassword" value="${boxtv_metadata_app.security.defaultRootPassword}"/>
-         	  
          </spring:bean>
          
          <spring:bean id="appConfiguration" class="uk.co.boxnetwork.model.AppConfig">         	  

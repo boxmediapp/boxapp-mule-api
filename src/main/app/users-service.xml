@@ -17,8 +17,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	         	<transformer ref="doNothingTransformer"/>         	
 	  		 </when>
 	    	<otherwise>
-	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<http:basic-security-filter realm="mule-realm"/>	        	
 	        	<transformer ref="boxUsersTransformer" doc:name="User Service Transformer"/>    	
 	        </otherwise>
 	    </choice>
