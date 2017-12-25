@@ -25,7 +25,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="listBoxEpisodeService" doc:name="Transformer Episode Service"/>	        	
 	        </otherwise>
 	    </choice>
@@ -47,7 +47,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="listBoxScheduleEpisodeService" doc:name="Transformer Episode Service"/>	 
 	        	       	
 	        </otherwise>
@@ -70,6 +70,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="imageSetService" doc:name="Transformer Image Set Service"/>    	
 	        </otherwise>
 	    </choice>
@@ -92,6 +93,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="imageTransformer" doc:name="Transformer Image Service"/>	        	    	
 	        </otherwise>
 	    </choice>
@@ -110,9 +112,10 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
 	         	<transformer ref="doNothingTransformer"/>         	
 	  		 </when>
-	    	<otherwise>	        	
-	        	<transformer ref="imageSummaries" doc:name="Transformer Image Summaries"/>
-	        		        	    	
+	    	<otherwise>	
+	    		<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>        	
+	        	<transformer ref="imageSummaries" doc:name="Transformer Image Summaries"/>	        		        	    	
 	        </otherwise>
 	    </choice>
 

@@ -3,9 +3,11 @@ package uk.co.boxnetwork.security;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
+import org.python.modules.synchronize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +18,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.boxnetwork.components.BoxMedataRepository;
 import uk.co.boxnetwork.components.RandomStringGenerator;
+import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.app.LoginInfo;
 import uk.co.boxnetwork.model.BoxUser;
+import uk.co.boxnetwork.model.BoxUserRole;
+import uk.co.boxnetwork.util.GenericUtilities;
 
 
 public class BoxUserService implements UserDetailsService{
+	
+	private  static List<BoxUserRole> userRoles=new ArrayList<BoxUserRole>();
+	
+	private  static Map<String, LoginInfo> temporaryLoginInfo=new HashMap<String, LoginInfo>();
+	
+	
 	
 	private static final Logger logger=LoggerFactory.getLogger(BoxUserService.class);
 	
@@ -36,7 +47,7 @@ public class BoxUserService implements UserDetailsService{
 
 	private String encryptionKey;
 	
-	private String defaultRootPassword;
+	
 	
 	@Autowired
 	private RandomStringGenerator randomStringGenerator;
@@ -48,18 +59,13 @@ public class BoxUserService implements UserDetailsService{
 	}
 
 
-	public void setDefaultRootPassword(String defaultRootPassword) {
-		this.defaultRootPassword = defaultRootPassword;
-	}
-
-
-	private List<SimpleGrantedAuthority> getAuthorities(BoxUser user) {
-        List<SimpleGrantedAuthority> authList = new ArrayList<SimpleGrantedAuthority>();
-        String roles[]=user.getRoles().split(",");
-        for(String role:roles){
-        	role=role.trim();
-        	String rolename="ROLE_"+role.toUpperCase();        	
-        	authList.add(new SimpleGrantedAuthority(rolename));
+	
+	
+	
+	private List<SimpleGrantedAuthority> getAuthorities(List<BoxUserRole> boxuserRoles) {
+        List<SimpleGrantedAuthority> authList = new ArrayList<SimpleGrantedAuthority>();                	
+        for(BoxUserRole role:boxuserRoles){
+        	authList.add(new SimpleGrantedAuthority(role.getApiAccess()));
         }
         return authList;        
     }
@@ -68,56 +74,41 @@ public class BoxUserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
+		String password="Xh6OE0iiBi";				
+		List<BoxUserRole> boxUserRoles=null;
+		removeExpiredLoginInfo();
 		
+		LoginInfo loginInfo=findLoginInfoByClientId(username);			
 		
-		BoxUser boxuser=getUserByUserName(username);
-		
-		String password=null;
-		if(boxuser==null){
-			boxuser=getUserByClientId(username);
-			if(boxuser==null){
-				throw new UsernameNotFoundException("User details not found with this username: " + username);
-			}
-			Date now=new Date();
-			if(now.getTime()>boxuser.getSecretExpiresAt()){
-				logger.error("The client secret is expired:"+now.getTime()+">"+boxuser.getSecretExpiresAt());
-			}
-			else{
-				password=boxuser.getClientSecret();
-			}
-			
-						
-			/*
-			if("root".equals(username)){
-				password=this.defaultRootPassword;
-				boxuser=new BoxUser();
-				boxuser.setUsername("root");
-				boxuser.setPassword(password);
-				boxuser.setRoles("admin");				
-				createNewUser(boxuser);
-			}
-			else{
-				throw new UsernameNotFoundException("User details not found with this username: " + username);
-			}
-			*/
-			
+		if(loginInfo!=null){		
+			loginInfo.refreshExpiresAt();
+			boxUserRoles=loginInfo.getRoles();
+			password=loginInfo.getClientSecret();						
 		}
-		else{			
-			password=boxuser.getPassword();			
-		}	
-		
-		List<SimpleGrantedAuthority> authList = getAuthorities(boxuser);
+		else{	
+				BoxUser boxuser=getUserByClientId(username);		
+				if(boxuser==null){
+						boxuser=getUserByUserName(username);
+						if(boxuser==null){
+							throw new UsernameNotFoundException("User details not found with this username: " + username);
+						}
+						password=GenericUtilities.decrypt(encryptionKey, boxuser.getPassword());
+				}
+				else{
+					password=boxuser.getClientSecret();
+				}																
+				boxUserRoles=findBoxUserRole(boxuser);															
+		}					
+		List<SimpleGrantedAuthority> authList = getAuthorities(boxUserRoles);
 		String encodedPassword = passwordEncoder.encode(password);
-		User user=new User(username, encodedPassword, authList);
-		return user;
+		return new User(username, encodedPassword, authList);		
 	}
     public BoxUser getUserByUserName(String username){
     	List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(username);
     	if(matchedusers.size()==0){
     		return null;
     	}    	
-    	BoxUser boxuser=matchedusers.get(0);
-		boxuser.decrypt(encryptionKey);
+    	BoxUser boxuser=matchedusers.get(0);		
 		return boxuser;
     }
     public BoxUser getUserByClientId(String clientId){
@@ -132,37 +123,105 @@ public class BoxUserService implements UserDetailsService{
 		List<BoxUser> users=boxMetadataRepository.findAllUsers();
 		for(BoxUser user:users){
 			user.setPassword("***********");
+			user.setClientSecret("*****");
 		}
 		return users;
 	}
 	
 	 
-	
-	public void createNewUser(BoxUser user){
-		user.encrypt(encryptionKey);
+	public void setPassword(BoxUser user, String password){
+		user.setPassword(GenericUtilities.encrypt(encryptionKey, password));
+	}
+	public void createNewUser(BoxUser user){			
 		boxMetadataRepository.createUser(user);
 	}
 	public void deleteUser(String username){
 		boxMetadataRepository.deleteByUsername(username);		
 	}
-	public void updateUser(BoxUser user){
-		user.encrypt(encryptionKey);
+	public void updateUser(BoxUser user){		
 		boxMetadataRepository.updateUser(user);		
 	}
-	public LoginInfo createClientIdAndSecret(BoxUser user){
+	
+	public LoginInfo createLoginInfo(BoxUser user){
 		List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(user.getUsername());
     	if(matchedusers.size()==0){
     		return null;
     	}
     	BoxUser boxuser=matchedusers.get(0);
     	if(boxuser.getClientId()==null||boxuser.getClientId().trim().length()==0){
-    		boxuser.setClientId(randomStringGenerator.nextString(10));    		
-    	}
-    	boxuser.setClientSecret(randomStringGenerator.nextString(23));
-    	Date now=new Date();
-    	long nowInMilliseconds=now.getTime();    	
-    	boxuser.setSecretExpiresAt(nowInMilliseconds+3600*10*1000);
-    	boxMetadataRepository.updateUser(boxuser);
-    	return new LoginInfo(boxuser);    	
+    		boxuser.setClientId(randomStringGenerator.nextString(10));
+    		boxuser.setClientSecret(randomStringGenerator.nextString(23));
+    		boxMetadataRepository.updateUser(boxuser);
+    	}    	    	    	    
+    	LoginInfo loginInfo= new LoginInfo(boxuser);    	
+    	List<BoxUserRole> userroles=findBoxUserRole(boxuser);
+    	loginInfo.setRoles(userroles);
+    	loginInfo.setClientId(randomStringGenerator.nextString(10));
+    	loginInfo.setClientSecret(randomStringGenerator.nextString(23));
+    	loginInfo.refreshExpiresAt();    	    	
+    	synchronized(temporaryLoginInfo){
+    		temporaryLoginInfo.put(loginInfo.getClientId(), loginInfo);
+    	}    	
+    	return loginInfo;    	    	
 	}
+	
+	public LoginInfo findLoginInfoByClientId(String clientId){
+		synchronized(temporaryLoginInfo){
+			return temporaryLoginInfo.get(clientId);
+		}
+	}
+	public void removeLoginInfoByClientId(String clientId){
+		synchronized(temporaryLoginInfo){
+				temporaryLoginInfo.remove(clientId);
+				logger.info("**********logged out:"+clientId);
+		}
+	}
+	public void removeExpiredLoginInfo(){
+		try{
+					synchronized(temporaryLoginInfo){
+						if(temporaryLoginInfo.size()==0){
+							return;
+						}
+						for(Map.Entry<String, LoginInfo> linfo: temporaryLoginInfo.entrySet()){
+							if(linfo.getValue().expired()){
+								temporaryLoginInfo.remove(linfo.getKey());
+							}
+						}
+						
+					}
+		}
+		catch(Exception e){
+			logger.error(e+" while checking the expired logininfo",e);
+		}
+	}
+	public  List<BoxUserRole> getAllUserRoles(){
+			synchronized(userRoles){
+					if(userRoles.size()==0){
+						userRoles=boxMetadataRepository.findAllUserRoles();						
+					}
+			}
+			return userRoles;		
+	}
+	public List<BoxUserRole> findBoxUserRole(BoxUser user){
+			List<BoxUserRole> ret=new ArrayList<BoxUserRole>();		
+			List<BoxUserRole> availableRoles=getAllUserRoles();		
+			logger.info("****:user:"+user);
+			logger.info("****:roles:"+user.getRoles());
+			String[] userroles=user.getRoles().trim().split(",");
+			for(BoxUserRole r:availableRoles){
+				for(String userrole:userroles){
+					if(r.getRolename().equals(userrole)){
+						ret.add(r);
+						break;
+					}
+				}
+				if(ret.size()>=userroles.length){
+					break;
+				}
+		    }					
+			return ret;
+	}
+		
+	
+	
 }

@@ -18,6 +18,7 @@ import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.components.S3BucketService;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -35,7 +36,7 @@ public class BoxMasterImageTransformer extends BoxRestTransformer{
 	
 		
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 		logger.info("boximage.get request is received");
 		SearchParam searchParam=new SearchParam(message,appConfig,SearchParam.SearchParamType.S3ITEM);
 		int start=0;
@@ -49,7 +50,7 @@ public class BoxMasterImageTransformer extends BoxRestTransformer{
 		return s3uckerService.listMasterImageItem(searchParam.getPrefix(),start,numberOfRecords);		
 	}
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		Set<String> attachementnames=message.getInboundAttachmentNames();
 				
 		for(String attachementname:attachementnames){
@@ -90,8 +91,8 @@ public class BoxMasterImageTransformer extends BoxRestTransformer{
 		logger.info("*******Completed***");
 		return message.getPayload();		
 	}
-	 
-	protected Object processDELETE(MuleMessage message, String outputEncoding){			
+	@Override 
+	protected Object processDELETE(MuleMessage message, BoxOperator operator, String outputEncoding){			
 		String path=MuleRestUtil.getPathPath(message);
 		String pathcomonents[]=path.split("/");
 		logger.info("path::::"+path);

@@ -20,11 +20,7 @@ public class BoxUser {
     
     @Column(name="client_secret")
     private String clientSecret;
-    
-    @Column(name="secret_expires_at")
-    private Long secretExpiresAt;
-    
-    
+           
 	public String getRoles() {
 		return roles;
 	}
@@ -42,13 +38,7 @@ public class BoxUser {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public void encrypt(String encryptionKey){
-		this.password=GenericUtilities.encrypt(encryptionKey, password);		
-	}
-	public void decrypt(String encryptionKey){
-		this.password=GenericUtilities.decrypt(encryptionKey, password);		
-	}
+	}	
 	public String getClientId() {
 		return clientId;
 	}
@@ -60,12 +50,8 @@ public class BoxUser {
 	}
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
+	}	 
+	public String toString(){
+		return "username=["+username+"clientId=["+clientId+"]roles=["+roles+"]";
 	}
-	public Long getSecretExpiresAt() {
-		return secretExpiresAt;
-	}
-	public void setSecretExpiresAt(Long secretExpiresAt) {
-		this.secretExpiresAt = secretExpiresAt;
-	} 
-	
 }

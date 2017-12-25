@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.util.GenericUtilities;
 
@@ -18,7 +19,8 @@ public class CommandExecutionTransformer extends BoxRestTransformer{
 	MetadataService metataService;
 	
 	
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
 		try{	
     		    String commandInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new command:"+commandInJson+"****");

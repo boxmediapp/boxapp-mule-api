@@ -17,6 +17,7 @@ import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.data.ErrorMessage;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.transformers.metadata.EpisodeTransformer;
 import uk.co.boxnetwork.mule.util.MenuMessageUtil;
@@ -33,7 +34,7 @@ public class BCVideoTransmer extends  BoxRestTransformer{
 	MetadataService metataService;
 	
 	@Override
-		protected Object processGET(MuleMessage message, String outputEncoding){
+		protected Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){
 			
 		String videoid=MuleRestUtil.getPathPath(message);
 		if(videoid==null || videoid.length()==0){

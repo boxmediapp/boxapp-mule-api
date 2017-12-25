@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.data.Episode;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -22,7 +23,7 @@ public class AvailabilityTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		String pathpart=MuleRestUtil.getPathPath(message);		 
 		if(pathpart==null || pathpart.length()==0){
 			return returnError("the episodeId is missing", message);
@@ -48,7 +49,7 @@ public class AvailabilityTransformer extends BoxRestTransformer{
 	}
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){				
+	protected Object processPOST(MuleMessage message,BoxOperator operator,  String outputEncoding){				
 		String pathpart=MuleRestUtil.getPathPath(message);		 
 		if(pathpart==null || pathpart.length()==0){
 			return returnError("the episodeId is missing", message);
@@ -86,7 +87,7 @@ public class AvailabilityTransformer extends BoxRestTransformer{
 	}
 	
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String pathpart=MuleRestUtil.getPathPath(message);		 
 		if(pathpart==null || pathpart.length()==0){
 			return returnError("the episodeId is missing", message);
@@ -103,7 +104,7 @@ public class AvailabilityTransformer extends BoxRestTransformer{
 	}
 	
 	@Override
-	protected Object processPUT(MuleMessage message, String outputEncoding){	
+	protected Object processPUT(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String pathpart=MuleRestUtil.getPathPath(message);		 
 		if(pathpart==null || pathpart.length()==0){
 			return returnError("the episodeId is missing", message);

@@ -13,6 +13,7 @@ import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.app.AppInfo;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.TimedTask;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -25,7 +26,7 @@ public class LoadAppInformationTransformer extends BoxRestTransformer{
 	MetadataMaintainanceService maintainanceService;
 	
 	@Override
-	 protected Object processGET(MuleMessage message, String outputEncoding){
+	 protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){
 		AppInfo appInfo=new AppInfo();
 		appInfo.setAppconfig(appConfig);
 			return appInfo;
@@ -33,7 +34,7 @@ public class LoadAppInformationTransformer extends BoxRestTransformer{
 	
 	
 	 @Override
-     protected Object processPUT(MuleMessage message, String outputEncoding) throws Exception{
+     protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding) throws Exception{
 		 	AppInfo  appInfo=null;		   
 		   if(message.getPayload() instanceof AppInfo){
 			   appInfo=(AppInfo)message.getPayload();			   

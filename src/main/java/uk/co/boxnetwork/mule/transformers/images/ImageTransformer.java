@@ -12,7 +12,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.Image;
 
 import uk.co.boxnetwork.model.AppConfig;
-import uk.co.boxnetwork.mule.model.ClientRequestInfo;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -26,7 +26,7 @@ public class ImageTransformer extends BoxRestTransformer{
 	AppConfig appConfig;
 
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		String imgid=MuleRestUtil.getPathPath(message);
 		if(imgid==null || imgid.length()==0){
 			return findImages(message,outputEncoding);
@@ -63,7 +63,7 @@ public class ImageTransformer extends BoxRestTransformer{
 		return image;
 	}
 	@Override
-	protected Object processPUT(MuleMessage message, String outputEncoding){
+	protected Object processPUT(MuleMessage message, BoxOperator operator,String outputEncoding){
 		String imgid=MuleRestUtil.getPathPath(message);
 		if(imgid==null || imgid.length()==0){
 			return returnError("PUT not supoorted for pulural", message);
@@ -83,15 +83,15 @@ public class ImageTransformer extends BoxRestTransformer{
 	}
 	
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){
 		
 		String imgid=MuleRestUtil.getPathPath(message);
 		if(imgid==null || imgid.length()==0){
 			return returnError("DELETE not supoorted for pulural", message);
 		}
 		else{		
-					ClientRequestInfo userinfo=new ClientRequestInfo(message);
-					uk.co.boxnetwork.data.image.Image image=imageService.deleteImageById(Long.valueOf(imgid),userinfo.getUsername());					
+					
+					uk.co.boxnetwork.data.image.Image image=imageService.deleteImageById(Long.valueOf(imgid),operator.getUsername());					
 					return image;
 				
 			}
@@ -100,7 +100,7 @@ public class ImageTransformer extends BoxRestTransformer{
 	}
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String imgid=MuleRestUtil.getPathPath(message);
 		if(imgid==null || imgid.length()==0){
 			Object obj=parseImage(message,outputEncoding);

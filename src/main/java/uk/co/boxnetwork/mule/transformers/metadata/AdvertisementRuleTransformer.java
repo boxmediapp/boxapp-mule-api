@@ -10,6 +10,7 @@ import uk.co.boxnetwork.components.BoxMedataRepository;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AdvertisementRule;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -23,7 +24,7 @@ public class AdvertisementRuleTransformer extends BoxRestTransformer{
 	AppConfig appConfig;
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){		
 		String ruleid=MuleRestUtil.getPathPath(message);
 		if(ruleid==null || ruleid.length()==0){
 			return getAllRules(message,outputEncoding);
@@ -44,7 +45,7 @@ public class AdvertisementRuleTransformer extends BoxRestTransformer{
    }
 	
 	@Override	
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String ruleInJson=null;
 		try{	
 			ruleInJson=(String)message.getPayloadAsString();
@@ -76,7 +77,7 @@ public class AdvertisementRuleTransformer extends BoxRestTransformer{
 			}
     }
 	@Override	
-	protected Object processPUT(MuleMessage message, String outputEncoding){
+	protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding){
 		String ruleid=MuleRestUtil.getPathPath(message);
 		if(ruleid==null || ruleid.length()==0){
 			returnError("does not support put", message);
@@ -116,7 +117,7 @@ public class AdvertisementRuleTransformer extends BoxRestTransformer{
 			}
     }
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message, BoxOperator operator, String outputEncoding){	
 		String ruleid=MuleRestUtil.getPathPath(message);		 
 		if(ruleid==null || ruleid.length()==0){
 			return returnError("the ruleId is missing", message);

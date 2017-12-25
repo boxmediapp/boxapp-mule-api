@@ -12,13 +12,15 @@ import uk.co.boxnetwork.components.S3BucketService;
 import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.S3FileSignatureData;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 
 public class PresignedURLTransformer extends BoxRestTransformer{
 	@Autowired
 	private S3BucketService s3uckerService;
 	
-	protected Object processGET(MuleMessage message, String outputEncoding){
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){
 		Map<String, String> queryprarams=message.getInboundProperty("http.query.params");		
 		String prefix=null;
 		if(queryprarams!=null && queryprarams.get("url")!=null){
@@ -32,7 +34,8 @@ public class PresignedURLTransformer extends BoxRestTransformer{
 			return new ErrorMessage("the parameter is missing");
 		}	
 	}
-	 protected Object processPOST(MuleMessage message, String outputEncoding){
+	@Override
+	 protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		 try{
 			   String commandInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new command:"+commandInJson+"****");

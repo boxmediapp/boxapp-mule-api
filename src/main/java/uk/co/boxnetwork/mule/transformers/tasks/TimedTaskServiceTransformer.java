@@ -14,6 +14,7 @@ import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.model.ImportScheduleType;
 import uk.co.boxnetwork.model.TimedTask;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -25,7 +26,7 @@ public class TimedTaskServiceTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){		
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){		
 		String payload=null;
 		try {
 			payload = message.getPayloadAsString();
@@ -47,7 +48,7 @@ public class TimedTaskServiceTransformer extends BoxRestTransformer{
 		  		  	    			 
 	}
 	@Override
-	 protected Object processGET(MuleMessage message, String outputEncoding){
+	 protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 		    ParameterMap queryparams=message.getInboundProperty("http.query.params");
 		    String channel=queryparams.get("channel");
 		    String importScheduleType=queryparams.get("importScheduleType");
@@ -69,7 +70,8 @@ public class TimedTaskServiceTransformer extends BoxRestTransformer{
 		    }
 			
 	 }
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	@Override
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String taskid=MuleRestUtil.getPathPath(message);
 		logger.info("deleting the task:"+taskid);
 		if(taskid==null || taskid.length()==0){

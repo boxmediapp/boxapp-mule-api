@@ -13,6 +13,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.data.soundmouse.SoundMouseData;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -27,7 +28,7 @@ public class BCAnalyticsDataTransformer extends  BoxRestTransformer{
     private BCConfiguration bcConfiguration;
 
 	@Override
-		protected Object processGET(MuleMessage message, String outputEncoding){
+		protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){
 			 
 			 
 		     SearchParam searchParam=new SearchParam(message, appConfig, SearchParam.SearchParamType.BCREPORT);

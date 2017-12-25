@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import uk.co.boxnetwork.components.BoxMedataRepository;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -17,12 +18,12 @@ public class ClientDeciceTransformer  extends BoxRestTransformer{
 	BoxMedataRepository boxMedataRepository;
 			
 	@Override
-	protected  Object processGET(MuleMessage message, String outputEncoding){					
+	protected  Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){					
 		    List<uk.co.boxnetwork.model.ClientDevice> devices=boxMedataRepository.getAllClientDevices();		    
 			return devices;
 	}      
 	@Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message,BoxOperator operator, String outputEncoding){	
 		String device=MuleRestUtil.getPathPath(message);
 		if(device==null || device.length()==0){
 			logger.info("device is not provided to delete");
@@ -33,7 +34,9 @@ public class ClientDeciceTransformer  extends BoxRestTransformer{
 			return boxMedataRepository.removeClientDevice(device);
 		}			 
 	}
-	protected Object processPOST(MuleMessage message, String outputEncoding){
+	
+	@Override
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		try{	
     		    String deviceInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new device:"+deviceInJson+"****");

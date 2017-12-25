@@ -7,6 +7,7 @@ import org.mule.api.MuleMessage;
 import uk.co.boxnetwork.data.ErrorMessage;
 
 import uk.co.boxnetwork.mule.components.LoadResourceAsInputStream;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 
 
@@ -18,11 +19,12 @@ public class MockSoapServiceTransformer  extends BoxRestTransformer{
 		this.file = file;
 	}
 	
-	protected Object processGET(MuleMessage message, String outputEncoding){		
-		return processPOST(message,outputEncoding);
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator, String outputEncoding){		
+		return processPOST(message,operator,outputEncoding);
 	}
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){		
+	protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){		
 		  try{
 			     if(file==null){
 			       throw new RuntimeException("missing file parameter");	 

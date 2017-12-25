@@ -14,6 +14,7 @@ import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.transformers.metadata.EpisodeTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
@@ -24,7 +25,7 @@ public class BCVideoPublisher extends BoxRestTransformer{
 	BCVideoService bcVideoService;
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){		
+	protected Object processPOST(MuleMessage message,BoxOperator operator, String outputEncoding){		
 		String episodeid=MuleRestUtil.getPathPath(message);
 		if(episodeid==null||episodeid.length()==0){
 			   return new ErrorMessage("The episodeid is missing in POST");
@@ -33,7 +34,8 @@ public class BCVideoPublisher extends BoxRestTransformer{
 		  return bcVideoService.publishEpisodeToBrightcove(id);		  
 		  		  	    			 
 	}
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	@Override
+	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
 		String episodeid=MuleRestUtil.getPathPath(message);
 		if(episodeid==null||episodeid.length()==0){
 			   return new ErrorMessage("The episodeid is missing in DELETE");

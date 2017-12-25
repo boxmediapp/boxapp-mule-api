@@ -23,6 +23,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MetadataStatus;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -40,7 +41,7 @@ public class EpisodeTransformer extends BoxRestTransformer{
 		
 		
 		@Override
-		protected Object processGET(MuleMessage message, String outputEncoding){				
+		protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 			String episodeid=MuleRestUtil.getPathPath(message);
 			if(episodeid==null || episodeid.length()==0){
 				return getAllEpisodes(message,outputEncoding);
@@ -63,7 +64,7 @@ public class EpisodeTransformer extends BoxRestTransformer{
 			
 		
          @Override
-       protected Object processPUT(MuleMessage message, String outputEncoding) throws Exception{
+       protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding) throws Exception{
     	   String episodeid=MuleRestUtil.getPathPath(message);
     	   
     	   if(episodeid==null||episodeid.length()==0){
@@ -107,9 +108,8 @@ public class EpisodeTransformer extends BoxRestTransformer{
 		   
 		}  
          
-         
-         
-    	protected Object processPOST(MuleMessage message, String outputEncoding){
+         @Override         
+    	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
     		String episodeInJson=null;
     		try{	
     			episodeInJson=(String)message.getPayloadAsString();
@@ -209,7 +209,7 @@ public class EpisodeTransformer extends BoxRestTransformer{
     		
         }
     	@Override
-    	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+    	protected Object processDELETE(MuleMessage message, BoxOperator operator,String outputEncoding){	
     		String episodeid=MuleRestUtil.getPathPath(message);
 			if(episodeid==null || episodeid.length()==0){
 				return returnError("Do not support delete all episodes",message);

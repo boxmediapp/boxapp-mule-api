@@ -33,7 +33,7 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="boxVideoTransformer" doc:name="Box Video"/>    	
 	        </otherwise>
 	    </choice>
@@ -50,6 +50,7 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>	        	
 	        	<transformer ref="dbboxVideoTransformer" doc:name="Box Video"/>    	
 	        </otherwise>
 	    </choice>
@@ -70,6 +71,7 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
 	        	<transformer ref="presignedURLTransformer" doc:name="presgined"/>    	
 	        </otherwise>
 	    </choice>
@@ -87,6 +89,7 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
 	  		 </when>
 	    	<otherwise>
 	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>	        	
 	        	<transformer ref="boxMasterImageTransfoer" doc:name="Box Video"/>
 	        	    	
 	        </otherwise>

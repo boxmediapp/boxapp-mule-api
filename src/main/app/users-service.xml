@@ -17,9 +17,25 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	         	<transformer ref="doNothingTransformer"/>         	
 	  		 </when>
 	    	<otherwise>
-	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_USER', 'ROLE_ADMIN'} }"/>
+	        	<http:basic-security-filter realm="mule-realm"/>	        	
 	        	<transformer ref="boxUsersTransformer" doc:name="User Service Transformer"/>    	
+	        </otherwise>
+	    </choice>
+        
+        
+         
+             
+    </flow>
+    
+    <flow name="user-role-service-flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.userroles}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>	        	
+	        	<transformer ref="userRolesTransformer" doc:name="User Role Service Transformer"/>    	
 	        </otherwise>
 	    </choice>
         

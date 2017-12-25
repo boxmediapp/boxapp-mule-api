@@ -16,6 +16,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.SeriesGroup;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Series;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -30,7 +31,7 @@ public class SeriesGroupTransformer extends BoxRestTransformer{
 	
 			
 	@Override
-	protected  Object processGET(MuleMessage message, String outputEncoding){
+	protected  Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){
 			
 		String seriesgroupdid=MuleRestUtil.getPathPath(message);
 		if(seriesgroupdid==null || seriesgroupdid.length()==0){
@@ -51,7 +52,7 @@ public class SeriesGroupTransformer extends BoxRestTransformer{
    
    
     @Override	
-   protected Object processPUT(MuleMessage message, String outputEncoding) throws Exception{
+   protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding) throws Exception{
 	   String seriesgroupid=MuleRestUtil.getPathPath(message);
 	   if(seriesgroupid==null||seriesgroupid.length()==0){
 		   return returnError("seriesgroupid is required",message);
@@ -82,7 +83,7 @@ public class SeriesGroupTransformer extends BoxRestTransformer{
 	}
     
     @Override
-	protected Object processDELETE(MuleMessage message, String outputEncoding){	
+	protected Object processDELETE(MuleMessage message, BoxOperator operator, String outputEncoding){	
 		String seriesgroupid=MuleRestUtil.getPathPath(message);
 		if(seriesgroupid==null || seriesgroupid.length()==0){
 			return returnError("Do not support delete all seriesgroup",message);
@@ -98,7 +99,7 @@ public class SeriesGroupTransformer extends BoxRestTransformer{
 	}
     
     @Override
-    protected Object processPOST(MuleMessage message, String outputEncoding){
+    protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
 		try{	
     		    String episodeInJson=(String)message.getPayloadAsString();		   
 			   logger.info("*****Posted a new series group:"+episodeInJson+"****");

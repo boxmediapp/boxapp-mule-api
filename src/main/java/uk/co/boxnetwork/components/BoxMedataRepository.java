@@ -28,6 +28,7 @@ import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.BoxUser;
+import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.CertificationCategory;
 import uk.co.boxnetwork.model.CertificationTime;
 import uk.co.boxnetwork.model.CertificationType;
@@ -1077,6 +1078,28 @@ public class BoxMedataRepository {
     	   TypedQuery<BoxUser> query=entityManager.createQuery("SELECT u FROM user u", BoxUser.class);
 		   List<BoxUser> users=query.getResultList();
 		   return users;
+       }
+	   
+	   @Transactional
+		public void createBoxUserRole(BoxUserRole boxUserRole){
+			if(boxUserRole==null||boxUserRole.getRolename().trim().length()==0){
+				return;
+			}
+			BoxUserRole foundRole=entityManager.find(BoxUserRole.class, boxUserRole.getRolename());
+			if(foundRole!=null){
+				logger.info("role is already in db so will bot be created");
+				return;
+			}
+			else{
+				logger.info("is going to create a new role:"+boxUserRole.getRolename());
+			}
+			entityManager.persist(boxUserRole);		
+		}
+
+	   public List<BoxUserRole> findAllUserRoles(){		   
+    	   TypedQuery<BoxUserRole> query=entityManager.createQuery("SELECT u FROM user_role u", BoxUserRole.class);
+		   List<BoxUserRole> roles=query.getResultList();
+		   return roles;
        }
 	   
 	   @Transactional

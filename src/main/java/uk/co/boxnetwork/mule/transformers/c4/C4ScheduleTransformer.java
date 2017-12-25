@@ -11,6 +11,7 @@ import uk.co.boxnetwork.components.MetadataService;
 import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -21,7 +22,7 @@ public class C4ScheduleTransformer extends BoxRestTransformer{
 	
 	
 	@Override
-	protected Object processGET(MuleMessage message, String outputEncoding){				
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
 		ImportScheduleRequest request=new ImportScheduleRequest();
 		request.setChannelId("1865244993");
 		request.setFromDate("2016-07-08");

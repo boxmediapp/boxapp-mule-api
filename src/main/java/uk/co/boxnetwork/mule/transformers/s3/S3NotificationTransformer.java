@@ -17,6 +17,7 @@ import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.FileIngestRequest;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.data.s3.S3Notifivcation;
+import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.mule.util.MuleRestUtil;
 
@@ -26,7 +27,28 @@ public class S3NotificationTransformer extends BoxRestTransformer{
 	private NotificationReceiver notificationReceiver; 
 	
 	@Override
-	protected Object processPOST(MuleMessage message, String outputEncoding){		
+	protected boolean checkGETAccess(BoxOperator operator){
+	    return true;		    
+   }
+	@Override
+	protected boolean checkPOSTAccess(BoxOperator operator){
+	   return true;				 
+	}	
+	@Override
+	protected boolean checkPUTAccess(BoxOperator operator){
+	
+		return true;
+	}
+	protected boolean checkDELETEAccess(BoxOperator operator){			
+		return true;	   
+	}	
+   protected boolean checkPATCHAccess(BoxOperator operator){	   					
+	  return true;		   
+   }
+
+
+	@Override
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){		
 		try{
 			
 			com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
