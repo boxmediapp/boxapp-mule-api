@@ -899,7 +899,7 @@ public void calculateUploadedDuration(){
    }
    public void createBoxUserRoles(){	
 	   logger.info("**************start to create roles***********");
-	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(3600)));	   
+	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(360)));	   
 	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(3600)));
 	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(3600)));
 	   repository.createBoxUserRole(new BoxUserRole("client",     "ROLE_CLIENT", "client-access", Long.valueOf(3600)));
