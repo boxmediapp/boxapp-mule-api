@@ -28,6 +28,36 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
          
              
     </flow>
+     <flow name="refreshlogin-service-flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.refreshlogin}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>	        	
+	        	<transformer ref="refreshloginTransformer" doc:name="Login Service Transformer"/>
+	        </otherwise>
+	    </choice>
+             
+    </flow>
+    
+     <flow name="logout-service-flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.userlogout}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>	        	
+	        	<transformer ref="logoutTransformer" doc:name="Logout Service Transformer"/>
+	        </otherwise>
+	    </choice>
+             
+    </flow>
+    
+    
+
     
 
 </mule>

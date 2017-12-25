@@ -20,11 +20,7 @@ public class BoxUser {
     
     @Column(name="client_secret")
     private String clientSecret;
-    
-    @Column(name="secret_expires_at")
-    private Long secretExpiresAt;
-    
-    
+           
 	public String getRoles() {
 		return roles;
 	}
@@ -54,13 +50,7 @@ public class BoxUser {
 	}
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
-	}
-	public Long getSecretExpiresAt() {
-		return secretExpiresAt;
-	}
-	public void setSecretExpiresAt(Long secretExpiresAt) {
-		this.secretExpiresAt = secretExpiresAt;
-	} 
+	}	 
 	public String toString(){
 		return "username=["+username+"clientId=["+clientId+"]roles=["+roles+"]";
 	}

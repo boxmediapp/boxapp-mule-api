@@ -1,15 +1,18 @@
 package uk.co.boxnetwork.data.app;
 
+import java.util.Date;
+import java.util.List;
+
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 
 public class LoginInfo {
 	private String username;
-    private String roles;       
+    private List<BoxUserRole> roles;       
     private String clientId;       
     private String clientSecret;
     private Long expiresAt;
-    private Long durationInSeconds;
+    private Long durationInSeconds=Long.valueOf(3600);
     
 	public String getUsername() {
 		return username;
@@ -17,11 +20,13 @@ public class LoginInfo {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getRoles() {
-		return roles;
+	
+	
+	public Long getDurationInSeconds() {
+		return durationInSeconds;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+	public void setDurationInSeconds(Long durationInSeconds) {
+		this.durationInSeconds = durationInSeconds;
 	}
 	public String getClientId() {
 		return clientId;
@@ -44,21 +49,38 @@ public class LoginInfo {
 		this.expiresAt = expiresAt;
 	}
 	
-	public Long getDurationInSeconds() {
-		return durationInSeconds;
-	}
-	public void setDurationInSeconds(Long durationInSeconds) {
-		this.durationInSeconds = durationInSeconds;
-	}
+	
 	public LoginInfo(){
 		super();
 	}
-	public LoginInfo(BoxUser user, BoxUserRole role){
+	public void refreshExpiresAt(){
+		Date now=new Date();    	
+    	long nowInMilliseconds=now.getTime();    	    	    	
+    	expiresAt=nowInMilliseconds+durationInSeconds*1000; 		
+	}
+	public boolean expired(){
+		Date now=new Date();
+		if(now.getTime()>this.expiresAt){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public List<BoxUserRole> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<BoxUserRole> roles) {
+		this.roles = roles;
+		if(this.roles!=null && this.roles.size()>0){
+			this.durationInSeconds=roles.get(0).getSecretDuration();
+		}
+	}
+	public LoginInfo(BoxUser user){
 		this.username=user.getUsername();
 		this.clientId=user.getClientId();
-		this.clientSecret=user.getClientSecret();
-		this.roles=user.getRoles();
-		this.expiresAt=user.getSecretExpiresAt();	
-		this.durationInSeconds=role.getSecretDuration();
+		this.clientSecret=user.getClientSecret();							
 	}
+	
 }

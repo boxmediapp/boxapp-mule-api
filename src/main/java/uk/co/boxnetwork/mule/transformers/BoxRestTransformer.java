@@ -13,12 +13,12 @@ import org.mule.transformer.AbstractMessageTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
+import uk.co.boxnetwork.data.app.LoginInfo;
 import uk.co.boxnetwork.data.bc.BCErrorMessage;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
@@ -47,20 +47,37 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 	public  BoxOperator getOperator(MuleMessage message){		   
 			BoxOperator userinfo=new BoxOperator(message);
 			if(userinfo.getUsername()!=null){
-				BoxUser operator=boxUserService.getUserByUserName(userinfo.getUsername());
-				if(operator==null){
-					operator=boxUserService.getUserByClientId(userinfo.getUsername());					
+				BoxUser operator=null;
+				LoginInfo loginInfo=boxUserService.findLoginInfoByClientId(userinfo.getUsername());				
+				if(loginInfo!=null){
+					userinfo.setLoginInfo(loginInfo);
+					operator=boxUserService.getUserByUserName(loginInfo.getUsername());
 					if(operator!=null){
-						userinfo.setIdentityType(IdentityType.CLIENTID);
+						userinfo.setIdentityType(IdentityType.TEMPCLIENTID);
+					}		
+					else{
+							throw new RuntimeException("logged in user cannot be found from the database:"+userinfo.getUsername());
 					}
-				}
-				if(operator!=null){
-					List<BoxUserRole> roles=boxUserService.findBoxUserRole(operator);
-					userinfo.setRoles(roles);
+					
 				}
 				else{
-					throw new RuntimeException("Unknow identity, the user cannot be found from the database:"+userinfo.getUsername());
-				}				
+						operator=boxUserService.getUserByClientId(userinfo.getUsername());
+						if(operator==null){
+							operator=boxUserService.getUserByUserName(userinfo.getUsername());
+							if(operator!=null){
+								userinfo.setIdentityType(IdentityType.USERNAME);
+							}
+							else{
+								throw new RuntimeException("username cannot be found from the database:"+userinfo.getUsername());
+							}
+						}
+						else{
+							userinfo.setIdentityType(IdentityType.CLIENTID);
+						}
+				}	
+				List<BoxUserRole> roles=boxUserService.findBoxUserRole(operator);
+				userinfo.setRoles(roles);
+				userinfo.setUser(operator);
 			}			
 			return userinfo;
 	}	

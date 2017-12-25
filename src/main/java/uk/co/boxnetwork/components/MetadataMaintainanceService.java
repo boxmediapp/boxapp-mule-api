@@ -897,12 +897,14 @@ public void calculateUploadedDuration(){
 	   imageRepository.createBoxChannel(new BoxChannel("1865247002", "Box Hits"));
 	   imageRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));	   
    }
-   public void createBoxUserRoles(){	   	   	   	   
-	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(36000)));	   
-	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(36000)));
-	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(36000)));
+   public void createBoxUserRoles(){	
+	   logger.info("**************start to create roles***********");
+	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(3600)));	   
+	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(3600)));
+	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(3600)));
 	   repository.createBoxUserRole(new BoxUserRole("client",     "ROLE_CLIENT", "client-access", Long.valueOf(3600)));
-	   repository.createBoxUserRole(new BoxUserRole("user",       "ROLE_USER",    "no-access",Long.valueOf(36000)));	   
+	   repository.createBoxUserRole(new BoxUserRole("user",       "ROLE_USER",    "no-access",Long.valueOf(3600)));
+	   logger.info("**************end to create roles***********");
    }
    public void convertUserRoleToOperator(){
 	   List<BoxUser> allusers=repository.findAllUsers();

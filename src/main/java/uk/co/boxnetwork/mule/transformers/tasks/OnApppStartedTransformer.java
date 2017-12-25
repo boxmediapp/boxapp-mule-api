@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
+import org.python.modules.synchronize;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -23,6 +24,9 @@ import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.util.GenericUtilities;
 
 public class OnApppStartedTransformer extends AbstractMessageTransformer{
+	private static boolean appStarted=false; 
+	private  static Object appStartedMonitor=new Object();
+	
 	ExecutorService pool = Executors.newFixedThreadPool(1);
 	
 	@Autowired
@@ -49,6 +53,12 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
     }
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
+		synchronized(appStartedMonitor){
+			if(appStarted){
+				return  message.getPayload();
+			}
+			appStarted=true;			
+		}
 		logger.info("Application initialization");
 		metadataMaintainanceService.syncAppConfigWithDatabase();
 		metadataMaintainanceService.syncS3VideoItems();

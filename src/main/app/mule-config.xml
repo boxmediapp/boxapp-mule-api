@@ -245,6 +245,11 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.BoxUsersTransformer" name="boxUsersTransformer" doc:name="BoxUsersTransformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.LoginUserTransformer" name="loginTransformer" doc:name="loginTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.RefreshLoginTransformer" name="refreshloginTransformer" doc:name="refreshloginTransformer"/>
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.LogoutTransformer" name="logoutTransformer" doc:name="logoutTransformer"/>
+   
+   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.security.UserRolesTransformer" name="userRolesTransformer" doc:name="UserRolesTransformer"/>
    
    
    

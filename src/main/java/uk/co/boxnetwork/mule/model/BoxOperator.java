@@ -9,6 +9,8 @@ import org.mule.api.transport.PropertyScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.boxnetwork.data.app.LoginInfo;
+import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 
 public class BoxOperator {
@@ -20,6 +22,9 @@ public class BoxOperator {
 	private String requesturi;
 	private String referer;
 	private List<BoxUserRole> roles;
+	private BoxUser user;
+	private LoginInfo loginInfo;
+	
 	private IdentityType identityType=IdentityType.NO_CREDENTIAL;
 	
 	public BoxOperator(MuleMessage message){
@@ -149,6 +154,18 @@ public class BoxOperator {
 	}
 	public void setIdentityType(IdentityType identityType) {
 		this.identityType = identityType;
+	}
+	public BoxUser getUser() {
+		return user;
+	}
+	public void setUser(BoxUser user) {
+		this.user = user;
+	}
+	public LoginInfo getLoginInfo() {
+		return loginInfo;
+	}
+	public void setLoginInfo(LoginInfo loginInfo) {
+		this.loginInfo = loginInfo;
 	}
 	
 	
