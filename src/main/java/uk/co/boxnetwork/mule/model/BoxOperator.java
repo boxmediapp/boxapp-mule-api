@@ -37,7 +37,7 @@ public class BoxOperator {
 				    String authorization=message.getProperty("authorization", PropertyScope.INBOUND);
 					this.username=null;		
 					
-					if(authorization!=null){						
+					if(authorization!=null && authorization.length() > 5){						
 						 String base64Credentials = authorization.substring("Basic".length()).trim();
 					        String credentials = new String(Base64.getDecoder().decode(base64Credentials),
 					                Charset.forName("UTF-8"));

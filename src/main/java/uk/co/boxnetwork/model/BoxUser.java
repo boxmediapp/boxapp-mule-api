@@ -15,11 +15,26 @@ public class BoxUser {
   
     private String roles;
     
+    
+    
     @Column(name="client_id")
     private String clientId;
     
     @Column(name="client_secret")
     private String clientSecret;
+    
+   
+    private String firstName;
+    
+    private String lastName;   
+    
+    private String email;
+    
+    private String company;
+    
+    private String userStatus;
+    
+    
            
 	public String getRoles() {
 		return roles;
@@ -50,8 +65,40 @@ public class BoxUser {
 	}
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
-	}	 
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
 	public String toString(){
-		return "username=["+username+"clientId=["+clientId+"]roles=["+roles+"]";
+		return "username=["+username+"clientId=["+clientId+"]roles=["+roles+"]firstName=["+firstName+"]lastName["+lastName+"]company=["+company+"]userStatus=["+userStatus+"]";
 	}
 }

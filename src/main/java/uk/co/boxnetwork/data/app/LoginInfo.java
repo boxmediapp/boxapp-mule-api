@@ -12,6 +12,9 @@ public class LoginInfo {
     private String clientId;       
     private String clientSecret;
     private Long expiresAt;
+    private String application;
+    private String userStatus;
+    
     private Long durationInSeconds=Long.valueOf(3600);
     
 	public String getUsername() {
@@ -50,6 +53,12 @@ public class LoginInfo {
 	}
 	
 	
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
 	public LoginInfo(){
 		super();
 	}
@@ -77,10 +86,21 @@ public class LoginInfo {
 			this.durationInSeconds=roles.get(0).getSecretDuration();
 		}
 	}
+	
+	
+	
+	public String getApplication() {
+		return application;
+	}
+	public void setApplication(String application) {
+		this.application = application;
+	}
 	public LoginInfo(BoxUser user){
 		this.username=user.getUsername();
 		this.clientId=user.getClientId();
-		this.clientSecret=user.getClientSecret();							
+		this.clientSecret=user.getClientSecret();
+		this.userStatus=user.getUserStatus();
 	}
+	
 	
 }

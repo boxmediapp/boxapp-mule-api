@@ -39,47 +39,50 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 		return objectMapper.writeValueAsString(obj);			
 	}
 	public String returnError(String desc,MuleMessage message){
+		return returnError(desc,message,500);
+	}
+	public String returnError(String desc,MuleMessage message, int code){
 		
-		message.setOutboundProperty("http.status", 500);		
+		message.setOutboundProperty("http.status", code);		
 		return "{\"error\":\""+desc+"\"}";		
 	}
 	
 	public  BoxOperator getOperator(MuleMessage message){		   
-			BoxOperator userinfo=new BoxOperator(message);
-			if(userinfo.getUsername()!=null){
-				BoxUser operator=null;
-				LoginInfo loginInfo=boxUserService.findLoginInfoByClientId(userinfo.getUsername());				
-				if(loginInfo!=null){
-					userinfo.setLoginInfo(loginInfo);
-					operator=boxUserService.getUserByUserName(loginInfo.getUsername());
-					if(operator!=null){
-						userinfo.setIdentityType(IdentityType.TEMPCLIENTID);
+			BoxOperator operator=new BoxOperator(message);
+			if(operator.getUsername()!=null){
+				BoxUser user=null;
+				LoginInfo loginInfo=boxUserService.findLoginInfoByClientId(operator.getUsername());				
+				if(loginInfo!=null){ //User Logged In User.
+					operator.setLoginInfo(loginInfo);					
+					user=boxUserService.getUserByUserName(loginInfo.getUsername());
+					if(user!=null){
+						operator.setIdentityType(IdentityType.TEMPCLIENTID);
 					}		
 					else{
-							throw new RuntimeException("logged in user cannot be found from the database:"+userinfo.getUsername());
+							throw new RuntimeException("logged in user cannot be found from the database:"+operator.getUsername());
 					}
 					
 				}
 				else{
-						operator=boxUserService.getUserByClientId(userinfo.getUsername());
-						if(operator==null){
-							operator=boxUserService.getUserByUserName(userinfo.getUsername());
-							if(operator!=null){
-								userinfo.setIdentityType(IdentityType.USERNAME);
+						user=boxUserService.getUserByClientId(operator.getUsername());
+						if(user==null){
+							user=boxUserService.getUserByUserName(operator.getUsername());
+							if(user!=null){
+								operator.setIdentityType(IdentityType.USERNAME); 
 							}
 							else{
-								throw new RuntimeException("username cannot be found from the database:"+userinfo.getUsername());
+								throw new RuntimeException("username cannot be found from the database:"+operator.getUsername());
 							}
 						}
 						else{
-							userinfo.setIdentityType(IdentityType.CLIENTID);
+							operator.setIdentityType(IdentityType.CLIENTID);
 						}
-				}	
-				List<BoxUserRole> roles=boxUserService.findBoxUserRole(operator);
-				userinfo.setRoles(roles);
-				userinfo.setUser(operator);
+				}					
+				List<BoxUserRole> roles=boxUserService.findBoxUserRole(user);
+				operator.setRoles(roles);
+				operator.setUser(user);
 			}			
-			return userinfo;
+			return operator;
 	}	
 	protected boolean checkGETAccess(BoxOperator operator){
 		    return operator.checkGETAccess();		    

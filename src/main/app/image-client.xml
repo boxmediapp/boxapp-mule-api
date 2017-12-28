@@ -7,44 +7,54 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/current/mule-spring-security.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
-http://www.springframewor.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
-    <flow name="user-service-flow">
-        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.users.path}/*" doc:name="HTTP"/>
-        <choice doc:name="Choice">
-	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
-	         	<transformer ref="doNothingTransformer"/>         	
-	  		 </when>
-	    	<otherwise>
-	        	<http:basic-security-filter realm="mule-realm"/>	        	
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>
-	        	<transformer ref="boxUsersTransformer" doc:name="User Service Transformer"/>    	
-	        </otherwise>
-	    </choice>
-        
-        
-         
-             
-    </flow>
+       
     
-    <flow name="user-role-service-flow">
-        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.userroles}/*" doc:name="HTTP"/>
+     <flow name="client-images">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.clients.all}/*" doc:name="HTTP">
+        <http:response-builder>
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        
+        
         <choice doc:name="Choice">
 	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
 	         	<transformer ref="doNothingTransformer"/>         	
 	  		 </when>
-	    	<otherwise>
+	    	<otherwise>	        	
+	        	<transformer ref="allClientTransformer" doc:name="allClientTransformer"/>
 	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>	        	
-	        	<transformer ref="userRolesTransformer" doc:name="User Role Service Transformer"/>    	
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN','ROLE_CLIENT'} }"/>
 	        </otherwise>
 	    </choice>
-        
-        
-         
-             
+
     </flow>
     
+    
+    
+    <flow name="deleted-images">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${image_service_app.deletedImages}/*" doc:name="HTTP">
+        <http:response-builder>
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        
+        
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>	        	
+	    	    <http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN','ROLE_CLIENT'} }"/>
+	        	<transformer ref="deletedImageTransformer" doc:name="DeletedImageTransformer"/>
+	        </otherwise>
+	    </choice>
 
+    </flow>
+    
+    
 </mule>

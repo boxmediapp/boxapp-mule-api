@@ -31,7 +31,7 @@ public class LoginUserTransformer extends BoxRestTransformer{
 				objectMapper.setSerializationInclusion(Include.NON_NULL);
 				String requestInJson = (String)message.getPayloadAsString();							
 				BoxUser boxuser = objectMapper.readValue(requestInJson, BoxUser.class);				
-				return boxUserService.createLoginInfo(boxuser);
+				return boxUserService.createLoginInfo(operator.getUsername()); 
     	}
     	catch(Exception e){
 	    	logger.error("error is processing creating user :"+message.getPayload().getClass().getName());

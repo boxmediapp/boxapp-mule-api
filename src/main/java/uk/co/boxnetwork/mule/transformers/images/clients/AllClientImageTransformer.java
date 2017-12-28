@@ -1,4 +1,4 @@
-package uk.co.boxnetwork.mule.transformers.images;
+package uk.co.boxnetwork.mule.transformers.images.clients;
 
 import org.mule.api.MuleMessage;
 import org.slf4j.Logger;
