@@ -24,7 +24,6 @@ public class AllClientImageTransformer extends BoxRestTransformer{
 	AppConfig appConfig;
 
 	
-	private String[] clientIds={"virgin","freesat","ee","sky","freeview"};
 	
 	@Override
 	protected boolean checkGETAccess(BoxOperator operator){
@@ -36,73 +35,21 @@ public class AllClientImageTransformer extends BoxRestTransformer{
 		String path=MuleRestUtil.getPathPath(message);
 		
 		if(path==null || path.length()==0){
-			return findImages(message,outputEncoding);
-			}
-		else{
-			   int ib=path.indexOf("/");
-			   String clientIdPath=null;
-			   String imgid=null;
-			   if(ib==0){
-				   return returnError("wrong path", message);
-			   }
-			   else if(ib>0){
-				   clientIdPath=path.substring(0,ib);	
-				   if((ib+1)<path.length()){
-					   imgid=path.substring(ib+1);
-				   }
-			   }
-			   else{
-				   clientIdPath=path;
-			   }
-			   String clientId=null;
-			   for(String id:clientIds){
-				   if(id.equals(clientIdPath)){
-					   clientId=id;
-					   break;
-				   }
-			   }
-			   if(clientId==null){
-				   if(imgid!=null){
-					   return returnError("wrong client id:"+path, message);
-				   }
-				   else{
-					   Long imid=null;
-					   try{
-						   imid=Long.valueOf(clientIdPath);
+				return findImages(message,outputEncoding);
+	     }
+		else{			   
+				Long imid=null;
+				try{
+						   imid=Long.valueOf(path);
 						   return imageService.findClientImageById(imid);
 						   
-					   }
+			    }
 					   catch(Exception e){
 						   return returnError("wrong client id"+path, message);
 					   }
-				   }
-				   
-			   }
-			   else{
-				   return findImages(clientId,imgid,message,outputEncoding);
-			   }
-			   
-			   
-								
 		}
+
 	}
-	private Object findImages(String clientid,String imgid,MuleMessage message, String outputEncoding){
-		logger.info("Processing client image request clientid=["+clientid+"]imgid=["+imgid+"]");
-		if(imgid==null){
-			return findImages(message,outputEncoding);
-		}
-		else{
-			try{
-				  Long imid=Long.valueOf(imgid);
-				   return imageService.findClientImageById(imid);
-				   
-			   }
-			   catch(Exception e){
-				   return returnError("wrong imgid id"+imgid, message);
-			   }
-		}
-	}
-	
 	private  Object findImages(MuleMessage message, String outputEncoding){
 	   SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);
 	   return imageService.findClientImages(searchParam);	  	   

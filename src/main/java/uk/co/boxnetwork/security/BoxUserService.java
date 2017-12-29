@@ -198,12 +198,34 @@ public class BoxUserService implements UserDetailsService{
 		}
 		return ret;
 	}
+	public void updateLoginInfoUserRole(BoxUser user){
+		List<LoginInfo> loginfos=findAllLoginInfoByUserName(user.getUsername());
+	 	  if(loginfos.size()>0){
+	 		  List<BoxUserRole> userroles=findBoxUserRole(user);
+	 		  for(LoginInfo loginInfo:loginfos){
+	 			 loginInfo.setRoles(userroles);
+	 	    	 loginInfo.setApplication(selectApplicationFromRoles(userroles));			 	    	
+		 	  }
+	 	  }
+	}
+	
 	public void removeLoginInfoByClientId(String clientId){
 		synchronized(temporaryLoginInfo){
 				temporaryLoginInfo.remove(clientId);
 				logger.info("**********logged out:"+clientId);
 		}
 	}
+    public void removeLoginInfoByUser(BoxUser user){
+    	synchronized(temporaryLoginInfo){
+		    	List<LoginInfo> loginfos=findAllLoginInfoByUserName(user.getUsername());
+			 	  if(loginfos.size()>0){	 		  
+			 		  for(LoginInfo loginInfo:loginfos){
+			 			  temporaryLoginInfo.remove(loginInfo.getClientId());		 	    	
+				 	  }
+			 	  }
+    	}
+	}
+
 	public void removeExpiredLoginInfo(){
 		try{
 					synchronized(temporaryLoginInfo){

@@ -25,6 +25,11 @@ public class BoxUsersTransformer extends BoxRestTransformer{
 			return boxUserService.listUsers();							
 	}
 	
+	@Override
+	protected boolean checkDELETEAccess(BoxOperator operator){			
+	
+		return operator.checkAdminAccess();
+	}
 	
 	@Override
 	protected Object processDELETE(MuleMessage message, BoxOperator operator, String outputEncoding){
@@ -44,14 +49,17 @@ public class BoxUsersTransformer extends BoxRestTransformer{
 		  logger.error("User attempted to delete his/her account!!!!!:username=["+username+"]");
 		  return new ErrorMessage("You cannot delete your own account!");
 	  }	  
-	   boxUserService.deleteUser(username);  
+	   boxUserService.deleteUser(username); 
+	   boxUserService.removeLoginInfoByUser(user);
  	   return user;
 	}
 	@Override
+	protected boolean checkPUTAccess(BoxOperator operator){
+		 return operator.checkAdminAccess();				
+	}
+	@Override
 	protected Object processPUT(MuleMessage message, BoxOperator operator, String outputEncoding) throws Exception{
-		   if(!operator.checkAdminAccess()){
-				return deniedAccessMessage(message,outputEncoding);
-		   }
+		  
 		   String username=MuleRestUtil.getPathPath(message);
 	 	   if(username==null||username.length()==0){
 	 		   return new ErrorMessage("The username is missing in PUT");
@@ -71,14 +79,7 @@ public class BoxUsersTransformer extends BoxRestTransformer{
 		  if(usedata.getRoles()!=null){			  				  
 	 	 		  user.setRoles(usedata.getRoles());	 	 	        
 			 	  boxUserService.updateUser(user);
-			 	  List<LoginInfo> loginfos=boxUserService.findAllLoginInfoByUserName(user.getUsername());
-			 	  if(loginfos.size()>0){
-			 		  List<BoxUserRole> userroles=boxUserService.findBoxUserRole(user);
-			 		  for(LoginInfo loginInfo:loginfos){
-			 			 loginInfo.setRoles(userroles);
-			 	    	 loginInfo.setApplication(boxUserService.selectApplicationFromRoles(userroles));			 	    	
-				 	  }
-			 	  }
+			 	  boxUserService.updateLoginInfoUserRole(user);
 		  }
 		  else if(usedata.getPassword()!=null){			  
 				  boxUserService.setPassword(user, usedata.getPassword());
@@ -88,7 +89,7 @@ public class BoxUsersTransformer extends BoxRestTransformer{
 	 	  return usedata;	 	   
 	}
 		
-	
+	/*
     @Override	
 	 protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
     	if(!operator.checkAdminAccess()){
@@ -111,6 +112,6 @@ public class BoxUsersTransformer extends BoxRestTransformer{
     	}
 					 
 	}	
-
+*/
 	
 }

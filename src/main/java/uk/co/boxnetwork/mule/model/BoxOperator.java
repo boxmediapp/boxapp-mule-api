@@ -140,7 +140,7 @@ public class BoxOperator {
 		}
 		return false;		
 	}
-	public boolean  checkPUTAccess(){
+	public boolean  checkPUTAccess(){	
 		return checkPOSTAccess();
 	}
 	public boolean checkDELETEAccess(){
