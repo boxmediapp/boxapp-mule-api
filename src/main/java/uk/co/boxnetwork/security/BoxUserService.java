@@ -104,12 +104,7 @@ public class BoxUserService implements UserDetailsService{
 		return new User(username, encodedPassword, authList);		
 	}
     public BoxUser getUserByUserName(String username){
-    	List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(username);
-    	if(matchedusers.size()==0){
-    		return null;
-    	}    	
-    	BoxUser boxuser=matchedusers.get(0);		
-		return boxuser;
+    	return boxMetadataRepository.findAUserByUsername(username);    	
     }
     public BoxUser getUserByClientId(String clientId){
     	List<BoxUser> matchedusers=boxMetadataRepository.findUserByClientId(clientId);    	
@@ -149,12 +144,11 @@ public class BoxUserService implements UserDetailsService{
 				return "subscribe";
 		}
 	}
-	public LoginInfo createLoginInfo(String userName){
-		List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(userName);
-    	if(matchedusers.size()==0){
+	public LoginInfo createLoginInfo(String userName){		
+    	BoxUser boxuser=boxMetadataRepository.findAUserByUsername(userName);
+    	if(boxuser==null){
     		return null;
-    	}
-    	BoxUser boxuser=matchedusers.get(0);
+    	}    			
     	if(boxuser.getClientId()==null||boxuser.getClientId().trim().length()==0){
     		boxuser.setClientId(randomStringGenerator.nextString(10));
     		boxuser.setClientSecret(randomStringGenerator.nextString(23));
@@ -171,6 +165,14 @@ public class BoxUserService implements UserDetailsService{
     		temporaryLoginInfo.put(loginInfo.getClientId(), loginInfo);
     	}    	
     	return loginInfo;    	    	
+	}
+	public void regenerateClientSecret(BoxUser user){
+		BoxUser boxuser=boxMetadataRepository.findAUserByUsername(user.getUsername());
+		if(boxuser==null){
+			return;
+		}    	
+    	boxuser.setClientSecret(randomStringGenerator.nextString(23));
+    	boxMetadataRepository.updateUser(boxuser);
 	}
 	
 	public LoginInfo findLoginInfoByClientId(String clientId){

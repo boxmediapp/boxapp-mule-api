@@ -8,8 +8,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.model.UserAccountData;
+import uk.co.boxnetwork.mule.model.UserAccountDataAction;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.security.BoxUserService;
+
 
 public class UserAccountTransformer  extends BoxRestTransformer{	
 	@Autowired
@@ -28,7 +30,16 @@ public class UserAccountTransformer  extends BoxRestTransformer{
 	   return true;	   
 	}	
 	protected boolean checkPATCHAccess(BoxOperator operator){	   					
-	   return operator.checkPATCHAccess();		   
+	   return true;		   
+	}
+	@Override
+	protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){		
+		BoxUser user=operator.getUser();
+		if(user==null){
+			return returnError("Not logged in",message,403);			
+		}
+		UserAccountData accountData=new UserAccountData(user);
+		return accountData;
 	}
 	
 	@Override	
@@ -46,8 +57,17 @@ public class UserAccountTransformer  extends BoxRestTransformer{
 									if(operator.getLoginInfo()!=null){
 										operator.getLoginInfo().setUserStatus(userAccount.getUserStatus());
 									}
-							}							
-							return userAccount;
+									return userAccount;
+							}
+							else if(userAccount.getAction()==UserAccountDataAction.REGENERATE_CLIENT_SECRET){
+								boxUserService.regenerateClientSecret(operator.getUser());
+								BoxUser boxuser=boxUserService.getUserByUserName(operator.getUser().getUsername());
+								return new UserAccountData(boxuser);
+							}
+							else{
+								return userAccount;
+							}
+														
 			   	}
 			   	catch(Exception e){
 				    	logger.error("error is processing creating user :"+message.getPayload().getClass().getName());
