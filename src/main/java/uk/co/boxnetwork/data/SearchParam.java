@@ -501,7 +501,7 @@ public String getImageSelectQuery(){
 	boolean hasWhere=false;
 	
     if(this.search!=null){		
-			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.boxEpisode.programmeNumber LIKE :search)";
+			 query+=" where (e.imageSet.title LIKE :search OR e.imageSet.boxEpisode.programmeNumber LIKE :search OR e.tags LIKE :search)";
 			 hasWhere=true;
 	}
     else if(programmeNumber!=null){

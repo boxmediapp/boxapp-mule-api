@@ -80,21 +80,21 @@ public class BoxUserService implements UserDetailsService{
 		
 		LoginInfo loginInfo=findLoginInfoByClientId(username);			
 		
-		if(loginInfo!=null){		
-			loginInfo.refreshExpiresAt();
-			boxUserRoles=loginInfo.getRoles();
-			password=loginInfo.getClientSecret();						
+		if(loginInfo!=null){ //logged in user by calling previously createLoginInfo()		
+			loginInfo.refreshExpiresAt(); //refresh the expiry date of the temporary crendentials.
+			boxUserRoles=loginInfo.getRoles(); //get the roles from the logininfo
+			password=loginInfo.getClientSecret(); //passoword is the client secret.						
 		}
 		else{	
-				BoxUser boxuser=getUserByClientId(username);		
-				if(boxuser==null){
+				BoxUser boxuser=getUserByClientId(username); //check whether user used the clientId & clientSecret?		
+				if(boxuser==null){    //Try with the username and user password.
 						boxuser=getUserByUserName(username);
-						if(boxuser==null){
+						if(boxuser==null){ //All the crendtials are exausted.
 							throw new UsernameNotFoundException("User details not found with this username: " + username);
 						}
-						password=GenericUtilities.decrypt(encryptionKey, boxuser.getPassword());
+						password=GenericUtilities.decrypt(encryptionKey, boxuser.getPassword()); //Basic username & password credentials.
 				}
-				else{
+				else{//clientId & clientSecret authentication.
 					password=boxuser.getClientSecret();
 				}																
 				boxUserRoles=findBoxUserRole(boxuser);															
@@ -104,12 +104,7 @@ public class BoxUserService implements UserDetailsService{
 		return new User(username, encodedPassword, authList);		
 	}
     public BoxUser getUserByUserName(String username){
-    	List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(username);
-    	if(matchedusers.size()==0){
-    		return null;
-    	}    	
-    	BoxUser boxuser=matchedusers.get(0);		
-		return boxuser;
+    	return boxMetadataRepository.findAUserByUsername(username);    	
     }
     public BoxUser getUserByClientId(String clientId){
     	List<BoxUser> matchedusers=boxMetadataRepository.findUserByClientId(clientId);    	
@@ -141,13 +136,19 @@ public class BoxUserService implements UserDetailsService{
 	public void updateUser(BoxUser user){		
 		boxMetadataRepository.updateUser(user);		
 	}
-	
-	public LoginInfo createLoginInfo(BoxUser user){
-		List<BoxUser> matchedusers=boxMetadataRepository.findUserByUsername(user.getUsername());
-    	if(matchedusers.size()==0){
+	public String selectApplicationFromRoles(List<BoxUserRole> userroles){				
+		if(userroles!=null&& userroles.size()>0){
+			return userroles.get(0).getApplication();
+		}
+		else{
+				return "subscribe";
+		}
+	}
+	public LoginInfo createLoginInfo(String userName){		
+    	BoxUser boxuser=boxMetadataRepository.findAUserByUsername(userName);
+    	if(boxuser==null){
     		return null;
-    	}
-    	BoxUser boxuser=matchedusers.get(0);
+    	}    			
     	if(boxuser.getClientId()==null||boxuser.getClientId().trim().length()==0){
     		boxuser.setClientId(randomStringGenerator.nextString(10));
     		boxuser.setClientSecret(randomStringGenerator.nextString(23));
@@ -156,6 +157,7 @@ public class BoxUserService implements UserDetailsService{
     	LoginInfo loginInfo= new LoginInfo(boxuser);    	
     	List<BoxUserRole> userroles=findBoxUserRole(boxuser);
     	loginInfo.setRoles(userroles);
+    	loginInfo.setApplication(selectApplicationFromRoles(userroles));
     	loginInfo.setClientId(randomStringGenerator.nextString(10));
     	loginInfo.setClientSecret(randomStringGenerator.nextString(23));
     	loginInfo.refreshExpiresAt();    	    	
@@ -164,18 +166,68 @@ public class BoxUserService implements UserDetailsService{
     	}    	
     	return loginInfo;    	    	
 	}
+	public void regenerateClientSecret(BoxUser user){
+		BoxUser boxuser=boxMetadataRepository.findAUserByUsername(user.getUsername());
+		if(boxuser==null){
+			return;
+		}    	
+    	boxuser.setClientSecret(randomStringGenerator.nextString(23));
+    	boxMetadataRepository.updateUser(boxuser);
+	}
 	
 	public LoginInfo findLoginInfoByClientId(String clientId){
 		synchronized(temporaryLoginInfo){
 			return temporaryLoginInfo.get(clientId);
 		}
 	}
+	public List<LoginInfo> findAllLoginInfoByUserName(String username){
+		 List<LoginInfo> ret=new ArrayList<LoginInfo>();
+		try{
+			synchronized(temporaryLoginInfo){
+				if(temporaryLoginInfo.size()==0){
+					return ret;
+				}
+				for(Map.Entry<String, LoginInfo> linfo: temporaryLoginInfo.entrySet()){
+					if(linfo.getValue().getUsername().equals(username)){
+						ret.add(linfo.getValue());
+					}
+				}
+				
+			}
+		}
+		catch(Exception e){
+					logger.error(e+" while getting the logininfo by username",e);					
+		}
+		return ret;
+	}
+	public void updateLoginInfoUserRole(BoxUser user){
+		List<LoginInfo> loginfos=findAllLoginInfoByUserName(user.getUsername());
+	 	  if(loginfos.size()>0){
+	 		  List<BoxUserRole> userroles=findBoxUserRole(user);
+	 		  for(LoginInfo loginInfo:loginfos){
+	 			 loginInfo.setRoles(userroles);
+	 	    	 loginInfo.setApplication(selectApplicationFromRoles(userroles));			 	    	
+		 	  }
+	 	  }
+	}
+	
 	public void removeLoginInfoByClientId(String clientId){
 		synchronized(temporaryLoginInfo){
 				temporaryLoginInfo.remove(clientId);
 				logger.info("**********logged out:"+clientId);
 		}
 	}
+    public void removeLoginInfoByUser(BoxUser user){
+    	synchronized(temporaryLoginInfo){
+		    	List<LoginInfo> loginfos=findAllLoginInfoByUserName(user.getUsername());
+			 	  if(loginfos.size()>0){	 		  
+			 		  for(LoginInfo loginInfo:loginfos){
+			 			  temporaryLoginInfo.remove(loginInfo.getClientId());		 	    	
+				 	  }
+			 	  }
+    	}
+	}
+
 	public void removeExpiredLoginInfo(){
 		try{
 					synchronized(temporaryLoginInfo){

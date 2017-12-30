@@ -1,4 +1,4 @@
-package uk.co.boxnetwork.mule.transformers.images;
+package uk.co.boxnetwork.mule.transformers.images.clients;
 
 import java.util.Date;
 

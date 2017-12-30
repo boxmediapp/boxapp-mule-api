@@ -23,8 +23,7 @@ public class RefreshLoginTransformer extends BoxRestTransformer{
 	   return operator.checkPATCHAccess();		   
 	}
 	@Override
-	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
-		operator.setUser(null);
+	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){		
 		return operator;
 	}
 	

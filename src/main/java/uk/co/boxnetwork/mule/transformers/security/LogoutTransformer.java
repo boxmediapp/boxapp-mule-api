@@ -28,16 +28,12 @@ public class LogoutTransformer  extends BoxRestTransformer{
 	}
 	@Override
 	protected Object processPOST(MuleMessage message, BoxOperator operator,String outputEncoding){
-		try{    			
-	    	com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
-			objectMapper.setSerializationInclusion(Include.NON_NULL);
-			String requestInJson = (String)message.getPayloadAsString();							
-			LoginInfo loginInfo = objectMapper.readValue(requestInJson, LoginInfo.class);
-			  if(operator.getLoginInfo()!=null){
-						boxUserService.removeLoginInfoByClientId(operator.getLoginInfo().getClientId());
+		try{    				    											
+			  LoginInfo loginInfo = operator.getLoginInfo();			
+			  if(loginInfo!=null){
+				  boxUserService.removeLoginInfoByClientId(loginInfo.getClientId());
 			  }			  
-			  return loginInfo;
-			
+			  return loginInfo;			
 			}
 		catch(Exception e){
 			logger.error("error is processing creating user :"+message.getPayload().getClass().getName());

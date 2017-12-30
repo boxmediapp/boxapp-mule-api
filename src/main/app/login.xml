@@ -55,6 +55,32 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	    </choice>
              
     </flow>
+    <flow name="create-account-service-flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.createAccount}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>	        		        	
+	        	<transformer ref="createUserAccountTransformer" doc:name="Create Account Service Transformer"/>
+	        </otherwise>
+	    </choice>
+             
+    </flow>
+    
+    <flow name="update-account-service-flow">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.userAccount}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	    		<http:basic-security-filter realm="mule-realm"/>	        		        	
+	        	<transformer ref="userAccountTransformer" doc:name="Uodate Account Service Transformer"/>
+	        </otherwise>
+	    </choice>
+             
+    </flow>
     
     
 

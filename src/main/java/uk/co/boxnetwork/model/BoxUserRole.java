@@ -17,6 +17,9 @@ public class BoxUserRole {
 	
 	@Column(name="client_secret_duration")
 	private Long secretDuration;
+	
+	private String application;
+	
 					
 	public String getRolename() {
 		return rolename;
@@ -68,12 +71,25 @@ public class BoxUserRole {
 
 
 
-	public BoxUserRole(String rolename, String apiAccess, String operationAccess,Long secretDuration) {
+	public String getApplication() {
+		return application;
+	}
+
+
+
+	public void setApplication(String application) {
+		this.application = application;
+	}
+
+
+
+	public BoxUserRole(String rolename, String apiAccess, String operationAccess,Long secretDuration, String app) {
 		super();
 		this.rolename = rolename;
 		this.apiAccess = apiAccess;
 		this.operationAccess=operationAccess;
 		this.secretDuration = secretDuration;
+		this.application=app;		
 	}
 	public BoxUserRole(){
 		super();
