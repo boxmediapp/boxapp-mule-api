@@ -24,10 +24,12 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
 	         	<transformer ref="doNothingTransformer"/>         	
 	  		 </when>
-	    	<otherwise>	        	
+	    	<otherwise>
+	    		<http:basic-security-filter realm="mule-realm"/>
+	    		<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN','ROLE_CLIENT'} }"/>	        	
 	        	<transformer ref="allClientTransformer" doc:name="allClientTransformer"/>
-	        	<http:basic-security-filter realm="mule-realm"/>
-	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN','ROLE_CLIENT'} }"/>
+	        	
+	        	
 	        </otherwise>
 	    </choice>
 
