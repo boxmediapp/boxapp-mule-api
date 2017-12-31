@@ -61,7 +61,7 @@ public class CreateUserAccountTransformer extends BoxRestTransformer{
 				}
 				BoxUser existingUser=boxUserService.getUserByUserName(boxuser.getUsername());
 				if(existingUser!=null){
-					return returnError("User name with "+boxuser.getUsername()+" already exists",message,400);
+					return returnError("User name with "+boxuser.getUsername()+" already exists",message,409);
 				}
 				boxuser.setRoles("user");
 				boxuser.setRoles("user");
