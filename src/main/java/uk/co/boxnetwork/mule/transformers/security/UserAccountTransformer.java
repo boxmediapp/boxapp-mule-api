@@ -7,10 +7,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.mule.model.BoxOperator;
+import uk.co.boxnetwork.mule.model.OperationResult;
 import uk.co.boxnetwork.mule.model.UserAccountData;
 import uk.co.boxnetwork.mule.model.UserAccountDataAction;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.security.BoxUserService;
+import uk.co.boxnetwork.util.GenericUtilities;
 
 
 public class UserAccountTransformer  extends BoxRestTransformer{	
@@ -63,6 +65,29 @@ public class UserAccountTransformer  extends BoxRestTransformer{
 								boxUserService.regenerateClientSecret(operator.getUser());
 								BoxUser boxuser=boxUserService.getUserByUserName(operator.getUser().getUsername());
 								return new UserAccountData(boxuser);
+							}
+							
+							else if(userAccount.getAction()==UserAccountDataAction.VERIFY_PASSWORD){
+								BoxUser user=operator.getUser();
+								if(user==null){
+									return returnError("Not logged in",message,403);			
+								}								
+								if(boxUserService.verifyPasswordForUser(operator.getUser().getUsername(), userAccount.getPassword())){									
+									UserAccountData accountData=new UserAccountData(user);
+									return accountData;
+								}
+								else{
+									return returnError("Not logged in",message,200);
+								}
+								
+							} 
+							else if(userAccount.getAction()==UserAccountDataAction.UPDATE_USER_ACCOUNT){
+								BoxUser user=operator.getUser();
+								if(user==null){
+									return returnError("Not logged in",message,403);			
+								}
+								boxUserService.updateUserAccount(operator.getUser().getUsername(),userAccount);								
+								return userAccount;
 							}
 							else{
 								return userAccount;

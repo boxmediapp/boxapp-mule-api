@@ -26,6 +26,7 @@ import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.app.LoginInfo;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
+import uk.co.boxnetwork.mule.model.UserAccountData;
 import uk.co.boxnetwork.util.GenericUtilities;
 
 
@@ -274,6 +275,38 @@ public class BoxUserService implements UserDetailsService{
 			return ret;
 	}
 		
-	
+   public boolean verifyPasswordForUser(String userName,String password){
+	   BoxUser boxuser=getUserByUserName(userName);
+	   String userPassword=GenericUtilities.decrypt(encryptionKey, boxuser.getPassword());
+	   return userPassword.equals(password);
+   }
+   public void updateUserAccount(String username, UserAccountData userAccount){
+	   BoxUser boxuser=getUserByUserName(username);
+	   boolean modified=false;
+	   if(userAccount.getFirstName()!=null){
+		   boxuser.setFirstName(userAccount.getFirstName());
+		   modified=true;
+	   }
+	   if(userAccount.getLastName()!=null){
+		   boxuser.setLastName(userAccount.getLastName());
+		   modified=true;
+	   }
+	   if(userAccount.getEmail()!=null){
+		   boxuser.setEmail(userAccount.getEmail());
+		   modified=true;
+	   }
+	   if(userAccount.getPassword()!=null && userAccount.getPassword().length()>3){
+		   this.setPassword(boxuser, userAccount.getPassword());
+		   modified=true;
+	   }
+	   if(userAccount.getCompany()!=null){
+		  boxuser.setCompany(userAccount.getCompany());
+		  modified=true;
+	   }
+	   if(modified){
+		   updateUser(boxuser);
+	   }
+	   
+   }
 	
 }
