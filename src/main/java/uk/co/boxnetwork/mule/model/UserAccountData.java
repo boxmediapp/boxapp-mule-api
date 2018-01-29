@@ -31,6 +31,9 @@ public class UserAccountData {
     
     private String userStatus;
     
+    private  String password;
+    
+    
     private UserAccountDataAction action;
     
     
@@ -115,6 +118,17 @@ public class UserAccountData {
 	public void setCompany(String company) {
 		this.company = company;
 	}
+	
+	
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public UserAccountData(BoxUser user){
 	    this.username=user.getUsername();
 	    this.roles=user.getRoles();
