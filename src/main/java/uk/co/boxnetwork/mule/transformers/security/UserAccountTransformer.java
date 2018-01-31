@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.mule.model.BoxOperator;
-import uk.co.boxnetwork.mule.model.OperationResult;
+
 import uk.co.boxnetwork.mule.model.UserAccountData;
 import uk.co.boxnetwork.mule.model.UserAccountDataAction;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 import uk.co.boxnetwork.security.BoxUserService;
-import uk.co.boxnetwork.util.GenericUtilities;
+
 
 
 public class UserAccountTransformer  extends BoxRestTransformer{	
