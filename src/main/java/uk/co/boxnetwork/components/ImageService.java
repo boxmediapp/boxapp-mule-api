@@ -12,6 +12,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.image.BoxScheduleEventData;
 import uk.co.boxnetwork.data.image.ImageSummaries;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxEpisode;
 import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageBoxMediaStatus;
@@ -277,6 +278,57 @@ public class ImageService {
 		s3BucketService.copyFile(imageBucket, sourcepath, imageBucket, destfilepath);
 		dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.UPLOADED);
 		imageRepository.persist(dbImage);
+	}
+	public void copyImageSet(MediaCommand mediaCommand){		
+		Long imageSetId=mediaCommand.getImagesetId();
+		Long episodeId=mediaCommand.getEpisodeid();
+		if(imageSetId==null || episodeId==null){
+			logger.error("imageSetId is null or episodeId is not null, cannot clone the imageset");
+			return;
+		}
+		BoxEpisode episode=imageRepository.findEpisodeById(episodeId);
+		if(episode==null){
+			logger.error("Failed find the episode, cannot clone the imageset:episodeId:"+episodeId+"imageSetId:"+imageSetId);
+			return;
+		}
+		ImageSet fromImageSet=imageRepository.findImageSetById(imageSetId);
+		if(fromImageSet==null){
+			logger.error("Failed find the imageset to clone:"+imageSetId);
+			return;
+		}
+		ImageSet imageSet=new ImageSet();
+		imageSet.setBoxEpisode(episode);
+		imageSet.setTitle(episode.getTitle());
+		imageRepository.persist(imageSet);
+		imageSet.setFileCounter(1);
+		List<Image> fromImages=imageRepository.findImagesByImageSet(fromImageSet);
+		
+		String 	programmeNumber=episode.getProgrammeNumber();
+		String  programmeNumberFilePart=programmeNumber.replace('/','_');
+		
+		for(Image fromImage:fromImages){
+				String sourcefilename=fromImage.getFilename();
+				int width=fromImage.getWidth();
+				int height=fromImage.getHeight();
+				
+				int ind=sourcefilename.lastIndexOf(".");
+				String ext=sourcefilename.substring(ind);
+				String filename=appConfig.getImageClientFolder()+"/"+programmeNumberFilePart+"_001_"+width+"_"+height+ext;
+				s3BucketService.copyFile(appConfig.getImageBucket(), sourcefilename, appConfig.getImageBucket(), filename);
+				Image image=new Image();
+				image.setFilename(filename);
+				image.setHeight(height);
+				image.setWidth(width);
+				image.setS3BaseURL(fromImage.getS3BaseURL());
+				image.setImageSet(imageSet);				
+				image.setImageBoxMediaStatus(fromImage.getImageBoxMediaStatus());
+				image.setImageStatus(ImageStatus.WAITING_APPROVE);
+				image.setTags(fromImage.getTags());
+				imageRepository.persist(image);				
+		}
+		
+		
+	
 	}
 	
 }

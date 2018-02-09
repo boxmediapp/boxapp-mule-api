@@ -1890,6 +1890,9 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
    		imageService.copyImageToBoxMediaApp(mediaCommand);
    		
    	}
+   	else if(MediaCommand.COPY_IMAGE_SET.equals(mediaCommand.getCommand())){
+   		imageService.copyImageSet(mediaCommand);   		
+   	} 
   	
    	else{
    		logger.info("ignore the command");

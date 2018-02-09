@@ -22,6 +22,8 @@ public class MediaCommand {
 	public static String INSPECT_VIDEO_FILE="inspect_video_file";
 	public static String INVALIDATE_CDN_CLIENT_IMAGE_CACHE="invalidate-client-image-cdn-cache";
 	public static String COPY_IMAGE_TO_BOX_MEDIA_APP="copy-image-to-box-media-app";
+	public static String COPY_IMAGE_SET="copy_image_set";
+	
 	
 	
 	@Id
@@ -49,6 +51,11 @@ public class MediaCommand {
 	  private String episodeNumber;
 	  
 	  private Long imageId;
+	  
+	  
+	  @Column(name="image_set_id")
+	  private Long imagesetId;
+	  
 	  
 	  
 	  public String getCommand() {
@@ -132,6 +139,16 @@ public class MediaCommand {
 
 	public void setImageId(Long imageId) {
 		this.imageId = imageId;
+	}
+	
+	
+
+	public Long getImagesetId() {
+		return imagesetId;
+	}
+
+	public void setImagesetId(Long imagesetId) {
+		this.imagesetId = imagesetId;
 	}
 
 	@Override

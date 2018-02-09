@@ -390,6 +390,18 @@ public String getNewBoxEpisodeSelectQuery(){
 			 addedWhere=true;
 		 }		 		 
 	 }
+	 if(this.contractNumber!=null){
+		 if(!this.contractNumber.endsWith("%")){
+			 this.contractNumber+="/%";
+		 }
+		 if(addedWhere){
+			 query+=" and (e.programmeNumber LIKE :contractNumber)";
+		 }
+		 else{
+			 query+=" where (e.programmeNumber LIKE :contractNumber)";	
+			 addedWhere=true;
+		 }
+	 }
 	 if(this.from!=null){		
 		 if(addedWhere){
 			 query+=" and (e.boxSchedule.scheduleTimestamp >= :from)";

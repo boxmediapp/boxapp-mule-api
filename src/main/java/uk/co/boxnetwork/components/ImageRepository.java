@@ -59,6 +59,7 @@ public class ImageRepository {
 		   searchParam.config(query);		   		   
 		   return query.getResultList();		   
 	}
+	
 	public List<BoxScheduleEvent> findBoxScheduleEvent(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getBoxScheduleSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
