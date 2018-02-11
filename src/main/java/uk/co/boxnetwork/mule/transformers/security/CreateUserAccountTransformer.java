@@ -1,16 +1,19 @@
 package uk.co.boxnetwork.mule.transformers.security;
 
 import org.mule.api.MuleMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-
+import uk.co.boxnetwork.components.STMPEmailService;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
 
 
 public class CreateUserAccountTransformer extends BoxRestTransformer{	
+	@Autowired
+	private STMPEmailService smtpEmailService;
 	
 	protected boolean checkGETAccess(BoxOperator operator){
 	    return true;		    
@@ -70,6 +73,7 @@ public class CreateUserAccountTransformer extends BoxRestTransformer{
 				boxUserService.createNewUser(boxuser);
 				boxuser.setRoles("user");
 				boxuser.setPassword("*******");
+				smtpEmailService.sendApprovalNotification(boxuser);
 				return boxuser;
     	}
     	catch(Exception e){

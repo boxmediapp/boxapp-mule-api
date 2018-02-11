@@ -89,29 +89,6 @@ public class BoxUsersTransformer extends BoxRestTransformer{
 	 	  return usedata;	 	   
 	}
 		
-	/*
-    @Override	
-	 protected Object processPOST(MuleMessage message, BoxOperator operator, String outputEncoding){
-    	if(!operator.checkAdminAccess()){
-			return deniedAccessMessage(message,outputEncoding);
-	    }
-    	try{
-		    	com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
-				objectMapper.setSerializationInclusion(Include.NON_NULL);
-				String requestInJson = (String)message.getPayloadAsString();							
-				BoxUser boxuser = objectMapper.readValue(requestInJson, BoxUser.class);
-				boxUserService.setPassword(boxuser, boxuser.getPassword());
-				boxUserService.createNewUser(boxuser);
-				boxuser.setRoles("user");
-				boxuser.setPassword("*******");
-				return boxuser;
-    	}
-    	catch(Exception e){
-	    	logger.error("error is processing creating user :"+message.getPayload().getClass().getName());
-			throw new RuntimeException(e+" whule processing the payload",e);
-    	}
-					 
-	}	
-*/
+	
 	
 }

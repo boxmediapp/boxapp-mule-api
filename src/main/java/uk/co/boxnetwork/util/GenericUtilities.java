@@ -53,6 +53,7 @@ import uk.co.boxnetwork.data.soundmouse.SoundMouseItem;
 import uk.co.boxnetwork.model.AdvertisementRule;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.AvailabilityWindow;
+import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.CuePoint;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.Image;
@@ -1028,6 +1029,19 @@ public class GenericUtilities {
 					dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.CAN_UPLOAD);
 				}
 		}
+	 }
+	 
+	 
+	 
+	 public static String getAccountCreatedEmailBody(BoxUser boxuser) throws Exception{			
+			Map<String, Object> root = new HashMap<String, Object>();
+			root.put("boxuser", boxuser);
+			return executeTemplateFile("/email/accountCreatedBody.html",root);		
+	 }
+	 public static String getAccountCreatedEmailSubject(BoxUser boxuser) throws Exception{			
+			Map<String, Object> root = new HashMap<String, Object>();
+			root.put("boxuser", boxuser);
+			return executeTemplateFile("/email/accountCreatedSubject.txt",root);		
 	 }
 }
 
