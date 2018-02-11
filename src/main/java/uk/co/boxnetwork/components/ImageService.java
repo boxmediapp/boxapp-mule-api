@@ -30,6 +30,7 @@ public class ImageService {
 	@Autowired
 	ImageRepository imageRepository;
 	
+	
 	@Autowired
 	private AppConfig appConfig;
 	
@@ -279,7 +280,8 @@ public class ImageService {
 		dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.UPLOADED);
 		imageRepository.persist(dbImage);
 	}
-	public void copyImageSet(MediaCommand mediaCommand){		
+	public void copyImageSet(MediaCommand mediaCommand){
+		
 		Long imageSetId=mediaCommand.getImagesetId();
 		Long episodeId=mediaCommand.getEpisodeid();
 		if(imageSetId==null || episodeId==null){

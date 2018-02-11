@@ -308,5 +308,11 @@ public class BoxUserService implements UserDetailsService{
 	   }
 	   
    }
+   public String decryptContent(String extraKey,String content){	   
+	   return GenericUtilities.decrypt(encryptionKey+extraKey, content); 
+   }
+   public String encryptContent(String extraKey,String content){	   
+	   return GenericUtilities.encrypt(encryptionKey+extraKey, content); 
+   }
 	
 }

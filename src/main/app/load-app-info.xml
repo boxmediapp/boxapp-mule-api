@@ -31,5 +31,30 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     </flow>
     
+
+
+<flow name="smtp-config">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.smtpServiceConfig}/*" doc:name="HTTP"/>
+        
+        
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_ADMIN'} }"/>
+	        	<transformer ref="smtpConfigTransformer" doc:name="smtpConfigTransformer  Service"/>
+	        </otherwise>
+	    </choice>
+        
+        
+         
+             
+
+    </flow>
+
+
+
     
 </mule>
