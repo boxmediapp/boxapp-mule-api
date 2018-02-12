@@ -93,6 +93,13 @@ public class MetadataMaintainanceService {
 	@Autowired
 	private ImageRepository imageRepository;
 	
+	@Autowired
+	BoxUserService boxUserService;
+	
+	
+	@Autowired
+	private STMPEmailService smtpEmailService;
+	
 	
 	private static final Logger logger=LoggerFactory.getLogger(MetadataMaintainanceService.class);
 	
@@ -919,4 +926,14 @@ public void calculateUploadedDuration(){
 		   }
 	   }	   
    }
+   public void resendAccountCreatedEmails(){
+	   List<BoxUser> users=boxUserService.listUsers();
+	   for(BoxUser boxuser:users){
+		   if(boxuser.getRoles().equals("user")){
+			   	smtpEmailService.sendApprovalNotification(boxuser);				
+		   }
+	   }
+	   
+   }
+   
  }
