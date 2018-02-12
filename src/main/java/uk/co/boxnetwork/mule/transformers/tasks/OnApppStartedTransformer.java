@@ -65,6 +65,8 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		
 		//metadataMaintainanceService.createBoxChannels();
 		//metadataMaintainanceService.createBoxUserRoles();
+		
+			
 		metadataMaintainanceService.resendAccountCreatedEmails();
 		
 		//metadataMaintainanceService.convertUserRoleToOperator();
