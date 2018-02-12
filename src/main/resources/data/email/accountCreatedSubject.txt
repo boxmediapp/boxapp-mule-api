@@ -1,1 +1,1 @@
-A new user subscription (${boxuser.username}) in Box Image/Media Asset Manager
+A New User Subscription (${boxuser.username}) in Box Image/Media Asset Manager

@@ -1,8 +1,5 @@
 package uk.co.boxnetwork.mule.transformers.tasks;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,17 +8,18 @@ import java.util.concurrent.Future;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
-import org.python.modules.synchronize;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 
-import uk.co.boxnetwork.components.BoxMedataRepository;
+
 import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.components.MetadataService;
-import uk.co.boxnetwork.model.Episode;
+
 import uk.co.boxnetwork.model.MediaCommand;
-import uk.co.boxnetwork.util.GenericUtilities;
+
+
 
 public class OnApppStartedTransformer extends AbstractMessageTransformer{
 	private static boolean appStarted=false; 
@@ -36,6 +34,8 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 	@Autowired
 	MetadataService metataService;
 
+	
+	
 	Future<MediaCommand> commandExecution;
     boolean running=true;
     class MediaExecutionThreads implements Callable<MediaCommand>{
@@ -64,7 +64,9 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		metadataMaintainanceService.syncS3VideoItems();
 		
 		//metadataMaintainanceService.createBoxChannels();
-		metadataMaintainanceService.createBoxUserRoles();
+		//metadataMaintainanceService.createBoxUserRoles();
+		metadataMaintainanceService.resendAccountCreatedEmails();
+		
 		//metadataMaintainanceService.convertUserRoleToOperator();
 		
 		
@@ -84,6 +86,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		//metadataMaintainanceService.setAvailableWindowForAll(Calendar.getInstance().getTime(),GenericUtilities.nextYearDate());
 		//metadataMaintainanceService.autoPublishChangesToBrightcove();
 		commandExecution=pool.submit(new MediaExecutionThreads());
+		
 		return message.getPayload();
 	}
 	
