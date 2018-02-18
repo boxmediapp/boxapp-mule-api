@@ -224,6 +224,34 @@ public class EpisodeTransformer extends BoxRestTransformer{
 				logger.info("Episode is deleted successfully id="+id);
 				return episode;
 			}			 
-    	}         
+    	}      
+    	
+    	@Override
+    	protected Object processPATCH(MuleMessage message, BoxOperator operator,String outputEncoding) throws Exception{
+    		String episodeid=MuleRestUtil.getPathPath(message);
+     	   
+     	   if(episodeid==null||episodeid.length()==0){
+     		   return new ErrorMessage("The episodeid is missing in PATCH");
+     	   }
+ 		   Long id=Long.valueOf(episodeid);
+ 		   uk.co.boxnetwork.data.Episode  episode=null;
+ 		   
+ 		   if(message.getPayload() instanceof uk.co.boxnetwork.data.Episode){
+ 			   episode=(uk.co.boxnetwork.data.Episode)message.getPayload();			   
+ 		   }
+ 		   else{			   
+ 			   		String episodeInJson=(String)message.getPayloadAsString();		   
+ 				   logger.info("*****updating episode"+episodeInJson+"****");
+ 				   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
+ 					
+ 					
+ 					objectMapper.setSerializationInclusion(Include.NON_NULL);
+ 					episode = objectMapper.readValue(episodeInJson, uk.co.boxnetwork.data.Episode.class);
+ 		   } 		   
+ 		   metadataService.patch(id,episode);
+ 		   return episode;
+ 		   
+    		
+    	}
          
 }

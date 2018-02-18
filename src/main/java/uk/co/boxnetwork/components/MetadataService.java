@@ -348,6 +348,53 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 		}		
 		boxMetadataRepository.persist(existingEpisode);		
 	}
+	
+	
+	public void patch(long id, uk.co.boxnetwork.data.Episode episode){
+		Episode existingEpisode=boxMetadataRepository.findEpisodeById(id);
+		if(existingEpisode==null){
+			logger.warn("not found episode:"+id);
+			return;
+		}
+		if(episode.patch(existingEpisode)){
+			boxMetadataRepository.updateEpisode(existingEpisode);
+			if(appConfig.getBrightcoveStatus()){
+				 if(existingEpisode.getBrightcoveId()!=null){
+					 publishMetadatatoBCByEpisodeId(existingEpisode.getId());
+				 }				      
+			 }
+		}				
+	}
+	public void patch(long id, uk.co.boxnetwork.data.Series programme){
+		Series existingProgramme=boxMetadataRepository.findSeriesById(id);
+		if(existingProgramme==null){
+			logger.warn("not found programme:"+id);
+			return;
+		}
+		if(programme.patch(existingProgramme)){
+			boxMetadataRepository.updateSeries(existingProgramme);
+			if(appConfig.getBrightcoveStatus()){				
+					List<Episode> episodes=boxMetadataRepository.findEpisodesBySeries(existingProgramme);
+				    logger.info("Publishing all the episodes in this series");
+				    for(Episode ep:episodes){		  
+					  if(ep.getBrightcoveId()!=null && ep.getImageURL()==null){			  
+						  registerEpisodeForPublishMetadata(ep.getId());			  
+					  }		   
+				  }	
+			 }
+		}				
+	}
+	public void patch(long id, uk.co.boxnetwork.data.SeriesGroup programmeCollection){
+		SeriesGroup existingProgrammeCollection=boxMetadataRepository.findSeriesGroupById(id);
+		if(existingProgrammeCollection==null){
+			logger.warn("not found programme collection:"+id);
+			return;
+		}
+		if(programmeCollection.patch(existingProgrammeCollection)){
+			boxMetadataRepository.mergeSeriesGroup(existingProgrammeCollection);			
+		}				
+	}
+	
 	@Transactional
 	public void switchEpsiodeSeries(long id, uk.co.boxnetwork.data.Episode episode){
 		Episode existingEpisode=boxMetadataRepository.findEpisodeById(id);

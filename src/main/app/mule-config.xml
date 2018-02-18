@@ -191,6 +191,8 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.clients.DeletedImageTransformer" name="deletedImageTransformer" doc:name="deletedImageTransformer"/>
    
    
+   
+   
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.images.BoxChannelTransformer" name="boxChannelService" doc:name="BoxChannelServiceTransformer"/>
    
    
@@ -237,7 +239,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.PresignedURLTransformer" name="presignedURLTransformer" doc:name="presignedURLTransformer"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.BoxMasterImageTransformer" name="boxMasterImageTransfoer" doc:name="boxImageTransformer"/>
    
-   
+   <custom-transformer class="uk.co.boxnetwork.mule.transformers.s3.S3ImageTransformer" name="s3ImageTransformer" doc:name="S3ImageTransformer"/>
 
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.CheckTimedTaskTransformer" name="checkTimedTask" doc:name="Check Timed Tasks"/>
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.TimedTaskServiceTransformer" name="timedTaskServiceTransformer" doc:name="Timed Task Rest Service"/>

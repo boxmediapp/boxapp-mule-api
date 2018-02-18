@@ -99,5 +99,26 @@ http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/cu
                                  		
     </flow>
     
+    <flow name="s3ImageTransformer-service">
+        <http:listener config-ref="http_metadata_inbound_listener" path="${boxtv_metadata_app.s3images.path}/*" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+	         <when expression="#[message.inboundProperties['http.method'] == 'OPTIONS']">
+	         	<transformer ref="doNothingTransformer"/>         	
+	  		 </when>
+	    	<otherwise>
+	        	<http:basic-security-filter realm="mule-realm"/>
+	        	<mule-ss:authorization-filter requiredAuthorities="#{ {'ROLE_OPERATOR', 'ROLE_ADMIN'} }"/>	        	
+	        	<transformer ref="s3ImageTransformer" doc:name="Box S3 Image"/>	        	    	
+	        </otherwise>
+	    </choice>
+        
+        
+                                 		
+    </flow>
+    
+    
+    
+    
+    
     
 </mule>
