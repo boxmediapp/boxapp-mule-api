@@ -33,6 +33,13 @@ public class SeriesGroup {
 		seriesgroup.setImageURL(this.imageURL);
 		seriesgroup.setTags(GenericUtilities.arrayToSeparatedString(this.tags,", "));
 	}
+	public boolean patch(uk.co.boxnetwork.model.SeriesGroup seriesgroup){
+		if(this.imageURL!=null && (!this.imageURL.equals(seriesgroup.getImageURL()))){
+			seriesgroup.setImageURL(this.imageURL);
+			return true;
+		}
+		return false;		
+	}
 	public SeriesGroup(){
 		
 	}

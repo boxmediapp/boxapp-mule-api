@@ -59,6 +59,18 @@ public class Series {
 		series.setMaxNumberOfEpisodes(this.maxNumberOfEpisodes);
 		
 	}
+	public boolean patch(uk.co.boxnetwork.model.Series series){
+		
+		if(this.imageURL!=null && (!this.imageURL.equals(series.getImageURL()))){
+			series.setImageURL(this.imageURL);
+			return true;
+		}
+		
+		return false;
+		
+		
+		
+	}
 	public Series(){
 		
 	}

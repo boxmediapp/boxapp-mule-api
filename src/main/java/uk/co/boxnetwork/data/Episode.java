@@ -471,7 +471,15 @@ public Episode(){
 		episode.setDurationUploaded(this.durationUploaded);
 		episode.setEditorNotes(this.editorNotes);
 	}
-
+	public boolean patch(uk.co.boxnetwork.model.Episode episode) {		
+		if(this.imageURL!=null && (!this.imageURL.equals(episode.getImageURL()))){
+			episode.setImageURL(this.imageURL);
+			return true;
+		}
+		else{
+			return false;
+		}
+   }
 
 	  public boolean updateWhenReceivedByMaterialId(uk.co.boxnetwork.model.Episode episode) {		
 		boolean changed=false;

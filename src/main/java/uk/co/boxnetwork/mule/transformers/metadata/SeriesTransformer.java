@@ -131,4 +131,32 @@ public class SeriesTransformer  extends BoxRestTransformer{
 		}
     }
     
+    @Override
+	protected Object processPATCH(MuleMessage message, BoxOperator operator,String outputEncoding) throws Exception{
+		String programmeid=MuleRestUtil.getPathPath(message);
+ 	   
+ 	   if(programmeid==null||programmeid.length()==0){
+ 		   return new ErrorMessage("The programmeid is missing in PATCH");
+ 	   }
+		   Long id=Long.valueOf(programmeid);
+		   uk.co.boxnetwork.data.Series  programme=null;
+		   
+		   if(message.getPayload() instanceof uk.co.boxnetwork.data.Series){
+			   programme=(uk.co.boxnetwork.data.Series)message.getPayload();			   
+		   }
+		   else{			   
+			   		String seriesInJson=(String)message.getPayloadAsString();		   
+				   logger.info("*****updating series"+seriesInJson+"****");
+				   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
+					
+					
+					objectMapper.setSerializationInclusion(Include.NON_NULL);
+					programme = objectMapper.readValue(seriesInJson, uk.co.boxnetwork.data.Series.class);
+		   } 		   
+		   metadataService.patch(id,programme);
+		   return programme;
+		   
+		
+	}
+    
 }

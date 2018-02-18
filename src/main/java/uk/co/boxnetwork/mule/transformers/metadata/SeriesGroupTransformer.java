@@ -117,5 +117,31 @@ public class SeriesGroupTransformer extends BoxRestTransformer{
 			throw new RuntimeException("proesing post:"+e,e);    			
 		}
     }
-	
+    @Override
+	protected Object processPATCH(MuleMessage message, BoxOperator operator,String outputEncoding) throws Exception{
+		String collectionid=MuleRestUtil.getPathPath(message);
+ 	   
+ 	   if(collectionid==null||collectionid.length()==0){
+ 		   return new ErrorMessage("The programmeid is missing in PATCH");
+ 	   }
+		   Long id=Long.valueOf(collectionid);
+		   uk.co.boxnetwork.data.SeriesGroup  programmeCollection=null;
+		   
+		   if(message.getPayload() instanceof uk.co.boxnetwork.data.SeriesGroup){
+			   programmeCollection=(uk.co.boxnetwork.data.SeriesGroup)message.getPayload();			   
+		   }
+		   else{			   
+			   		String seriesGroupInJson=(String)message.getPayloadAsString();		   
+				   logger.info("*****patching series group"+seriesGroupInJson+"****");
+				   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
+					
+					
+					objectMapper.setSerializationInclusion(Include.NON_NULL);
+					programmeCollection = objectMapper.readValue(seriesGroupInJson, uk.co.boxnetwork.data.SeriesGroup.class);
+		   } 		   
+		   metadataService.patch(id,programmeCollection);
+		   return programmeCollection;
+		   
+		
+	}
 }

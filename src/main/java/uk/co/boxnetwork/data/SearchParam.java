@@ -1,7 +1,7 @@
 package uk.co.boxnetwork.data;
 
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.TypedQuery;
 
@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.ImageStatus;
-import uk.co.boxnetwork.model.PublishedStatus;
-import uk.co.boxnetwork.model.S3VideoFileItem;
 
 
 public class SearchParam {
@@ -442,6 +440,19 @@ public String getS3videoSelectQuery(){
 		queryString+=" WHERE m.file LIKE :search OR m.episodeTitle LIKE :search OR m.programmeNumber LIKE :search";
 		addedWhere=true;
 	}
+	
+	if(this.prefix!=null){
+		if(!addedWhere){
+			queryString+=" WHERE m.file LIKE :prefix";
+			addedWhere=true;
+		}
+		else{
+			queryString+=" AND m.file LIKE :prefix";			
+		}
+		if(!prefix.endsWith("%")){
+			prefix=prefix+"%";
+		}
+	}
 	return queryString;
 }
 public String getBoxScheduleSelectQuery(){
@@ -549,9 +560,9 @@ public String getImageSelectQuery(){
 		else if(this.search==null){
 			   return allquery;
 		 }		   
-		   else{			    
+		else{			    
 			    return filterQuery;
-		   }
+		}
     }
 	
 
@@ -565,7 +576,7 @@ public String getImageSelectQuery(){
 	   else{			    
 		    return allquery;
 	   }
-}
+    }
 	
 	public String selectSeriesQuery(String allquery,String  filterQuery, String contractQuery){				   
 			if(this.contractNumber!=null){
@@ -606,6 +617,12 @@ public String getImageSelectQuery(){
 		if(this.channelId!=null){
 			typedQuery.setParameter("channelId",this.channelId);
 		}
+		
+		if(this.prefix!=null){
+			typedQuery.setParameter("prefix",this.prefix);
+		}
+		
+		
 		if(this.from!=null){
 			try{
 				Long from=Long.valueOf(this.from);
@@ -644,12 +661,12 @@ public String getImageSelectQuery(){
    public void nextBatch(int videoSize){
 	   this.start+=videoSize;
    }
-   public String addSortByToQuery(String query, String prefix){
+   public String addSortByToQuery(String query, String queryAlias){
 	   if(this.sortBy==null){
 		  return  query;
 	   }	   	   
 	   StringBuilder builder=new StringBuilder();
-	   builder.append(query).append(" order by ").append(prefix).append(".").append(this.sortBy);
+	   builder.append(query).append(" order by ").append(queryAlias).append(".").append(this.sortBy);
 	   if(this.sortOrder!=null){
 		builder.append(" ").append(this.sortOrder);   
 	   }

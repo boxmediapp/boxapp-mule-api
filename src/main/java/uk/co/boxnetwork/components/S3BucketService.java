@@ -69,13 +69,14 @@ public class S3BucketService {
 		}		
 		return Regions.valueOf(region);				
 	}
-	public String computeS3BaseURL(String region){
-		
+	public String computeS3BaseURL(String region, String bucket){		
+		String baseURL=null;		
 		if(region==null|| region.length()==0){
-			return "http://s3-eu-west-1.amazonaws.com/";			
+			baseURL="https://s3-eu-west-1.amazonaws.com/";			
 		}
 		else
-			return "http://s3-"+region.toLowerCase().replace("_", "-")+".amazonaws.com/";			
+			baseURL="https://s3-"+region.toLowerCase().replace("_", "-")+".amazonaws.com/";
+		return baseURL+bucket;
 	}
 
 	
@@ -99,6 +100,7 @@ public class S3BucketService {
 		}
 	    return s3;
 	}
+	
 	public List<FileItem> listFiles(String bucketname, String prefix, int startIndex, int maximumRecords, String filenamecontains){
 		return listFiles(bucketname, prefix, null, startIndex, maximumRecords, null, null,filenamecontains);
 	}
