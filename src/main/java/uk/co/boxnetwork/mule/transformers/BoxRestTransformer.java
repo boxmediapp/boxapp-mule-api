@@ -22,6 +22,7 @@ import uk.co.boxnetwork.data.app.LoginInfo;
 import uk.co.boxnetwork.data.bc.BCErrorMessage;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.model.IdentityType;
 import uk.co.boxnetwork.security.BoxUserService;
@@ -33,11 +34,17 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 	 protected BoxUserService boxUserService;
 	 
 	
+	 public MediaApplicationID getApplicationId(BoxOperator operator){		 
+		 List<BoxUserRole> roles=operator.getRoles();
+		 return roles.get(0).getApplicationId();
+		 
+	 }
 	protected String convertObjectToJson(Object obj) throws JsonProcessingException{
 		com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();		
 		objectMapper.setSerializationInclusion(Include.NON_NULL);					
 		return objectMapper.writeValueAsString(obj);			
 	}
+	
 	public String returnError(String desc,MuleMessage message){
 		return returnError(desc,message,500);
 	}

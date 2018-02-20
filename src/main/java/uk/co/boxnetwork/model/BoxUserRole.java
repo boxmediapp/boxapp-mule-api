@@ -20,6 +20,9 @@ public class BoxUserRole {
 	
 	private String application;
 	
+	private MediaApplicationID applicationId;
+	
+	
 					
 	public String getRolename() {
 		return rolename;
@@ -83,16 +86,29 @@ public class BoxUserRole {
 
 
 
-	public BoxUserRole(String rolename, String apiAccess, String operationAccess,Long secretDuration, String app) {
+	public BoxUserRole(String rolename, String apiAccess, String operationAccess,Long secretDuration, String app, MediaApplicationID applicationId) {
 		super();
 		this.rolename = rolename;
 		this.apiAccess = apiAccess;
 		this.operationAccess=operationAccess;
 		this.secretDuration = secretDuration;
-		this.application=app;		
+		this.application=app;
+		this.applicationId=applicationId;
 	}
 	public BoxUserRole(){
 		super();
+	}
+
+
+
+	public MediaApplicationID getApplicationId() {
+		return applicationId;
+	}
+
+
+
+	public void setApplicationId(MediaApplicationID applicationId) {
+		this.applicationId = applicationId;
 	}
 	
 	

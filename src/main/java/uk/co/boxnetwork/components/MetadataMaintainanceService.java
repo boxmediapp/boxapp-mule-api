@@ -37,6 +37,7 @@ import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MetadataStatus;
 import uk.co.boxnetwork.model.Series;
@@ -514,26 +515,37 @@ logger.info("adding the default availability window......");
     }
     
     
-    
-    
-    
-    
-    @Transactional
     public void syncAppConfigWithDatabase(){
-    	TypedQuery<AppConfig> query=entityManager.createQuery("SELECT s FROM app_config s", AppConfig.class);
-		List<AppConfig> configs=query.getResultList();
-		if(configs.size()==0){
-			entityManager.persist(appConfig);
-		}
-		else{
-			AppConfig configInDb=configs.get(0);
-			if(configInDb.getVersion()==null || appConfig.getVersion()>configInDb.getVersion()){
-				configInDb.importConfig(appConfig);
-				entityManager.merge(configInDb);
-			}
-			else{
-				configInDb.exportConfig(appConfig);
-			}
+    	AppConfig appconfigInDB=repository.findAppConfigByApplication(MediaApplicationID.MEDIA_APP);
+        if(appconfigInDB==null){        		        	    		      		    	
+        			appconfigInDB=repository.findDefaultAppConfig();        	
+		        	if(appconfigInDB==null){
+		        		//application first run		        		        		
+		        		appConfig.setApplicationId(MediaApplicationID.MEDIA_APP);		        		
+		        		repository.updateAppConfig(appConfig);
+		        		
+		        		AppConfig beboxConfig=new AppConfig();
+		        		beboxConfig.importConfig(appConfig);
+		        		beboxConfig.setId(null);
+		        		beboxConfig.setApplicationId(MediaApplicationID.BEBOX);
+		        		repository.updateAppConfig(beboxConfig);
+		        	}
+		        	else{
+		        		//the version that do not have applicationId
+		        		appconfigInDB.setApplicationId(MediaApplicationID.MEDIA_APP);		        		
+		        		repository.updateAppConfig(appconfigInDB);
+		        		appconfigInDB.exportConfig(appConfig);
+		        		
+		        		AppConfig beboxConfig=new AppConfig();
+		        		
+		        		beboxConfig.importConfig(appconfigInDB);
+		        		beboxConfig.setApplicationId(MediaApplicationID.BEBOX);
+		        		beboxConfig.setId(null);
+		        		repository.updateAppConfig(beboxConfig);		        		
+		        	}        	
+        }
+        else{
+        		appconfigInDB.exportConfig(appConfig);    	
 		}     	
     }
     
@@ -572,17 +584,7 @@ logger.info("adding the default availability window......");
 		}
     }
     
-    @Transactional
-    public void updateAppConfig(AppConfig config){
-    	TypedQuery<AppConfig> query=entityManager.createQuery("SELECT s FROM app_config s", AppConfig.class);
-		List<AppConfig> configs=query.getResultList();
-		if(configs.size()>0){			
-			AppConfig configInDb=configs.get(0);			
-				configInDb.importConfig(config);
-				entityManager.merge(configInDb);			
-				configInDb.exportConfig(appConfig);
-			}
-    }
+    
     
     
 public void calculateUploadedDuration(){
@@ -906,11 +908,14 @@ public void calculateUploadedDuration(){
    }
    public void createBoxUserRoles(){	
 	   logger.info("**************start to create roles***********");
-	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(360), "boxmedia"));	   
-	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(3600), "boxmedia"));
-	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(3600), "boxmedia"));
-	   repository.createBoxUserRole(new BoxUserRole("image-client",     "ROLE_CLIENT", "client-access", Long.valueOf(3600), "imageclient"));
-	   repository.createBoxUserRole(new BoxUserRole("user",       "ROLE_USER",    "no-access",Long.valueOf(60), "subscribed"));
+	   repository.deleteAllBoxUserRole();
+	   logger.info("**************roles deleted***********");
+	   repository.createBoxUserRole(new BoxUserRole("admin",      "ROLE_ADMIN","admin",   Long.valueOf(360), "boxmedia", MediaApplicationID.MEDIA_APP));	   
+	   repository.createBoxUserRole(new BoxUserRole("operator",   "ROLE_OPERATOR","full-access",    Long.valueOf(3600), "boxmedia",MediaApplicationID.MEDIA_APP));
+	   repository.createBoxUserRole(new BoxUserRole("readonly-operator",   "ROLE_OPERATOR","readonly-operator",    Long.valueOf(3600), "boxmedia", MediaApplicationID.MEDIA_APP));
+	   repository.createBoxUserRole(new BoxUserRole("image-client",     "ROLE_CLIENT", "client-access", Long.valueOf(3600), "imageclient",MediaApplicationID.IMAGE_CLIENT_APP));
+	   repository.createBoxUserRole(new BoxUserRole("user",       "ROLE_USER",    "no-access",Long.valueOf(60), "subscribed",MediaApplicationID.SUBSCRIBED));
+	   repository.createBoxUserRole(new BoxUserRole("bebox_admin",       "ROLE_ADMIN",    "admin",Long.valueOf(360), "bebox", MediaApplicationID.BEBOX));	   
 	   logger.info("**************end to create roles***********");
    }
    public void convertUserRoleToOperator(){

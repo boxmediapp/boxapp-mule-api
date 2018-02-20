@@ -22,6 +22,7 @@ import uk.co.boxnetwork.data.DataReport;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AdvertisementRule;
+import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
 import uk.co.boxnetwork.model.BoxChannel;
@@ -37,6 +38,7 @@ import uk.co.boxnetwork.model.ComplianceInformation;
 import uk.co.boxnetwork.model.CuePoint;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MediaTag;
 import uk.co.boxnetwork.model.MetadataStatus;
@@ -59,6 +61,37 @@ public class BoxMedataRepository {
       @Autowired
       S3TableRepository s3TableRepository;
       
+      
+      public AppConfig findAppConfigByApplication(MediaApplicationID applicationId){
+    	  TypedQuery<AppConfig> query=entityManager.createQuery("SELECT s FROM app_config s where s.applicationId=:applicationId", AppConfig.class);    	      	  
+		  List<AppConfig> matchedAppConfigs=query.setParameter("applicationId",applicationId).getResultList();
+		  if(matchedAppConfigs.size()>0){
+			   return matchedAppConfigs.get(0);
+		   }
+		  else{
+			  return null;
+		  }
+      }
+      public AppConfig findDefaultAppConfig(){
+    	  TypedQuery<AppConfig> query=entityManager.createQuery("SELECT s FROM app_config s", AppConfig.class);    	      	  
+		  List<AppConfig> matchedAppConfigs=query.getResultList();
+		  if(matchedAppConfigs.size()>0){
+			   return matchedAppConfigs.get(0);
+		   }
+		  else{
+			  return null;
+		  }
+      }
+      
+      @Transactional
+      public void updateAppConfig(AppConfig config){
+    	  if(config.getId()!=null){
+    		  entityManager.merge(config);
+    	  }
+    	  else{
+    		  entityManager.persist(config);    		  
+    	  }    	  
+      }
 
        @Transactional
 	   public void importBoxEpisode(Episode episode){
@@ -1105,6 +1138,19 @@ public class BoxMedataRepository {
 			}
 			entityManager.persist(boxUserRole);		
 		}
+	   @Transactional
+	   public void deleteAllBoxUserRole(){
+		   List<BoxUserRole> userRoles=findAllUserRoles();
+		   for(BoxUserRole userole:userRoles){
+			   entityManager.remove(userole);
+		   }
+	   }
+	   
+	   @Transactional
+	   public void updateUserRole(BoxUserRole userrole){
+		   entityManager.merge(userrole);
+	   }
+	   
 
 	   public List<BoxUserRole> findAllUserRoles(){		   
     	   TypedQuery<BoxUserRole> query=entityManager.createQuery("SELECT u FROM user_role u", BoxUserRole.class);

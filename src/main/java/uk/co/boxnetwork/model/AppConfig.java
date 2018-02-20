@@ -118,6 +118,10 @@ private String imageBucket;
  
  
  
+ @Column(name="application_id")
+ private MediaApplicationID applicationId;
+ 
+ 
 public String getImageClientBaseURL() {
 	return imageClientBaseURL;
 }
@@ -327,6 +331,10 @@ public void setS3imagesURL(String s3imagesURL) {
 }
 
 public void exportConfig(AppConfig config){
+	 if(this.id!=null){
+		 config.setId(this.id);
+	 }
+	 
      config.setBrightcoveStatus(this.brightcoveStatus);
      config.setImagetemplateurl(this.imagetemplateurl);
      config.setRecordLimit(this.recordLimit);	
@@ -358,10 +366,14 @@ public void exportConfig(AppConfig config){
      config.setPublishProgrammeInfo(this.publishProgrammeInfo);
      config.setImageClientFolder(this.imageClientFolder);
      config.setImageClientBaseURL(imageClientBaseURL);
+     config.setApplicationId(applicationId);
     
 }
 
-public void importConfig(AppConfig config){	
+public void importConfig(AppConfig config){
+	if(config.getId()!=null){
+		this.id=config.getId();
+	}
     this.brightcoveStatus=config.getBrightcoveStatus();
     this.imagetemplateurl=config.getImagetemplateurl();
     this.recordLimit=config.getRecordLimit();
@@ -469,6 +481,14 @@ public boolean shouldSendSoundmouseHeaderFile(uk.co.boxnetwork.data.Episode epis
 	 }	 
 	 return true;
  }
+
+public MediaApplicationID getApplicationId() {
+	return applicationId;
+}
+
+public void setApplicationId(MediaApplicationID applicationId) {
+	this.applicationId = applicationId;
+}
 
 
 
