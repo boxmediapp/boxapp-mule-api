@@ -64,7 +64,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		metadataMaintainanceService.syncS3VideoItems();
 		
 		//metadataMaintainanceService.createBoxChannels();
-		//metadataMaintainanceService.createBoxUserRoles();
+		metadataMaintainanceService.createBoxUserRoles();
 		
 			
 		metadataMaintainanceService.resendAccountCreatedEmails();
