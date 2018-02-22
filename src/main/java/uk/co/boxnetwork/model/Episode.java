@@ -130,6 +130,9 @@ public class Episode {
 	@Column(name="recorded_at")
 	private Long recordedAt;
 	
+	@Column(name="application_id")
+	private MediaApplicationID applicationId=MediaApplicationID.MEDIA_APP;
+	
 	
 	@Column(name="episode_sequence_number")
 	private Integer episodeSequenceNumber;
@@ -182,6 +185,14 @@ public class Episode {
 	
 	
 	
+	public MediaApplicationID getApplicationId() {
+		return applicationId;
+	}
+
+	public void setApplicationId(MediaApplicationID applicationId) {
+		this.applicationId = applicationId;
+	}
+
 	public EpisodeStatus getEpisodeStatus() {
 		return episodeStatus;
 	}

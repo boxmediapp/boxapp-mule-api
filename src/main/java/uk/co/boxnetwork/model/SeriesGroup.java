@@ -30,6 +30,11 @@ public class SeriesGroup {
 	@Column(name="image_url")
 	private String imageURL;
 	
+	
+	@Column(name="application_id")
+	private MediaApplicationID applicationId=MediaApplicationID.MEDIA_APP;
+	
+	
 	private String tags;
 
 	public Long getId() {
@@ -99,6 +104,16 @@ public class SeriesGroup {
 
 	public void setTags(String tags) {
 		this.tags = tags;
+	}
+
+
+	public MediaApplicationID getApplicationId() {
+		return applicationId;
+	}
+
+
+	public void setApplicationId(MediaApplicationID applicationId) {
+		this.applicationId = applicationId;
 	}
 	
 

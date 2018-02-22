@@ -68,6 +68,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		
 			
 		metadataMaintainanceService.resendAccountCreatedEmails();
+		metadataMaintainanceService.setApplicationIdForAllRecords();
 		
 		//metadataMaintainanceService.convertUserRoleToOperator();
 		

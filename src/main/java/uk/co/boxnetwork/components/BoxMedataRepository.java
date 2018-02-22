@@ -773,11 +773,12 @@ public class BoxMedataRepository {
 	   public SeriesGroup findSeriesGroupById(Long id){
 		   return entityManager.find(SeriesGroup.class, id);		   
 	   }
-	   public List<Series> findAllSeries(SearchParam searchParam){
-		   String queryString=searchParam.selectSeriesQuery("SELECT s FROM series s", "SELECT s FROM series s where s.name LIKE :search OR s.contractNumber LIKE :search","SELECT s FROM series s where s.contractNumber = :contractNumber");
+	   
+	   public List<Series> findAllSeries(SearchParam searchParam,MediaApplicationID applicationId){
+		   String queryString=searchParam.selectSeriesQuery(applicationId);		   
 		   queryString=searchParam.addSortByToQuery(queryString, "s");
 		   TypedQuery<Series> query=entityManager.createQuery(queryString, Series.class);
-		   searchParam.config(query);		   		   
+		   searchParam.config(query,applicationId);		   		   
 		   return query.getResultList();
 	   }
 	   
@@ -816,11 +817,11 @@ public class BoxMedataRepository {
 			  else
 				  return series.get(0);
 	  }
-	   public List<SeriesGroup> findAllSeriesGroup(SearchParam searchParam){
-		   String queryString=searchParam.selectQuery("SELECT p FROM series_group p", "SELECT p FROM series_group p where p.title LIKE :search", "SELECT p FROM series_group p where p.title = :title");
+	   public List<SeriesGroup> findAllSeriesGroup(SearchParam searchParam,MediaApplicationID applicationId){
+		   String queryString=searchParam.selectSeriesGroupQuery(applicationId);
 		   queryString=searchParam.addSortByToQuery(queryString, "p");
 		   TypedQuery<SeriesGroup> query=entityManager.createQuery(queryString, SeriesGroup.class);
-		   searchParam.config(query);		   		   
+		   searchParam.config(query,applicationId);		   		   
 		   return query.getResultList();
 	   }
 	   public List<Episode> findEpisodesByName(String name){
@@ -882,14 +883,14 @@ public class BoxMedataRepository {
 	   public void persistMediaCommand(MediaCommand mediaCommand){		   		   
 		   entityManager.persist(mediaCommand);		   
 	   }
-	   public List<Episode> findAllEpisodes(SearchParam searchParam){
-		   String queryString=searchParam.selectQuery("SELECT e FROM episode e", "SELECT e FROM episode e where e.title LIKE :search OR e.materialId LIKE :search");
+	   public List<Episode> findAllEpisodes(SearchParam searchParam, MediaApplicationID applicationId){
+		   String queryString=searchParam.selectEpisodeQuery(applicationId);
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
-		   TypedQuery<Episode> query=entityManager.createQuery(queryString, Episode.class);
-		   
-		   searchParam.config(query);		   		   
+		   TypedQuery<Episode> query=entityManager.createQuery(queryString, Episode.class);		   
+		   searchParam.config(query,applicationId);		   
 		   return query.getResultList();		   
 	   }
+	   
 	   public List<Episode> findEpisodeToReport(){		   
 		   TypedQuery<Episode> query=entityManager.createQuery("SELECT e FROM episode e where e.brightcoveId IS NOT NULL and LENGTH(e.brightcoveId) >2", Episode.class);
 		   return query.getResultList();

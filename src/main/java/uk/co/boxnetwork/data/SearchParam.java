@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.ImageStatus;
+import uk.co.boxnetwork.model.MediaApplicationID;
 
 
 public class SearchParam {
@@ -349,14 +351,32 @@ public class SearchParam {
 	public void setContractNumber(String contractNumber) {
 		this.contractNumber = contractNumber;
 	}
-	public String selectQuery(String allquery,String  filterQuery){				   
-		   if(this.search==null){
-			   return allquery;
-		   }
-		   else{			    
-			    return filterQuery;
-		   }
-   }
+	public String selectEpisodeQuery(MediaApplicationID applicationId){
+		String query="SELECT e FROM episode e";
+		boolean whereAdded=false;
+		
+		if(this.search!=null){
+			query+=" where e.title LIKE :search OR e.materialId LIKE :search";
+			whereAdded=true;
+		}
+		if(applicationId!=null){
+			if(whereAdded){
+				query+=" and";
+			}
+			else{				
+				query+=" where";
+				whereAdded=true;
+			}
+			query+=" applicationId=:applicationId";
+		}		
+		return query;
+		
+		
+		 
+		
+	}
+	
+	
 public String getNewBoxEpisodeSelectQuery(){
 	 
 	 String query="SELECT e FROM box_episode e";
@@ -553,6 +573,44 @@ public String getImageSelectQuery(){
     
 }
 	
+public String selectSeriesGroupQuery(MediaApplicationID applicationId){
+	String query="SELECT p FROM series_group p";
+	
+	boolean whereAdded=false;
+	
+	
+	
+	if(this.title!=null){
+		query+=" where p.title = :title";
+		whereAdded=true;
+    }
+	
+    if(this.search!=null){
+		   if(whereAdded){
+			   query+=" add";
+		   }
+		   else{
+			   query+=" where";
+			   whereAdded=true;
+		   }
+		   query+=" p.title LIKE :search";			   
+	}
+    
+    if(applicationId!=null){
+		if(whereAdded){
+			query+=" and";
+		}
+		else{				
+			query+=" where";
+			whereAdded=true;
+		}
+		query+=" applicationId=:applicationId";
+	}
+	return query;
+	
+}
+
+
 	public String selectQuery(String allquery,String  filterQuery, String titleQuery){				   
 		if(this.title!=null){
 			return titleQuery;
@@ -578,18 +636,43 @@ public String getImageSelectQuery(){
 	   }
     }
 	
-	public String selectSeriesQuery(String allquery,String  filterQuery, String contractQuery){				   
-			if(this.contractNumber!=null){
-				return contractQuery;
+	public String selectSeriesQuery(MediaApplicationID applicationId){
+		String query="SELECT s FROM series s";
+		
+		boolean whereAdded=false;
+		if(this.contractNumber!=null){
+			query+=" where s.contractNumber = :contractNumber";
+			whereAdded=true;
+	    }
+	    if(this.search!=null){
+			   if(whereAdded){
+				   query+=" add";
+			   }
+			   else{
+				   query+=" where";
+				   whereAdded=true;
+			   }
+			   query+=" s.name LIKE :search OR s.contractNumber LIKE :search";			   
+		}
+	    if(applicationId!=null){
+			if(whereAdded){
+				query+=" and";
 			}
-			else if(this.search==null){
-			   return allquery;
-		   }
-		   else{			    
-			    return filterQuery;
-		   }
+			else{				
+				query+=" where";
+				whereAdded=true;
+			}
+			query+=" applicationId=:applicationId";
+		}
+	    return query;
   }
 	public void config(TypedQuery<?> typedQuery){
+		config(typedQuery,null);
+	}
+	public void config(TypedQuery<?> typedQuery, MediaApplicationID applicationId){
+		if(applicationId!=null){
+				typedQuery.setParameter("applicationId",applicationId);
+		}		
 		if(this.title!=null){
 			typedQuery.setParameter("title",this.title);
 		}

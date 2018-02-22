@@ -52,6 +52,7 @@ import uk.co.boxnetwork.model.BCNotification;
 import uk.co.boxnetwork.model.CuePoint;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MetadataStatus;
 import uk.co.boxnetwork.model.PublishedStatus;
@@ -92,9 +93,10 @@ public class MetadataService {
 	
 	  ExecutorService pool = Executors.newFixedThreadPool(1);
 
-	public List<uk.co.boxnetwork.data.SeriesGroup> getAllSeriesGroups(SearchParam searchParam){
+	public List<uk.co.boxnetwork.data.SeriesGroup> getAllSeriesGroups(SearchParam searchParam,MediaApplicationID applicationId){
 		List<uk.co.boxnetwork.data.SeriesGroup> seriesgrps=new ArrayList<uk.co.boxnetwork.data.SeriesGroup>();
-		List<SeriesGroup> seriesgroups=boxMetadataRepository.findAllSeriesGroup(searchParam);
+		List<SeriesGroup> seriesgroups=boxMetadataRepository.findAllSeriesGroup(searchParam,applicationId);
+		
 		for(SeriesGroup seriesgroup:seriesgroups){
 			seriesgrps.add(new uk.co.boxnetwork.data.SeriesGroup(seriesgroup));	
 		}
@@ -115,8 +117,8 @@ public class MetadataService {
 		return ret;		
 	}
 	
-	public List<uk.co.boxnetwork.data.Episode> getAllEpisodes(SearchParam searchParam){		
-		return toDataEpisodes(boxMetadataRepository.findAllEpisodes(searchParam),appConfig);
+	public List<uk.co.boxnetwork.data.Episode> getAllEpisodes(SearchParam searchParam,MediaApplicationID applicationId){		
+		return toDataEpisodes(boxMetadataRepository.findAllEpisodes(searchParam,applicationId),appConfig);
 	}
 	
 	/*
@@ -150,8 +152,8 @@ public class MetadataService {
 	 
 	
 	
-public List<uk.co.boxnetwork.data.Series> getAllSeries(SearchParam searchParam){		
-		 return toDataSeries(boxMetadataRepository.findAllSeries(searchParam));
+public List<uk.co.boxnetwork.data.Series> getAllSeries(SearchParam searchParam,MediaApplicationID applicationId){		
+		 return toDataSeries(boxMetadataRepository.findAllSeries(searchParam,applicationId));
 	}
 public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 	Series series=boxMetadataRepository.findSeriesById(id);
@@ -357,12 +359,20 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 			return;
 		}
 		if(episode.patch(existingEpisode)){
-			boxMetadataRepository.updateEpisode(existingEpisode);
+			
+			boxMetadataRepository.updateEpisode(existingEpisode);			
 			if(appConfig.getBrightcoveStatus()){
 				 if(existingEpisode.getBrightcoveId()!=null){
+					 logger.info("Updating the brightcove***:"+id);
 					 publishMetadatatoBCByEpisodeId(existingEpisode.getId());
-				 }				      
+				 }
+				 else{
+					 logger.info("The episode does not have brightcoveID, so it will not update");
+				 }
 			 }
+			else{
+				 logger.info("The appconfig is set not to update the brightcove on patch");
+			}
 		}				
 	}
 	public void patch(long id, uk.co.boxnetwork.data.Series programme){
@@ -1957,7 +1967,7 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
 	   		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 	   		
 	   		while(true){
-	   				List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam);
+	   				List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam,null);
 	   				if(episodes.size()==0){
 	   					break;
 	   				}
@@ -2262,7 +2272,7 @@ private boolean matchImageToSeriesGroup(List<SeriesGroup> matchedSeriesGroup,Str
 	    
 	   
 	    SearchParam searchParam=new SearchParam(null,0,null);
-		List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam);
+		List<Episode> episodes=boxMetadataRepository.findAllEpisodes(searchParam,null);
 		if(episodes.size()==0){
 			logger.info("no episode found");
 			return;

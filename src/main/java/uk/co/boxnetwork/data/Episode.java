@@ -472,7 +472,7 @@ public Episode(){
 		episode.setEditorNotes(this.editorNotes);
 	}
 	public boolean patch(uk.co.boxnetwork.model.Episode episode) {		
-		if(this.imageURL!=null && (!this.imageURL.equals(episode.getImageURL()))){
+		if(this.imageURL!=null){
 			episode.setImageURL(this.imageURL);
 			return true;
 		}

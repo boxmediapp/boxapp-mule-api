@@ -116,7 +116,7 @@ public class MetadataMaintainanceService {
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -172,7 +172,7 @@ public class MetadataMaintainanceService {
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -200,7 +200,7 @@ public class MetadataMaintainanceService {
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -238,7 +238,7 @@ logger.info("adding the default availability window......");
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -253,6 +253,8 @@ logger.info("adding the default availability window......");
 				}
 		}
 	}
+	
+	
 	public void setAvailableWindow(Episode episode,Date from, Date to){
 		repository.replaceAvailabilityWindow(episode.getId(), from, to);
 		
@@ -293,7 +295,7 @@ logger.info("adding the default availability window......");
 		}
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}		
@@ -364,7 +366,7 @@ logger.info("adding the default availability window......");
 		}
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}								
@@ -397,7 +399,7 @@ logger.info("adding the default availability window......");
     public void removeOrphantSeriesGroup(){
     	SearchParam searchParam=new SearchParam(null, 0, appConfig.getRecordLimit());
     	while(true){
-		    	List<SeriesGroup> seriesGroups=repository.findAllSeriesGroup(searchParam);
+		    	List<SeriesGroup> seriesGroups=repository.findAllSeriesGroup(searchParam,null);
 		    	if(seriesGroups.size()==0){
 					break;
 				}
@@ -453,7 +455,7 @@ logger.info("adding the default availability window......");
 		}
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}			
@@ -517,35 +519,18 @@ logger.info("adding the default availability window......");
     
     public void syncAppConfigWithDatabase(){
     	AppConfig appconfigInDB=repository.findAppConfigByApplication(MediaApplicationID.MEDIA_APP);
-        if(appconfigInDB==null){        		        	    		      		    	
-        			appconfigInDB=repository.findDefaultAppConfig();        	
-		        	if(appconfigInDB==null){
-		        		//application first run		        		        		
-		        		appConfig.setApplicationId(MediaApplicationID.MEDIA_APP);		        		
-		        		repository.updateAppConfig(appConfig);
-		        		
-		        		AppConfig beboxConfig=new AppConfig();
-		        		beboxConfig.importConfig(appConfig);
-		        		beboxConfig.setId(null);
-		        		beboxConfig.setApplicationId(MediaApplicationID.BEBOX);
-		        		repository.updateAppConfig(beboxConfig);
-		        	}
-		        	else{
-		        		//the version that do not have applicationId
-		        		appconfigInDB.setApplicationId(MediaApplicationID.MEDIA_APP);		        		
-		        		repository.updateAppConfig(appconfigInDB);
-		        		appconfigInDB.exportConfig(appConfig);
-		        		
-		        		AppConfig beboxConfig=new AppConfig();
-		        		
-		        		beboxConfig.importConfig(appconfigInDB);
-		        		beboxConfig.setApplicationId(MediaApplicationID.BEBOX);
-		        		beboxConfig.setId(null);
-		        		repository.updateAppConfig(beboxConfig);		        		
-		        	}        	
+        
+    	if(appconfigInDB==null){  
+    		        logger.error("**********media app media config is not found, so trying to create*******");        			
+		            //the version that do not have applicationId
+    		            appconfigInDB=new AppConfig();
+    		            appconfigInDB.importConfig(appconfigInDB);    		            
+    		            appconfigInDB.setApplicationId(MediaApplicationID.MEDIA_APP);		        		
+		        		repository.updateAppConfig(appconfigInDB);		        	
         }
-        else{
-        		appconfigInDB.exportConfig(appConfig);    	
+        else{        	
+        		appconfigInDB.exportConfig(appConfig);
+        		logger.info("**********MEdia App config is exported from db to the system*******:"+appConfig);
 		}     	
     }
     
@@ -563,7 +548,7 @@ logger.info("adding the default availability window......");
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -595,7 +580,7 @@ public void calculateUploadedDuration(){
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}
@@ -832,7 +817,7 @@ public void calculateUploadedDuration(){
 		}
 		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
 		while(true){
-				List<Episode> episodes=repository.findAllEpisodes(searchParam);
+				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
 				if(episodes.size()==0){
 					break;
 				}								
@@ -940,5 +925,83 @@ public void calculateUploadedDuration(){
 	   }
 	   
    }
+   
+   
+   @Transactional
+   public void setApplicationIdForAllRecords(){
+	   logger.info("Setting ApplicationIds......");
+	   		
+	   		int rcordLimit=appConfig.getRecordLimit();
+	   		if(rcordLimit<1){
+	   			rcordLimit=Integer.MAX_VALUE;
+	   		}
+	   		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
+	   			
+	   		
+	   		
+	   		while(true){
+	   				List<Episode> episodes=repository.findAllEpisodes(searchParam,null);
+	   				if(episodes.size()==0){
+	   					break;
+	   				}
+	   				for(Episode episode:episodes){	   					
+	   					if(episode.getApplicationId()==null){
+	   						episode.setApplicationId(MediaApplicationID.MEDIA_APP);
+	   						entityManager.merge(episode);
+	   					}
+	   						   												  
+	   				}
+	   				if(searchParam.isEnd(episodes.size())){
+	   					break;
+	   				}
+	   				else{
+	   					searchParam.nextBatch();
+	   				}
+	   		}
+	   		
+	   		searchParam=new SearchParam(null, 0, rcordLimit);
+	   		while(true){
+   				List<Series> serieslist=repository.findAllSeries(searchParam,null);
+   				if(serieslist.size()==0){
+   					break;
+   				}
+   				for(Series series:serieslist){	   					
+   					if(series.getApplicationId()==null){
+   						series.setApplicationId(MediaApplicationID.MEDIA_APP);
+   						entityManager.merge(series);
+   					}
+   						   												  
+   				}
+   				if(searchParam.isEnd(serieslist.size())){
+   					break;
+   				}
+   				else{
+   					searchParam.nextBatch();
+   				}
+   		   }
+	   		
+	   		
+	   		searchParam=new SearchParam(null, 0, rcordLimit);
+	   		while(true){
+   				List<SeriesGroup> seriesgrouplist=repository.findAllSeriesGroup(searchParam,null);
+   				if(seriesgrouplist.size()==0){
+   					break;
+   				}
+   				for(SeriesGroup seriesgroup:seriesgrouplist){	   					
+   					if(seriesgroup.getApplicationId()==null){
+   						seriesgroup.setApplicationId(MediaApplicationID.MEDIA_APP);
+   						entityManager.merge(seriesgroup);
+   					}
+   						   												  
+   				}
+   				if(searchParam.isEnd(seriesgrouplist.size())){
+   					break;
+   				}
+   				else{
+   					searchParam.nextBatch();
+   				}
+   		   }
+	   		
+	   	}
    
  }
