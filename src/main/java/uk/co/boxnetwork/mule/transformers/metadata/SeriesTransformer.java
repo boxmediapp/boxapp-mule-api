@@ -19,6 +19,7 @@ import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.Series;
 import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
@@ -36,18 +37,18 @@ public class SeriesTransformer  extends BoxRestTransformer{
 	
 	@Override
 	protected  Object processGET(MuleMessage message,BoxOperator operator, String outputEncoding){
-			
+		MediaApplicationID applicationId=getApplicationId(operator);	
 		String seriesid=MuleRestUtil.getPathPath(message);
 		if(seriesid==null || seriesid.length()==0){
-			return getAllSeries(message,outputEncoding);
+			return getAllSeries(message,outputEncoding,applicationId);
 		}
 		else{
 			return getAnSeries(seriesid, message,outputEncoding);				
 		}
 	}
-	private Object getAllSeries(MuleMessage message, String outputEncoding){
+	private Object getAllSeries(MuleMessage message, String outputEncoding,MediaApplicationID applicationId){
 		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.SERIES);					    
-		return metadataService.getAllSeries(searchParam);					
+		return metadataService.getAllSeries(searchParam,applicationId);					
 						
 	}
     private Object getAnSeries(String seriesid, MuleMessage message, String outputEncoding){

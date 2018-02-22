@@ -22,6 +22,7 @@ import uk.co.boxnetwork.data.ErrorMessage;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.UpdatePraram;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.MetadataStatus;
 import uk.co.boxnetwork.mule.model.BoxOperator;
 import uk.co.boxnetwork.mule.transformers.BoxRestTransformer;
@@ -41,20 +42,20 @@ public class EpisodeTransformer extends BoxRestTransformer{
 		
 		
 		@Override
-		protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){				
+		protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){	
+			MediaApplicationID applicationId=getApplicationId(operator);			
 			String episodeid=MuleRestUtil.getPathPath(message);
 			if(episodeid==null || episodeid.length()==0){
-				return getAllEpisodes(message,outputEncoding);
+				return getAllEpisodes(message,outputEncoding,applicationId);
 			}
 			else{
 				return getAnEpisode(episodeid, message,outputEncoding);				
 			}
 		}
 		
-		private  Object getAllEpisodes(MuleMessage message, String outputEncoding){
+		private  Object getAllEpisodes(MuleMessage message, String outputEncoding,MediaApplicationID applicationId){
 			SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);
-		    return metadataService.getAllEpisodes(searchParam);		    			
-					    
+		    return metadataService.getAllEpisodes(searchParam, applicationId);					    
 		}
 		
          private Object getAnEpisode(String episodeid, MuleMessage message, String outputEncoding){
@@ -241,7 +242,7 @@ public class EpisodeTransformer extends BoxRestTransformer{
  		   }
  		   else{			   
  			   		String episodeInJson=(String)message.getPayloadAsString();		   
- 				   logger.info("*****updating episode"+episodeInJson+"****");
+ 				   logger.info("*****patching episode"+episodeInJson+"****");
  				   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
  					
  					

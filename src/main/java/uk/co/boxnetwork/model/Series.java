@@ -67,6 +67,8 @@ public class Series {
 	@Column(name="max_number_of_episodes")
 	private Integer maxNumberOfEpisodes;
 	
+	@Column(name="application_id")
+	private MediaApplicationID applicationId=MediaApplicationID.MEDIA_APP;
 	
 	
 	
@@ -233,6 +235,16 @@ public class Series {
 		}
 		
 	}
+	
+	
+	public MediaApplicationID getApplicationId() {
+		return applicationId;
+	}
+
+	public void setApplicationId(MediaApplicationID applicationId) {
+		this.applicationId = applicationId;
+	}
+
 	@Override
 	public String toString(){
 		return "id="+id+" assetId=["+assetId+"]primaryId=["+primaryId+" contractNumber=["+contractNumber+"]lastModifiedAt="+lastModifiedAt+"]createdAt=["+createdAt+"]";

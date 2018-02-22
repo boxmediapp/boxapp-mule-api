@@ -375,6 +375,7 @@ public class S3BucketService {
 		
 		
 		if(!url.startsWith(baseURL)){
+			logger.error("*****Base URL does not match:"+baseURL+": with:"+url);
 			throw new IllegalArgumentException("the url cannot be signed");
 		}
 		String filename=url.substring(baseURL.length());
