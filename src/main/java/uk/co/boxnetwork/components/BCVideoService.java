@@ -35,6 +35,7 @@ import uk.co.boxnetwork.data.SearchParam;
 
 import uk.co.boxnetwork.data.bc.BCAccessToken;
 import uk.co.boxnetwork.data.bc.BCConfiguration;
+import uk.co.boxnetwork.data.bc.BCEnvironmentType;
 import uk.co.boxnetwork.data.bc.BCErrorMessage;
 import uk.co.boxnetwork.data.bc.BCPlayListData;
 import uk.co.boxnetwork.data.bc.BCRemoteAsset;
@@ -179,7 +180,7 @@ public String  getViodeInJson(String videoid){
 	
 	
 	
-	public String updateVideo(BCVideoData videodata, String brightcoveid){
+	private String updateVideo(BCVideoData videodata, String brightcoveid){
 		   BCAccessToken accessToken=bcAccessToenService.getAccessToken();			
 		   com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();				
 		   objectMapper.setSerializationInclusion(Include.NON_NULL);
@@ -214,7 +215,7 @@ public String  getViodeInJson(String videoid){
 				
 			}
 	}
-	public String  createVideo(BCVideoData videodata){			
+	private String  createVideo(BCVideoData videodata){			
 	    BCAccessToken accessToken=bcAccessToenService.getAccessToken();
 		RestTemplate rest=new RestTemplate();
 		
@@ -263,7 +264,7 @@ public String  getViodeInJson(String videoid){
 	    
    }
 	
-	public String deleteVideo(String brightcoveID){
+	private  String deleteVideo(String brightcoveID){
 		brightcoveID=brightcoveID.trim();
 		if(brightcoveID.length()<5){
 			throw new RuntimeException("brightcoveID is too short for delete:"+brightcoveID);
@@ -304,7 +305,7 @@ public String  getViodeInJson(String videoid){
 				
 			}
 	}
-	public String sendMediaRequest(String requestInJson){
+	private String sendMediaRequest(String requestInJson){
 		RestTemplate rest=new RestTemplate();							
 			logger.info("sending media api request to bc:"+requestInJson);
 			MultiValueMap<String, Object> parts = 
@@ -327,7 +328,7 @@ public String  getViodeInJson(String videoid){
 	
 	
 	 
-	 public void publishThumnnailImage(Episode episode,BCVideoData videoData){
+	 private void publishThumnnailImage(Episode episode,BCVideoData videoData){
 		    String imagename=episode.calculateImageURL();
 			if(imagename==null || imagename.trim().length()==0){
 				return;
@@ -344,7 +345,7 @@ public String  getViodeInJson(String videoid){
 		    }
 		    		 
 	 }
-	 public void publishPosterImage(Episode episode,BCVideoData videoData){
+	 private void publishPosterImage(Episode episode,BCVideoData videoData){
 		    String imagename=episode.calculateImageURL();
 			if(imagename==null || imagename.trim().length()==0){
 				return;
@@ -361,14 +362,14 @@ public String  getViodeInJson(String videoid){
 			}
 	 }
 	
-	public String replaceThumbnailImage(BCVideoData videoData, String imageurl){					
+	private String replaceThumbnailImage(BCVideoData videoData, String imageurl){					
 			if(videoData.getImages()!=null && videoData.getImages().getThumbnail()!=null && videoData.getImages().getThumbnail().getAsset_id()!=null && videoData.getImages().getThumbnail().getAsset_id().trim().length()>1){
 				String deleteResult=deleteAsset(videoData.getId(), "thumbnail",videoData.getImages().getThumbnail().getAsset_id());
 				logger.info("delete thumbnail result:"+deleteResult);			
 			}
 			return addAsset(videoData.getId(),"thumbnail",imageurl);		
 	}
-	public String replacePosterImage(BCVideoData videoData, String imageurl){
+	private String replacePosterImage(BCVideoData videoData, String imageurl){
 		if(videoData.getImages()!=null && videoData.getImages().getPoster()!=null && videoData.getImages().getPoster().getAsset_id()!=null && videoData.getImages().getPoster().getAsset_id().trim().length()>1){
 			String deleteResult=deleteAsset(videoData.getId(), "poster",videoData.getImages().getPoster().getAsset_id());
 			logger.info("delete poster result:"+deleteResult);			
@@ -377,7 +378,7 @@ public String  getViodeInJson(String videoid){
 	}
 	
 	
-	public String  addAsset(String brightcoveid, String assetType,String imageurl){			
+	private String  addAsset(String brightcoveid, String assetType,String imageurl){			
 	    BCAccessToken accessToken=bcAccessToenService.getAccessToken();
 		RestTemplate rest=new RestTemplate();
 		
@@ -430,7 +431,7 @@ public String  getViodeInJson(String videoid){
 	    
    }
 	
-	public String deleteAsset(String brightcoveID, String assetType,String assetId){
+	private String deleteAsset(String brightcoveID, String assetType,String assetId){
 		brightcoveID=brightcoveID.trim();
 		if(brightcoveID.length()<5 || assetId.length()<2){
 			throw new RuntimeException("brightcoveID or assetID is too short for delete:"+brightcoveID+" assetId="+assetId);
@@ -477,7 +478,7 @@ public String  getViodeInJson(String videoid){
 	}
 	
 	
-	public BcIngestResponse ingestVideo(BCVideoIngestRequest ingestRequest, String videoid){
+	private BcIngestResponse ingestVideo(BCVideoIngestRequest ingestRequest, String videoid){
 		BCAccessToken accessToken=bcAccessToenService.getAccessToken();
 		RestTemplate rest=new RestTemplate();
 		
@@ -578,6 +579,10 @@ public String  getViodeInJson(String videoid){
    }
 	
     public BCVideoData changeVideoStatus(String brightcoveid, String status){
+    	if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********changeVideoStatus is skipped:The BC Configuration is SET TO READONLY");
+    		return new BCVideoData();    		
+    	}
     	BCVideoData updateVideo=new BCVideoData();
 		updateVideo.setState(status);			   				   
 	    String reponse=updateVideo(updateVideo,brightcoveid);
@@ -586,6 +591,11 @@ public String  getViodeInJson(String videoid){
 	    return updatedVideo;
     }
 	public void publishImage(Episode episode, String imageType){
+		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********publishImage is skipped:The BC Configuration is SET TO READONLY");
+    		return;    		
+    	}
+		
 		if(episode.getBrightcoveId()==null){
 			logger.info("The episode is not yet published:"+episode.getId());
 			return;
@@ -603,6 +613,11 @@ public String  getViodeInJson(String videoid){
 	}
 	@Transactional
 	public BCVideoData publishEpisodeToBrightcove(long episodeid){
+		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********publishEpisodeToBrightcove is skipped:The BC Configuration is SET TO READONLY");
+    		return new BCVideoData();    		
+    	}
+		
 		  Episode  episode=metadataRepository.findEpisodeById(episodeid);		  
 		  if(episode==null){
 			  throw new RuntimeException("The episodeid is not found in the database"); 
@@ -680,6 +695,11 @@ public String  getViodeInJson(String videoid){
 	
 	@Transactional
 	public Object deleteEpisodeFromBrightcove(long episodeid){
+		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********deleteEpisodeFromBrightcove is skipped:The BC Configuration is SET TO READONLY");
+    		return new BCVideoData();    		
+    	}
+		
 		  Episode  episode=metadataRepository.findEpisodeById(episodeid);		  
 		  if(episode==null){			  
 			  return new RestResponseMessage("EpisodeNotFound", "The episodeid is not found in the database for removing from the brightcove");
@@ -724,7 +744,12 @@ public String  getViodeInJson(String videoid){
 	
 	
 	@Transactional
-	public BcIngestResponse ingestVideoToBrightCove(FileIngestRequest ingestRequest){
+	public BcIngestResponse ingestVideoToBrightCove(FileIngestRequest ingestRequest){		
+		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********ingestVideoToBrightCove is skipped:The BC Configuration is SET TO READONLY");
+    		return new  BcIngestResponse();    		
+    	}
+		
 		  Episode  episode=metadataRepository.findEpisodeById(ingestRequest.getEpisodeid());		  
 		  if(episode==null){
 			  throw new RuntimeException("The episodeid is not found in the database"); 

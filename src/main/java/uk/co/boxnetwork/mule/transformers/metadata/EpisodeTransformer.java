@@ -69,7 +69,7 @@ public class EpisodeTransformer extends BoxRestTransformer{
     	   String episodeid=MuleRestUtil.getPathPath(message);
     	   
     	   if(episodeid==null||episodeid.length()==0){
-    		   return new ErrorMessage("The episodeid is missing in DELETE");
+    		   return new ErrorMessage("The episodeid is missing in PUT");
     	   }
 		   Long id=Long.valueOf(episodeid);
 		   uk.co.boxnetwork.data.Episode  episode=null;

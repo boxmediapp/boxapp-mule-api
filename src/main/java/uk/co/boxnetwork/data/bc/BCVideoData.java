@@ -12,7 +12,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 
 import uk.co.boxnetwork.model.AdSuport;
 import uk.co.boxnetwork.model.AdvertisementRule;
@@ -27,6 +27,7 @@ import uk.co.boxnetwork.model.PublishedStatus;
 import uk.co.boxnetwork.model.ScheduleEvent;
 import uk.co.boxnetwork.model.Series;
 import uk.co.boxnetwork.model.VideoStatus;
+
 import uk.co.boxnetwork.util.GenericUtilities;
 
 
@@ -495,6 +496,7 @@ public class BCVideoData {
 		public void setHas_digital_master(Boolean has_digital_master) {
 			this.has_digital_master = has_digital_master;
 		}
+		
 		
 		 
 }

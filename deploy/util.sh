@@ -52,6 +52,7 @@ unzipConfigAndReplaceVariables(){
       echo  'sed -i -e "s,@@@brightcove_account_id@@@,'$brightcove_account_id',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
       echo  'sed -i -e "s,@@@brightcove_client_id@@@,'$brightcove_client_id',g" metadata-config/services.properties  ' >> /tmp/script_$uniqueidforfilename.sh
       echo  'sed -i -e "s,@@@brightcove_client_secret@@@,'$brightcove_client_secret',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
+      echo  'sed -i -e "s,@@@brightcove_environment_type@@@,'$brightcove_environment_type',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
       
       
       echo  'sed -i -e "s,@@@brightcove_custom_fields_type@@@,'$brightcove_custom_fields_type',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh

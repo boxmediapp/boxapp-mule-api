@@ -107,7 +107,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
                              <spring:property name="analyticsFields" value="${brightcove.analytics.fields}"/>
                              
                              <spring:property name="customFieldsUpdateType" value="${brightcove.customFields.updateType}"/>
-                             
+                             <spring:property name="environmentType" value="${brightcove.environment.type}"/>
                                                           
          </spring:bean>
          <spring:bean id="c4ScheduleConfiguration"  class="uk.co.boxnetwork.data.BasicAuthenticatedURLConfiguration">
@@ -262,6 +262,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
    <custom-transformer class="uk.co.boxnetwork.mule.transformers.tasks.CommandExecutionTransformer" name="commandExecutionTransformer" doc:name="CommandExecutionTransformer"/>
    
    
+  <custom-transformer class="uk.co.boxnetwork.mule.transformers.cms.ManageCMSMenuTransformer" name="manageCMSMenuTransformer" doc:name="manageCMSMenuTransformer"/>
    
    
    

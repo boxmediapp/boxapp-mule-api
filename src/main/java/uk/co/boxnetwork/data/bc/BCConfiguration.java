@@ -22,6 +22,8 @@ public class BCConfiguration {
 	
 	private String customFieldsUpdateType;
 	
+	private BCEnvironmentType environmentType;
+	
 	public String getAccountId() {
 		return accountId;
 	}
@@ -243,6 +245,12 @@ public class BCConfiguration {
 	}
 	public void setCustomFieldsUpdateType(String customFieldsUpdateType) {
 		this.customFieldsUpdateType = customFieldsUpdateType;
+	}
+	public BCEnvironmentType getEnvironmentType() {
+		return environmentType;
+	}
+	public void setEnvironmentType(BCEnvironmentType environmentType) {
+		this.environmentType = environmentType;
 	}
 	
   
