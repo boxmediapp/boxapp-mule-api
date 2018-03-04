@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import uk.co.boxnetwork.components.BoxMedataRepository;
 import uk.co.boxnetwork.components.MetadataMaintainanceService;
 import uk.co.boxnetwork.data.app.AppInfo;
+import uk.co.boxnetwork.data.app.BCSettings;
+import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.MediaApplicationID;
 
@@ -24,6 +26,8 @@ public class LoadAppInformationTransformer extends BoxRestTransformer{
 	@Autowired
 	AppConfig appConfig;
 	
+	@Autowired
+    private BCConfiguration bcConfiguration;
 	
 	
 	@Autowired
@@ -38,9 +42,14 @@ public class LoadAppInformationTransformer extends BoxRestTransformer{
 		if(applicationId==MediaApplicationID.IMAGE_CLIENT_APP){
 			applicationId=MediaApplicationID.MEDIA_APP;
 		}
-		AppInfo appInfo=new AppInfo();
+		AppInfo appInfo=new AppInfo();		
 		AppConfig appconfig=repository.findAppConfigByApplication(applicationId);		
 		appInfo.setAppconfig(appconfig);
+		
+		BCSettings bcSettings=new BCSettings();
+		bcSettings.setAccountId(bcConfiguration.getAccountId());
+		bcSettings.setEnvironmentType(bcConfiguration.getEnvironmentType());
+		appInfo.setBcSettings(bcSettings);
 	    return appInfo;
 	 }
 	
