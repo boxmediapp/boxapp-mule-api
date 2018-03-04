@@ -37,6 +37,7 @@ public class CMSMenuData {
 	}
 	
 	public void exportAttributes(CMSMenu cmsmenu){
+		cmsmenu.setId(this.id);
 		cmsmenu.setTitle(this.title);
 	}
 	public void importData(CMSMenu cmsmenu){

@@ -56,7 +56,7 @@ public class ManageCMSMenuTransformer  extends BoxRestTransformer{
 	   Long id=Long.valueOf(menuid);
 	   CMSMenuData  cmsmenu=null;
 	   
-	   if(message.getPayload() instanceof uk.co.boxnetwork.data.Episode){
+	   if(message.getPayload() instanceof CMSMenuData){
 		   cmsmenu=(CMSMenuData)message.getPayload();			   
 	   }
 	   else{			   
@@ -66,6 +66,10 @@ public class ManageCMSMenuTransformer  extends BoxRestTransformer{
 				objectMapper.setSerializationInclusion(Include.NON_NULL);
 				cmsmenu = objectMapper.readValue(cmsMenuInJson, CMSMenuData.class);
 	   }	   	  
+	   if(cmsmenu.getId()!=id){
+		   logger.info("*****is does not match"+id+"****"+cmsmenu.getId());
+		   return returnError("ID does not match for update",message);
+	   }
 	   cmsService.updateCMSMenu(cmsmenu,applicationId);
 	   return cmsmenu;
 	}  

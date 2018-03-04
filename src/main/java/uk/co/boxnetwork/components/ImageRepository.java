@@ -38,18 +38,7 @@ public class ImageRepository {
 	public void updateBoxEpisode(BoxEpisode boxepisode){
 		entityManager.merge(boxepisode);
 	}
-	@Transactional
-	public void createBoxChannel(BoxChannel boxChannel){
-		if(boxChannel.getChannelId()==null||boxChannel.getChannelId().trim().length()==0){
-			return;
-		}
-		BoxChannel efoundChannel=entityManager.find(BoxChannel.class, boxChannel.getChannelId());
-		if(efoundChannel!=null){
-			return;
-		}
-		entityManager.persist(boxChannel);
-		
-	}
+	
 	
 	
 	public List<BoxEpisode> findBoxEpisodes(SearchParam searchParam){		   		   
@@ -130,14 +119,6 @@ public class ImageRepository {
 	   
 	  	  
   }
-public BoxChannel findBoxChannelById(String channelid){
-	return  entityManager.find(BoxChannel.class, channelid);
-	
-}
-public List<BoxChannel> findAllBoxChannel(SearchParam searchParam){
-	TypedQuery<BoxChannel> query=entityManager.createQuery("SELECT c FROM box_channel c", BoxChannel.class);
-	return  query.getResultList();
-}
   
   public List<ImageSet> findImageSet(SearchParam searchParam){	   
 	   String queryString=searchParam.getImageSetSelectQuery();

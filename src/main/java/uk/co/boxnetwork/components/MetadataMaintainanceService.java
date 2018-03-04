@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.amazonaws.regions.Regions;
 
+import uk.co.boxnetwork.components.boxdata.BoxDataRepository;
 import uk.co.boxnetwork.data.DataReport;
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.data.bc.BCConfiguration;
@@ -50,6 +51,8 @@ import uk.co.boxnetwork.util.GenericUtilities;
 @Service
 public class MetadataMaintainanceService {	
 	
+	@Autowired
+	BoxDataRepository boxDataRepository;
 	
 	
 	@Autowired
@@ -882,14 +885,14 @@ public void calculateUploadedDuration(){
     }
    
    public void createBoxChannels(){	   	   
-	   imageRepository.createBoxChannel(new BoxChannel("1865244993", "On Demand"));  
-	   imageRepository.createBoxChannel(new BoxChannel("1824133004", "4Music"));
-	   imageRepository.createBoxChannel(new BoxChannel("1859498504", "Kerrang"));
-	   imageRepository.createBoxChannel(new BoxChannel("1859498506", "The Box"));
-	   imageRepository.createBoxChannel(new BoxChannel("1859498507", "Kiss"));
-	   imageRepository.createBoxChannel(new BoxChannel("1859498509", "Magic"));
-	   imageRepository.createBoxChannel(new BoxChannel("1865247002", "Box Hits"));
-	   imageRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));	   
+	   boxDataRepository.createBoxChannel(new BoxChannel("1865244993", "On Demand"));  
+	   boxDataRepository.createBoxChannel(new BoxChannel("1824133004", "4Music"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1859498504", "Kerrang"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1859498506", "The Box"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1859498507", "Kiss"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1859498509", "Magic"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1865247002", "Box Hits"));
+	   boxDataRepository.createBoxChannel(new BoxChannel("1865247003", "Box Upfront"));	   
    }
    public void createBoxUserRoles(){	
 	   logger.info("**************start to create roles***********");

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import uk.co.boxnetwork.components.boxdata.BoxDataRepository;
 import uk.co.boxnetwork.data.BasicAuthenticatedURLConfiguration;
 import uk.co.boxnetwork.data.C4Metadata;
 import uk.co.boxnetwork.data.ImportScheduleRequest;
@@ -59,6 +60,8 @@ public class ImportC4ScheduleService {
   @Autowired
   MetadataService metadataService;
   
+  @Autowired
+  BoxDataRepository boxdataRepository;
  public String requestSchedulService(ImportScheduleRequest request){	
 		RestTemplate rest=new RestTemplate();
 		
@@ -167,7 +170,7 @@ public class ImportC4ScheduleService {
 			C4Metadata c4metadata=c4SchedulerParser.parse(schedule);
 			for(ScheduleEvent event: c4metadata.getScheduleEvents()){
 				boxMetadataRepository.importBoxEpisode(event.getEpisode());
-				boxMetadataRepository.updateBoxEpisodeWithScheduleEvent(event, request);				
+				boxdataRepository.updateBoxEpisodeWithScheduleEvent(event, request);				
 			}
 			
 		} catch (DocumentException e) {

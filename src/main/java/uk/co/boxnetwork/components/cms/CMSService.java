@@ -1,6 +1,7 @@
 package uk.co.boxnetwork.components.cms;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,10 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.boxnetwork.components.BCVideoService;
+import uk.co.boxnetwork.components.boxdata.BoxDataRepository;
 import uk.co.boxnetwork.data.bc.BCVideoData;
+import uk.co.boxnetwork.data.cms.BoxChannelData;
 import uk.co.boxnetwork.data.cms.CMSMenuData;
 import uk.co.boxnetwork.data.cms.CMSPlaylistData;
+import uk.co.boxnetwork.data.image.BoxScheduleEventData;
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.BoxChannel;
+import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.cms.CMSEpisode;
 import uk.co.boxnetwork.model.cms.CMSMenu;
@@ -25,6 +31,9 @@ public class CMSService {
 	
 	@Autowired
 	CMSRepository cmsRepository;
+	
+	@Autowired
+	BoxDataRepository  boxdataRepository;
 	
 	@Autowired 
 	BCVideoService bcVideoService;
@@ -43,6 +52,7 @@ public class CMSService {
 			}
 			return ret;		
 	}
+	@Transactional
 	public CMSMenuData getCMSMenuById(Long id){
 	
 		CMSMenu cmsMenu=cmsRepository.findCMSMenuById(id);
@@ -52,12 +62,41 @@ public class CMSService {
 		
 	}
 	
-	public void updateCMSMenu(CMSMenuData cmsmenu,MediaApplicationID applicationId){
-		
+	public void updateCMSMenu(CMSMenuData cmsmenuData,MediaApplicationID applicationId){
+		  if(!isValid(cmsmenuData)){
+			  logger.error("Failed to create:Invalid cmsmenuData:"+cmsmenuData);
+			  return;
+		  }
+		  CMSMenu cmsMenu=new CMSMenu();
+		  cmsmenuData.exportAttributes(cmsMenu);
+		  cmsMenu.setApplicationId(applicationId);
+		  List<CMSPlaylist> playlist=new ArrayList<CMSPlaylist>();
+		  for(CMSPlaylistData pllistdata:cmsmenuData.getPlaylist()){
+			  		if(!isValid(pllistdata)){
+			  			logger.error("Failed to create:Invalid pllistdata:"+pllistdata);
+			  			return;
+			  		}
+			  		CMSPlaylist cmsPlaylist=new CMSPlaylist();
+			  		pllistdata.exportAttributes(cmsPlaylist);
+			  		List<CMSEpisode> episodes=loadCMSEpisodesFromPlayList(pllistdata.getId());
+			  		episodes=cmsRepository.updateEpisodes(episodes);			  		
+			  		cmsPlaylist.setEpisodes(episodes);
+			  		cmsPlaylist=cmsRepository.updatePlayList(cmsPlaylist);
+			  		playlist.add(cmsPlaylist);
+		  }
+		  cmsMenu.setPlaylist(playlist);
+		  cmsRepository.updateCMSMenu(cmsMenu);		
 	}
-    
+	@Transactional
 	public CMSMenuData removeCMSMenuById(Long id, MediaApplicationID applicationId){
-		return null;
+		CMSMenuData cmsMenuData=new CMSMenuData();
+		cmsMenuData.setId(id);
+		  CMSMenu cmsMenu=cmsRepository.removeCMSMenuById(id);
+		  if(cmsMenu!=null){
+			  logger.info("CMS Menu is deleted:"+cmsMenu);
+			  cmsMenuData.importData(cmsMenu);
+		  }
+		  return cmsMenuData;
 	}
 	
 	private boolean isValid(CMSMenuData cmsmenuData){
@@ -127,5 +166,61 @@ public class CMSService {
 			}
 			return episodes;
 	  }
-	
+	  
+	  public BoxChannelData findBoxChannelById(String channelid,Long scheduleTimestampFrom, Long scheduleTimestampTo){
+		  BoxChannel channel=boxdataRepository.findBoxChannelById(channelid);
+		  BoxChannelData channelData=new BoxChannelData();
+		  channelData.importFrom(channel);
+		  retrieveSchedule(channel,channelData,scheduleTimestampFrom,scheduleTimestampTo);
+		  
+		  return channelData;
+	  }
+	  void retrieveSchedule(BoxChannel channel,BoxChannelData channelData,Long scheduleTimestampFrom,Long scheduleTimestampTo){
+		  if(scheduleTimestampFrom==null || scheduleTimestampTo==null){
+			  logger.info("scheduleTimestampFrom/scheduleTimestampTo is empty");
+			  return;
+		  }
+		  
+		  List<BoxScheduleEvent> schdules=boxdataRepository.findBoxScheduleEvent(channel, new Date(scheduleTimestampFrom*1000), new Date(scheduleTimestampTo*1000));
+		  if(schdules.size()==0){
+			  logger.info("No schedules for the channel");
+			  return;
+		  }
+		  List<BoxScheduleEventData> scheduleData=new ArrayList<BoxScheduleEventData>();
+		  for(BoxScheduleEvent evt:schdules){
+			  BoxScheduleEventData scheduledata=new BoxScheduleEventData(evt);
+			  scheduleData.add(scheduledata);
+		  }
+		  channelData.setSchedule(scheduleData);		  
+		  
+	  }
+	  public List<BoxChannelData> findAllBoxChannel(Long scheduleTimestampFrom, Long scheduleTimestampTo){
+		  List<BoxChannel> channels=boxdataRepository.findAllBoxChannel();
+		  List<BoxChannelData> channeldata=new ArrayList<BoxChannelData>();
+		  for(BoxChannel ch:channels){
+			  BoxChannelData cdata=new BoxChannelData();
+			  cdata.importFrom(ch);
+			  retrieveSchedule(ch,cdata,scheduleTimestampFrom,scheduleTimestampTo);
+			  
+			  channeldata.add(cdata);
+		  }
+		  return channeldata;
+		  
+	  }
+	  public void updateChannel(BoxChannelData channelData){
+		  BoxChannel boxChannel=new BoxChannel();
+		  channelData.exportTo(boxChannel);
+		  boxdataRepository.updateOrCreate(boxChannel);		  
+	  }
+	  public BoxChannelData deleteChannelById(String channelId){		  
+		  BoxChannelData channelData=new BoxChannelData();
+		  channelData.setChannelId(channelId);
+		  BoxChannel boxChannel=boxdataRepository.removeChannelById(channelId);
+		  if(boxChannel!=null){
+			  logger.info("Box Channel is deleted:"+boxChannel);
+			  channelData.importFrom(boxChannel);
+		  }
+		  return channelData;
+	  }
+
 }

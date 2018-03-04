@@ -1,85 +1,45 @@
-package uk.co.boxnetwork.model;
+package uk.co.boxnetwork.data.cms;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
 
-@Entity(name="box_channel")
-public class BoxChannel {
-	
-	
+import uk.co.boxnetwork.data.image.BoxScheduleEventData;
+import uk.co.boxnetwork.model.BoxChannel;
 
-	@Id
-	@Column(name="channel_id")
-    private String channelId;
-  
-	
-	@Column(name="channel_name")
-	private String channelName;
-	
-	private String title;
-	
-	@Column(name="channel_path")
-	private String channel_path;
-	
-	private String stream;
-	
-	private String mobile_stream;
-	
-	private String tv_stream;
-	
-	private String web_stream;
-	
-	private  String ios_stream;
-	
-	private String android_stream;
-	
-	private String roku_stream;
-	
-	private String nowtv_stream;
-	
-	private String eetv_stream;
-	
-	private String firetv_stream;
-	
-	private String xbox_stream;
-	
-	private String playstation_stream;
-	
-	private String lgtv_stream;
-	
+public class BoxChannelData {
+	private String channelId;
+	private String channelName;	
+	private String title;	
+	private String channel_path;	
+	private String stream;	
+	private String mobile_stream;	
+	private String tv_stream;	
+	private String web_stream;	
+	private  String ios_stream;	
+	private String android_stream;	
+	private String roku_stream;	
+	private String nowtv_stream;	
+	private String eetv_stream;	
+	private String firetv_stream;	
+	private String xbox_stream;	
+	private String playstation_stream;	
+	private String lgtv_stream;	
 	private String samsung_stream;
 	private String carousel;
 	private String player_focus;
 	private String player_blur;
 	private String schedule_focus;
 	private String schedule_blur;
-
-   public BoxChannel() {
-		
-	}
-	public BoxChannel(String channelId, String channelName) {
-		super();
-		this.channelId = channelId;
-		this.channelName = channelName;
-	}
-
-
+	private List<BoxScheduleEventData> schedule;
+	
 	public String getChannelId() {
 		return channelId;
 	}
-
-
 	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
-
-
 	public String getChannelName() {
 		return channelName;
 	}
-
-
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
 	}
@@ -210,8 +170,64 @@ public class BoxChannel {
 		this.schedule_blur = schedule_blur;
 	}
 	
-	@Override
-	public String toString(){
-		return 	"channelId="+channelId+" channelName="+channelName;		 
+	
+	public List<BoxScheduleEventData> getSchedule() {
+		return schedule;
 	}
+	public void setSchedule(List<BoxScheduleEventData> schedule) {
+		this.schedule = schedule;
+	}
+	public void exportTo(BoxChannel boxChannel){
+		boxChannel.setChannelId(this.channelId);
+		boxChannel.setChannelName(this.channelName);	
+		boxChannel.setTitle(this.title);	
+		boxChannel.setChannel_path(this.channel_path);	
+		boxChannel.setStream(this.stream);	
+		boxChannel.setMobile_stream(this.mobile_stream);	
+		boxChannel.setTv_stream(this.tv_stream);	
+		boxChannel.setWeb_stream(this.web_stream);	
+		boxChannel.setIos_stream(this.ios_stream);	
+		boxChannel.setAndroid_stream(this.android_stream);	
+		boxChannel.setRoku_stream(this.roku_stream);	
+		boxChannel.setNowtv_stream(this.nowtv_stream);	
+		boxChannel.setEetv_stream(this.eetv_stream);	
+		boxChannel.setFiretv_stream(this.firetv_stream);	
+		boxChannel.setXbox_stream(this.xbox_stream);	
+		boxChannel.setPlaystation_stream(this.playstation_stream);	
+		boxChannel.setLgtv_stream(this.lgtv_stream);	
+		boxChannel.setSamsung_stream(this.samsung_stream);
+		boxChannel.setCarousel(this.carousel);
+		boxChannel.setPlayer_focus(this.player_focus);
+		boxChannel.setPlayer_blur(this.player_blur);
+		boxChannel.setSchedule_focus(this.schedule_focus);
+		boxChannel.setSchedule_blur(this.schedule_blur);
+	}
+	public void importFrom(BoxChannel boxChannel){
+		this.channelId=boxChannel.getChannelId();
+		this.channelName=boxChannel.getChannelName();	
+		this.title=boxChannel.getTitle();	
+		this.channel_path=boxChannel.getChannel_path();	
+		this.stream=boxChannel.getStream();	
+		this.mobile_stream=boxChannel.getMobile_stream();	
+		this.tv_stream=boxChannel.getTv_stream();	
+		this.web_stream=boxChannel.getWeb_stream();	
+		this.ios_stream=boxChannel.getIos_stream();	
+		this.android_stream=boxChannel.getAndroid_stream();	
+		this.roku_stream=boxChannel.getRoku_stream();	
+		this.nowtv_stream=boxChannel.getNowtv_stream();	
+		this.eetv_stream=boxChannel.getEetv_stream();	
+		this.firetv_stream=boxChannel.getFiretv_stream();	
+		this.xbox_stream=boxChannel.getXbox_stream();	
+		this.playstation_stream=boxChannel.getPlaystation_stream();	
+		this.lgtv_stream=boxChannel.getLgtv_stream();	
+		this.samsung_stream=boxChannel.getSamsung_stream();
+		this.carousel=boxChannel.getCarousel();
+		this.player_focus=boxChannel.getPlayer_focus();
+		this.player_blur=boxChannel.getPlayer_blur();
+		this.schedule_focus=boxChannel.getSchedule_focus();
+		this.schedule_blur=boxChannel.getSchedule_blur();
+	}
+	
+	
+	
 }

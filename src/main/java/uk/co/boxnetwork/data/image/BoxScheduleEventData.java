@@ -13,6 +13,10 @@ public class BoxScheduleEventData {
 	private BoxEpisode boxEpisode;		
 	private Date scheduleTimestamp;	
 	private BoxChannel boxChannel;
+	private String title;
+	private String programmeNumber;
+	
+
 	 
 	public Long getId() {
 		return id;
@@ -38,9 +42,29 @@ public class BoxScheduleEventData {
 	public void setBoxChannel(BoxChannel boxChannel) {
 		this.boxChannel = boxChannel;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getProgrammeNumber() {
+		return programmeNumber;
+	}
+	public void setProgrammeNumber(String programmeNumber) {
+		this.programmeNumber = programmeNumber;
+	}
 	public BoxScheduleEventData(BoxScheduleEvent scheduleEvent){
 		this.id=scheduleEvent.getId();
 		this.scheduleTimestamp=scheduleEvent.getScheduleTimestamp();
-		this.boxChannel=scheduleEvent.getBoxChannel();				
+		this.boxChannel=scheduleEvent.getBoxChannel();
+		if(scheduleEvent.getBoxEpisode()!=null){
+			BoxEpisode episode=scheduleEvent.getBoxEpisode();
+			
+			this.programmeNumber=episode.getProgrammeNumber();
+			this.title=episode.getTitle();
+		}
+	
 	}
 }

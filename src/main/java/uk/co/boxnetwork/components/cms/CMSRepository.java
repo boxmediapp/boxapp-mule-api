@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import uk.co.boxnetwork.data.cms.CMSMenuData;
-import uk.co.boxnetwork.data.cms.CMSPlaylistData;
+import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.cms.CMSEpisode;
 import uk.co.boxnetwork.model.cms.CMSMenu;
@@ -87,13 +86,23 @@ public class CMSRepository {
 	  public CMSPlaylist updatePlayList(CMSPlaylist cmsPlaylist){
 		  cmsPlaylist.setSyncedAt(new Date());
 		  CMSPlaylist playlistIndDB=entityManager.find(CMSPlaylist.class, cmsPlaylist.getId());
-		  if(playlistIndDB!=null){
+		  if(playlistIndDB==null){
 			  entityManager.persist(cmsPlaylist);
 			  return cmsPlaylist;
 		  }
 		  else{
 			  return entityManager.merge(cmsPlaylist);
 		  }		  
+	  }
+	  
+	  
+	  public CMSMenu removeCMSMenuById(Long id){
+		  CMSMenu cmsMenu=findCMSMenuById(id);
+		  if(cmsMenu==null){
+			  return null;
+		  }
+		  entityManager.remove(cmsMenu);
+		  return cmsMenu;
 	  }
 	  
 }

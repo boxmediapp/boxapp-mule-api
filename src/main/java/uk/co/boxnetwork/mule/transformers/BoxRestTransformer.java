@@ -8,7 +8,7 @@ import java.util.Map;
 import org.mule.api.MuleMessage;
 
 import org.mule.api.transformer.TransformerException;
-
+import org.mule.module.http.internal.ParameterMap;
 import org.mule.transformer.AbstractMessageTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +29,31 @@ import uk.co.boxnetwork.security.BoxUserService;
 
 public class BoxRestTransformer  extends AbstractMessageTransformer{
 	 static final protected Logger logger=LoggerFactory.getLogger(BoxRestTransformer.class);
+	 
+	 public static  Long getLongQueryParameter(MuleMessage message,String parametername){		
+		 	ParameterMap queryparams=message.getInboundProperty("http.query.params");
+		 	String pvalue=null;
+			if(queryparams!=null){				
+				pvalue=queryparams.get(parametername);
+				try{
+					return Long.valueOf(pvalue);
+				}
+				catch(Exception error){
+					logger.error("failed convert "+parametername+" input parameter to long parameter:"+pvalue+":"+error);
+					return null;
+				}
+			}
+			else{
+				return null;
+			}
+	 }
+
+			
 
 	 @Autowired
 	 protected BoxUserService boxUserService;
 	 
-	
+			
 	 public MediaApplicationID getApplicationId(BoxOperator operator){		 
 		 List<BoxUserRole> roles=operator.getRoles();
 		 return roles.get(0).getApplicationId();
