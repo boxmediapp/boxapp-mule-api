@@ -57,6 +57,7 @@ unzipConfigAndReplaceVariables(){
       
       echo  'sed -i -e "s,@@@brightcove_custom_fields_type@@@,'$brightcove_custom_fields_type',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
       
+      echo  'sed -i -e "s,@@@c4_mule_host@@@,'$c4_mule_host',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
       echo  'sed -i -e "s,@@@c4_schedule_get_user@@@,'$c4_schedule_get_user',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh 
       echo  'sed -i -e "s,@@@c4_schedule_get_password@@@,'$c4_schedule_get_password',g" metadata-config/services.properties ' >> /tmp/script_$uniqueidforfilename.sh
       echo  'sed -i -e "s,@@@c4_certification_get_user@@@,'$c4_certification_get_user',g" metadata-config/services.properties  ' >> /tmp/script_$uniqueidforfilename.sh

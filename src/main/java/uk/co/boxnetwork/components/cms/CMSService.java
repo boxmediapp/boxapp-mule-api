@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import uk.co.boxnetwork.components.BCVideoService;
+import uk.co.boxnetwork.components.BoxMedataRepository;
 import uk.co.boxnetwork.components.boxdata.BoxDataRepository;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.data.cms.BoxChannelData;
@@ -20,6 +21,7 @@ import uk.co.boxnetwork.data.image.BoxScheduleEventData;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.BoxChannel;
 import uk.co.boxnetwork.model.BoxScheduleEvent;
+import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.cms.CMSEpisode;
 import uk.co.boxnetwork.model.cms.CMSMenu;
@@ -40,6 +42,10 @@ public class CMSService {
 	
 	@Autowired
 	AppConfig appConfig;
+	
+	@Autowired
+	BoxMedataRepository boxMetadataRepository;
+	
 	
 	@Transactional
 	public List<CMSMenuData> findAllCMSMenu(MediaApplicationID applicationId){				
@@ -221,6 +227,26 @@ public class CMSService {
 			  channelData.importFrom(boxChannel);
 		  }
 		  return channelData;
+	  }
+	  @Transactional
+	  public List<CMSPlaylistData> findCMSPlaylistByEpisodeId(Long id){
+		  List<CMSPlaylistData> playlistdata= new ArrayList<CMSPlaylistData>();
+		  Episode episode=boxMetadataRepository.findEpisodeById(id);
+		  if(episode==null){
+			  logger.error("not found episode:"+id);
+			  return playlistdata;			  
+		  }
+		  if(episode.getBrightcoveId()==null||episode.getBrightcoveId().trim().length()==0){
+			  logger.error("episod does not have provide id:"+id);
+			  return playlistdata; 
+		  }
+		  List<CMSPlaylist> playlists=cmsRepository.findCMSPlaylistByCMSEpisodeId(episode.getBrightcoveId());
+		  for(CMSPlaylist pl:playlists){
+			  CMSPlaylistData pldata=new CMSPlaylistData();
+			  pldata.importData(pl);
+			  playlistdata.add(pldata);
+		  }
+		  return playlistdata;
 	  }
 
 }

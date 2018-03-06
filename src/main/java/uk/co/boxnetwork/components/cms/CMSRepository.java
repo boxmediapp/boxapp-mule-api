@@ -105,4 +105,9 @@ public class CMSRepository {
 		  return cmsMenu;
 	  }
 	  
+	  public List<CMSPlaylist> findCMSPlaylistByCMSEpisodeId(String episodeid){		  
+		   TypedQuery<CMSPlaylist> query=entityManager.createQuery("SELECT c FROM cms_playlist c join c.episodes e where e.id=:episodeid", CMSPlaylist.class);
+		   return query.setParameter("episodeid",episodeid).getResultList();		  
+	  }
+	  
 }

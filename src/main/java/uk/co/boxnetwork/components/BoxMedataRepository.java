@@ -9,8 +9,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.hibernate.validator.jtype.Generic;
-import org.mule.api.MuleMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import uk.co.boxnetwork.data.DataReport;
-import uk.co.boxnetwork.data.ImportScheduleRequest;
+
 import uk.co.boxnetwork.data.SearchParam;
 import uk.co.boxnetwork.model.AdvertisementRule;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
-import uk.co.boxnetwork.model.BoxChannel;
+
 import uk.co.boxnetwork.model.BoxEpisode;
-import uk.co.boxnetwork.model.BoxScheduleEvent;
+
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.CertificationCategory;
@@ -43,8 +41,6 @@ import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MediaTag;
 import uk.co.boxnetwork.model.MetadataStatus;
 import uk.co.boxnetwork.model.ProgrammeCertification;
-import uk.co.boxnetwork.model.ProgrammeContentType;
-import uk.co.boxnetwork.model.PublishedStatus;
 import uk.co.boxnetwork.model.ScheduleEvent;
 import uk.co.boxnetwork.model.Series;
 import uk.co.boxnetwork.model.SeriesGroup;
