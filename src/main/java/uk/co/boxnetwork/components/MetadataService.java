@@ -14,15 +14,12 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 
 import uk.co.boxnetwork.data.BCPlayList;
 import uk.co.boxnetwork.data.BCPlayListItem;
@@ -41,11 +39,9 @@ import uk.co.boxnetwork.data.bc.BCConfiguration;
 import uk.co.boxnetwork.data.bc.BCPlayListData;
 import uk.co.boxnetwork.data.bc.BCVideoData;
 import uk.co.boxnetwork.data.bc.BCVideoSource;
-import uk.co.boxnetwork.data.bc.BcIngestResponse;
 import uk.co.boxnetwork.data.s3.FileItem;
 import uk.co.boxnetwork.data.s3.MediaFilesLocation;
 import uk.co.boxnetwork.data.soundmouse.SoundMouseData;
-import uk.co.boxnetwork.data.soundmouse.SoundMouseItem;
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.AvailabilityWindow;
 import uk.co.boxnetwork.model.BCNotification;
@@ -1163,7 +1159,17 @@ public uk.co.boxnetwork.data.Series getSeriesById(Long id){
 	   }
    }
    
-   public void deleteEpisodeById(Long episodeid){	   
+   
+   
+   public void deleteEpisodeById(Long episodeid){
+	    // videoService.listPlayListData(q, sort, offset, limit)
+	   	 Episode episode=boxMetadataRepository.findEpisodeById(episodeid);
+	   	 if(episode==null){
+	   		 logger.error("Episode is already deleted:"+episodeid);
+	   		 return;	   		 
+	   	 }	   	 	
+	   	 
+		 videoService.deleteBCVideo(episode.getBrightcoveId());		
 		 boxMetadataRepository.removeEpisode(episodeid);
    }
    

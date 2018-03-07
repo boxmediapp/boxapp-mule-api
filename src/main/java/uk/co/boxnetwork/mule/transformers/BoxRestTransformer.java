@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import uk.co.boxnetwork.data.app.LoginInfo;
 import uk.co.boxnetwork.data.bc.BCErrorMessage;
+import uk.co.boxnetwork.data.generic.RestResponseMessage;
 import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.MediaApplicationID;
@@ -211,22 +212,27 @@ public class BoxRestTransformer  extends AbstractMessageTransformer{
 					}
 				}
 	     }
-		catch(Exception e) {									
-						logger.error(e+" in transformer",e);
-						try{
-							com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
-							BCErrorMessage[] erromessages = objectMapper.readValue(e.getMessage(), BCErrorMessage[].class);							
-							message.setOutboundProperty("http.status", 500);
-							return e.getMessage();
-						}
-						catch(Exception e1){
-							
-							return returnError(e.toString(),message);
-						}
-						
+	   
+		catch(Exception e) {															
+				return exceptionToErrorResponse(e,message);		
 		 }
-		
-		
+	}
+	private Object exceptionToErrorResponse(Exception error, MuleMessage message){
+		logger.error(error+" in transformer",error);
+		try{
+			com.fasterxml.jackson.databind.ObjectMapper objectMapper=new com.fasterxml.jackson.databind.ObjectMapper();
+			BCErrorMessage[] erromessages = objectMapper.readValue(error.getMessage(), BCErrorMessage[].class);
+			return returnError(error.getMessage(), message, 500);
+		}
+		catch(Exception e1){
+			try{
+				RestResponseMessage responseMEssage=RestResponseMessage.exceptionToRestResponseMessage(e1);
+				return returnError(responseMEssage.getMessage(), message,responseMEssage.getCode());
+			}
+			catch(Exception e2){
+				return returnError(error.getMessage(), message, 500);
+			}
+		}
 	}
 	
 	 protected Object processGET(MuleMessage message, BoxOperator operator,String outputEncoding){

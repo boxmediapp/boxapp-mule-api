@@ -264,11 +264,20 @@ public String  getViodeInJson(String videoid){
 	    
    }
 	
+	private void removeFromPlayLists(String brightcoveID){
+		   	BCPlayListData[] bcplaylistdata=listPlayListData("type:EXPLICIT", null, null, null);
+	  		for(BCPlayListData pldata:bcplaylistdata){
+	  			if(pldata.removeVideoId(brightcoveID)){
+	  				patchPlaylist(pldata.getId(),pldata);
+	  			}
+	  	    }
+	}
 	private  String deleteVideo(String brightcoveID){
-		brightcoveID=brightcoveID.trim();
-		if(brightcoveID.length()<5){
-			throw new RuntimeException("brightcoveID is too short for delete:"+brightcoveID);
-		}
+			brightcoveID=brightcoveID.trim();
+			if(brightcoveID.length()<5){
+				throw new RuntimeException("brightcoveID is too short for delete:"+brightcoveID);
+		 }
+		 this.removeFromPlayLists(brightcoveID);		
 		 BCAccessToken accessToken=bcAccessToenService.getAccessToken();
 		 RestTemplate rest=new RestTemplate();			
 		 HttpHeaders headers=new HttpHeaders();			
@@ -695,50 +704,51 @@ public String  getViodeInJson(String videoid){
 	
 	@Transactional
 	public Object deleteEpisodeFromBrightcove(long episodeid){
-		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
-    		logger.error("********deleteEpisodeFromBrightcove is skipped:The BC Configuration is SET TO READONLY");
-    		return new BCVideoData();    		
-    	}
-		
 		  Episode  episode=metadataRepository.findEpisodeById(episodeid);		  
 		  if(episode==null){			  
-			  return new RestResponseMessage("EpisodeNotFound", "The episodeid is not found in the database for removing from the brightcove");
+			  return new RestResponseMessage(400, "The episodeid is not found in the database for removing from the brightcove");
 		  }
-		  
-		  if(episode.getBrightcoveId()==null){
-			  return new RestResponseMessage("EpisodeNotPublished", "The episode is not published");			  
-		  }
-		  else{
-			  BCVideoData existingbcVideoData=null;
-			 try{ 
-			     existingbcVideoData=getVideo(episode.getBrightcoveId());
-		      }
-			 catch(HttpClientErrorException e){
+		  Object response=deleteBCVideo(episode.getBrightcoveId());		  
+		  logger.info("successfully deleted:"+episode.getBrightcoveId()+" for episode=["+episode+"]reponse=["+response+"]");
+		  episode.setBrightcoveId(null);
+		  statusUnpublishedFromBrightCove(episode);
+		   metadataRepository.persist(episode);
+		   return response;
+	}
+	
+	public Object deleteBCVideo(String videoid){
+		if(configuration.getEnvironmentType()==BCEnvironmentType.READONLY){
+    		logger.error("********deleteEpisodeFromBrightcove is skipped:The BC Configuration is SET TO READONLY");
+    		return new RestResponseMessage(200, "Environment is readyonly");    		
+    	}
+		if(videoid==null || videoid.trim().length()<5){
+			  logger.info("videois is empty");
+			  return new RestResponseMessage(200, "Video is Empty");			  
+		 }		 
+		 BCVideoData existingbcVideoData=null;
+		 try{ 
+			     existingbcVideoData=getVideo(videoid);
+		 }
+		 catch(HttpClientErrorException e){
 				if(e.getStatusCode()==HttpStatus.NOT_FOUND){
 					logger.error("not found in the bc for delete");
-					return new RestResponseMessage("EntryDoesNotExists", "The video is not found in the brightcove");
+					return new RestResponseMessage(400, "HTTP Status Not Found is returned from BC");
 				}
 				else{
 					logger.error("Error retrieving the media entry from the brightcove",e);
 					throw new RuntimeException("Failed to retrieved the media entry from the brightcove:"+e);
 				}
-			 }			  
-			  DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-			  if(existingbcVideoData.getId().equals(episode.getBrightcoveId())){				  
-				  String reponse=deleteVideo(episode.getBrightcoveId());
-				  logger.info("successfully deleted:"+episode.getBrightcoveId()+" for episode=["+episode+"]reponse=["+reponse+"]");
-				  episode.setBrightcoveId(null);
-				  statusUnpublishedFromBrightCove(episode);
-				  metadataRepository.persist(episode);
+		}			  			
+	   if(existingbcVideoData.getId().equals(videoid)){				  
+				  String reponse=deleteVideo(videoid);
+				  logger.info("successfully deleted the bcvideo:"+videoid+" reponse=["+reponse+"]");
 				  return reponse;
-			  }
-			  else{
-				  logger.error("Different Brightcoveid is returned from the videocloud:"+existingbcVideoData.getId()+":"+episode.getBrightcoveId());		
-			  	   throw new RuntimeException("Different Brightcoveid is returned from the videocloud:"+existingbcVideoData.getId()+":"+episode.getBrightcoveId()); 
-			  }
+	   }
+	 else{
+				  logger.error("Different Brightcoveid is returned from the videocloud:"+existingbcVideoData.getId()+":"+videoid);		
+			  	   throw new RuntimeException("Different Brightcoveid is returned from the videocloud:"+videoid+":"+existingbcVideoData.getId()); 
+	  }
 			  
-		  }
-		  
 		  
 	}
 	
@@ -873,7 +883,7 @@ public String  getViodeInJson(String videoid){
 			patchInJson = objectMapper.writeValueAsString(playlistdata);
 		} catch (JsonProcessingException e1) {
 			logger.error("error while parsing the patched text to playlist data playlistdata="+playlistdata,e1);			
-			throw new RuntimeException(e1.getMessage(),e1);
+			throw RestResponseMessage.toRuntmeException(500, "failed to create json patch request string",e1);		
 		}
 		logger.info("About to patching playlist, requestInJson="+patchInJson);
 	
@@ -887,13 +897,20 @@ public String  getViodeInJson(String videoid){
 	    logger.info(":::::::::statuscode:"+statusCode);
 	    String responseBody= responseEntity.getBody();
 	    logger.info("The playlist patch response:"+responseBody);
+	    if(statusCode==null){
+	    	logger.error("Empty response code received from the brightcove");	    	
+	    	throw RestResponseMessage.toRuntmeException(500, "Empty response received from brightcove");
+	    }
+	    else if(!statusCode.is2xxSuccessful()){
+	    	logger.error("Not successfull response is received from the brightcove:"+statusCode.value());
+	    	throw RestResponseMessage.toRuntmeException(statusCode.value(), "Not successfull response is received from the brightcove");	    	
+	    }
 	    BCPlayListData playlist;
 		try {
 			playlist = objectMapper.readValue(responseBody, BCPlayListData.class);
 		} catch (Exception e) {			
-			logger.error("error while parsing the brightcove playlist data when patching",e);
-			logger.error(responseBody);
-			throw new RuntimeException(e.getMessage(),e);
+			logger.error("Failed to parse the brightcove response into BCPlayListData when patching playlist:"+responseBody,e);			
+			throw RestResponseMessage.toRuntmeException(500, "Failed to parse the brightcove response into BCPlayListData",e);			
 		}
 			
 	    return playlist;

@@ -41,7 +41,8 @@ public class BCVideoPublisher extends BoxRestTransformer{
 			   return new ErrorMessage("The episodeid is missing in DELETE");
 		  }
 		  Long id=Long.valueOf(episodeid);
-		  return bcVideoService.deleteEpisodeFromBrightcove(id);			 
+		  
+		  return bcVideoService.deleteEpisodeFromBrightcove(id);					 
 	}
 	 
    

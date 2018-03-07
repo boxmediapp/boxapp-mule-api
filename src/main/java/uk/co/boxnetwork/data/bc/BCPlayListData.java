@@ -1,5 +1,9 @@
 package uk.co.boxnetwork.data.bc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class BCPlayListData {
 	private String id;
 	private String account_id;
@@ -92,7 +96,30 @@ public class BCPlayListData {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	
-	
+	public boolean containsVideoId(String viodeId){
+		if(this.video_ids==null || this.video_ids.length==0){
+			return false;
+		}		
+		for(String vid:this.video_ids){
+			   	if(vid.equals(viodeId)){
+			   		return true;
+			   	}
+		 }
+	     return false;
+	}
+	public boolean removeVideoId(String viodeId){
+		if(!this.containsVideoId(viodeId)){
+			return false;
+		}		
+		List<String> nvideo_ids=new ArrayList<String>();
+		for(String vid:this.video_ids){
+		   	if(!vid.equals(viodeId)){
+		   		nvideo_ids.add(vid);
+		   	}
+	    }
+		this.video_ids=new String[nvideo_ids.size()];
+		this.video_ids=nvideo_ids.toArray(this.video_ids);
+		return true;
+	}	
 	
 }
