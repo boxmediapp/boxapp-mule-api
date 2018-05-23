@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import uk.co.boxnetwork.model.ImageSetType;
+
 
 public class ImageSet {
 	
@@ -26,6 +28,7 @@ public class ImageSet {
 	private String title;
 	private List<Image> images=new ArrayList<Image>();
 	
+	private ImageSetType imageSetType=ImageSetType.DEFAULT;
 	
 	private Integer fileCounter;
 	
@@ -92,6 +95,12 @@ public class ImageSet {
 		
 	}
 	
+	public ImageSetType getImageSetType() {
+		return imageSetType;
+	}
+	public void setImageSetType(ImageSetType imageSetType) {
+		this.imageSetType = imageSetType;
+	}
 	public ImageSet(uk.co.boxnetwork.model.ImageSet imageSet){
 		this.id=imageSet.getId();
 		this.lastModifiedAt=imageSet.getLastModifiedAt();
@@ -102,7 +111,7 @@ public class ImageSet {
 			
 		this.title=imageSet.getTitle();
 		this.fileCounter=imageSet.getFileCounter();
-		
+		this.imageSetType=imageSet.getImageSetType();
 		
 		if(programmeNumber!=null&& programmeNumber.length()>0){
 			String matParts[]=programmeNumber.split("/");
@@ -117,9 +126,10 @@ public class ImageSet {
 		imageSet.setId(this.id);		
 		imageSet.setTitle(this.title);		
 		imageSet.setFileCounter(fileCounter);
+		imageSet.setImageSetType(imageSetType);
 	}
 	@Override
 	public String toString(){
-		return "id=["+this.id+"]programmeNumber=["+programmeNumber+"]title=["+this.title+"]";
+		return "id=["+this.id+"]programmeNumber=["+programmeNumber+"]title=["+this.title+"]imageSetType=["+imageSetType+"]";
 	}
 }

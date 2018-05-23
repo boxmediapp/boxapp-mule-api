@@ -32,6 +32,10 @@ public class ImageSet {
 	@JoinColumn( name = "box_episode_id", nullable = true)
 	private BoxEpisode boxEpisode;	
 
+	@Column(name="image_set_type")
+	private ImageSetType imageSetType=ImageSetType.DEFAULT;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -82,9 +86,17 @@ public class ImageSet {
 		this.boxEpisode = boxEpisode;
 	}
 
+	public ImageSetType getImageSetType() {
+		return imageSetType;
+	}
+
+	public void setImageSetType(ImageSetType imageSetType) {
+		this.imageSetType = imageSetType;
+	}
+
 	@Override
 	public String toString(){
-		return "id=["+id+"]createdAt=["+createdAt+"]lastModifiedAt=["+lastModifiedAt+"]title=["+title+"]";
+		return "id=["+id+"]createdAt=["+createdAt+"]lastModifiedAt=["+lastModifiedAt+"]title=["+title+"]imageSetType=["+imageSetType+"]";
 		
 	}
 	
