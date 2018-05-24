@@ -62,7 +62,7 @@ public class OnApppStartedTransformer extends AbstractMessageTransformer{
 		logger.info("Application initialization");
 		metadataMaintainanceService.syncAppConfigWithDatabase();
 		metadataMaintainanceService.syncS3VideoItems();
-		metadataMaintainanceService.setImageSetTypesToDefault();
+		//metadataMaintainanceService.setImageSetTypesToDefault();
 		//metadataMaintainanceService.createBoxChannels();
 		//metadataMaintainanceService.createBoxUserRoles();
 		
