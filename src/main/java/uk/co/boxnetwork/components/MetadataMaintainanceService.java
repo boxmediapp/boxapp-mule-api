@@ -38,6 +38,8 @@ import uk.co.boxnetwork.model.BoxUser;
 import uk.co.boxnetwork.model.BoxUserRole;
 import uk.co.boxnetwork.model.Episode;
 import uk.co.boxnetwork.model.EpisodeStatus;
+import uk.co.boxnetwork.model.ImageSet;
+import uk.co.boxnetwork.model.ImageSetType;
 import uk.co.boxnetwork.model.MediaApplicationID;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.model.MetadataStatus;
@@ -161,6 +163,35 @@ public class MetadataMaintainanceService {
 					searchParam.nextBatch();
 				}
 		}
+	}
+	public void setImageSetTypesToDefault(){
+		logger.info("Setting ImageSets Type to Default......");
+		
+		int rcordLimit=appConfig.getRecordLimit();
+		if(rcordLimit<1){
+			rcordLimit=Integer.MAX_VALUE;
+		}
+		SearchParam searchParam=new SearchParam(null, 0, rcordLimit);
+		
+		while(true){
+			List<ImageSet> imagesets=imageRepository.findImageSet(searchParam);
+				if(imagesets.size()==0){
+					break;
+				}
+				for(ImageSet imageset:imagesets){
+					if(imageset.getImageSetType()==null){
+						imageset.setImageSetType(ImageSetType.DEFAULT);
+						imageRepository.persist(imageset);						
+					}
+				}
+				if(searchParam.isEnd(imagesets.size())){
+					break;
+				}
+				else{
+					searchParam.nextBatch();
+				}
+		}
+		
 	}
 	
 	

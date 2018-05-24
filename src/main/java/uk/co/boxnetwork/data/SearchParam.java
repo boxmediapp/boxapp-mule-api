@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.boxnetwork.model.AppConfig;
 import uk.co.boxnetwork.model.Episode;
+import uk.co.boxnetwork.model.ImageSetType;
 import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.MediaApplicationID;
 
@@ -51,6 +52,8 @@ public class SearchParam {
 	private SearchParamType searchType;
 	
 	private ImageStatus  imageStatus=null;
+	private ImageSetType imageSetType=null;
+	
 	private String programmeNumber=null;
 	
 	private Integer numberOfImageSets=null;
@@ -69,6 +72,13 @@ public class SearchParam {
 	}
 	public void setImageStatus(ImageStatus imageStatus) {
 		this.imageStatus = imageStatus;
+	}
+	
+	public ImageSetType getImageSetType() {
+		return imageSetType;
+	}
+	public void setImageSetType(ImageSetType imageSetType) {
+		this.imageSetType = imageSetType;
 	}
 	public String getVideoid() {
 		return videoid;
@@ -276,6 +286,17 @@ public class SearchParam {
 						logger.error("wrong enum imageStatus is passed:"+imageStatus);
 					}
 				}
+				String imageSetType=queryparams.get("imageSetType");
+				if(imageSetType!=null){
+					try{
+							this.imageSetType=ImageSetType.valueOf(imageSetType);
+					}
+					catch(Exception e){
+						logger.error("wrong enum imageStatus is passed:"+imageSetType);
+					}
+				}
+				
+				
 				String programmeNumber=queryparams.get("programmeNumber");
 				if(programmeNumber!=null){
 							programmeNumber=programmeNumber.trim().replace("-","/");
@@ -560,6 +581,17 @@ public String getImageSelectQuery(){
     		hasWhere=true;
     	}
     }
+    if(imageSetType!=null){
+    	if(hasWhere){
+    		query+=" and e.imageSet.imageSetType=:imageSetType";    		
+    	}
+    	else{
+    		query+=" where (e.imageSet.imageSetType=:imageSetType)";
+    		hasWhere=true;
+    	}
+    }
+    
+    
     if(lastModifiedFrom!=null){
     	if(hasWhere){
     		query+=" and e.lastModifiedAt >=:lastModifiedFrom";    		
@@ -684,6 +716,9 @@ public String selectSeriesGroupQuery(MediaApplicationID applicationId){
 		   }
 		if(this.getImageStatus()!=null){
 			typedQuery.setParameter("imageStatus",this.imageStatus);
+		}
+		if(this.getImageSetType()!=null){
+			typedQuery.setParameter("imageSetType",this.imageSetType);
 		}
 		if(this.programmeNumber!=null){
 			 typedQuery.setParameter("programmeNumber",programmeNumber);

@@ -17,6 +17,7 @@ import uk.co.boxnetwork.model.BoxScheduleEvent;
 import uk.co.boxnetwork.model.Image;
 import uk.co.boxnetwork.model.ImageBoxMediaStatus;
 import uk.co.boxnetwork.model.ImageSet;
+import uk.co.boxnetwork.model.ImageSetType;
 import uk.co.boxnetwork.model.ImageStatus;
 import uk.co.boxnetwork.model.MediaCommand;
 import uk.co.boxnetwork.util.GenericUtilities;
@@ -211,6 +212,9 @@ public class ImageService {
 		if(searchParam.getImageStatus()==null){
 			searchParam.setImageStatus(ImageStatus.APPROVED);
 		}
+		if(searchParam.getImageSetType()==null){
+			searchParam.setImageSetType(ImageSetType.DEFAULT);
+		}				
 		List<Image> dbImages=imageRepository.findImages(searchParam);
 		List<uk.co.boxnetwork.data.image.ClientImage> ret=new ArrayList<uk.co.boxnetwork.data.image.ClientImage>();
 		for(Image dbimg:dbImages){	

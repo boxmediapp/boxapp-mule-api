@@ -3,6 +3,8 @@ package uk.co.boxnetwork.data.image;
 import java.util.Date;
 
 import uk.co.boxnetwork.model.AppConfig;
+import uk.co.boxnetwork.model.ImageSetType;
+import uk.co.boxnetwork.model.ImageStatus;
 
 public class ClientImage {
 	    private Long id;						
@@ -14,6 +16,8 @@ public class ClientImage {
 		private String tags;
 		private String title;
 		private Date lastModifiedAt;
+		private ImageSetType imageSetType;
+		private ImageStatus imageStatus;
 		
 		public Long getId() {
 			return id;
@@ -72,6 +76,19 @@ public class ClientImage {
 		public void setLastModifiedAt(Date lastModifiedAt) {
 			this.lastModifiedAt = lastModifiedAt;
 		}
+		
+		public ImageSetType getImageSetType() {
+			return imageSetType;
+		}
+		public void setImageSetType(ImageSetType imageSetType) {
+			this.imageSetType = imageSetType;
+		}
+		public ImageStatus getImageStatus() {
+			return imageStatus;
+		}
+		public void setImageStatus(ImageStatus imageStatus) {
+			this.imageStatus = imageStatus;
+		}
 		public ClientImage(uk.co.boxnetwork.model.Image image, AppConfig appConfig){
 			this.id=image.getId();						
 			this.url=appConfig.getImageClientBaseURL()+"/"+image.getFilename();	
@@ -80,6 +97,8 @@ public class ClientImage {
 			this.tags=image.getTags();
 			this.title=image.getImageSet().getTitle();
 			this.lastModifiedAt=image.getLastModifiedAt();
+			this.imageSetType=image.getImageSet().getImageSetType();
+			this.imageStatus=image.getImageStatus();
 			if(image.getImageSet()!=null && image.getImageSet().getBoxEpisode()!=null){
 				String programmeNumber=image.getImageSet().getBoxEpisode().getProgrammeNumber();
 				if(programmeNumber!=null&& programmeNumber.length()>0){
