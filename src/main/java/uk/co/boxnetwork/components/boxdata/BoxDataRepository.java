@@ -105,15 +105,18 @@ public class BoxDataRepository {
 	  @Transactional
       public void updateBoxEpisodeWithScheduleEvent(ScheduleEvent evt, ImportScheduleRequest request){
    	   if(evt==null || evt.getEpisode()==null){
+   		   logger.info("schedule does not have episode");
    		   return;
    	   }    	   
    	   String programmeNumber=evt.getEpisode().getCtrPrg();
    	       	  
-   	   if(programmeNumber==null||evt.getScheduleTimestamp()==null){    		   
+   	   if(programmeNumber==null||evt.getScheduleTimestamp()==null){
+   		   		logger.info("schedule programmeNumber is empty or there is no scheduletimestamp");
 			   return;
 		   }
 		   programmeNumber=programmeNumber.trim();
 		   if(programmeNumber.length()==0){
+			   logger.info("schedule programme number length is zero");
 			   return;
 		   }
 		   
@@ -140,7 +143,7 @@ public class BoxDataRepository {
 					   boxScheduleEvent.setBoxChannel(foundChannel);
 					   boxScheduleEvent.setBoxEpisode(matchedEpisode);
 					   boxScheduleEvent.setScheduleTimestamp(evt.getScheduleTimestamp());
-					   entityManager.persist(boxScheduleEvent);
+					   entityManager.persist(boxScheduleEvent);					   
 				   }
 				   else{
 					   boxScheduleEvent=matchedSchdules.get(0);					   
@@ -174,6 +177,7 @@ public class BoxDataRepository {
 				   matchedEpisode.setLastModifiedAt(new Date());
 				   entityManager.merge(matchedEpisode);
 		   }
+		   
       }
 	
 }

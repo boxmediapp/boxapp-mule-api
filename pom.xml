@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>boxtv-metadata-app</artifactId>
-    <version>4.1.2</version>
+    <version>5.0.1-SNAPSHOT</version>
     <packaging>mule</packaging>
 	<name>Mule boxtv-metadata-app Application</name>
 
@@ -84,9 +84,9 @@
 			</plugin>
 			
 			 <plugin>
-            <groupId>external.atlassian.jgitflow</groupId>
-            <artifactId>jgitflow-maven-plugin</artifactId>
-            <version>1.0-m5.1</version>
+             	<groupId>com.amashchenko.maven.plugin</groupId>
+           		<artifactId>gitflow-maven-plugin</artifactId>
+	           <version>1.9.0</version>
               <configuration>
                  <!--     
     				<enableSshAgent>true</enableSshAgent>

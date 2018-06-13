@@ -91,6 +91,10 @@ public class BoxMedataRepository {
 
        @Transactional
 	   public void importBoxEpisode(Episode episode){
+    	   if(episode==null){
+    		   logger.info("episode is null, null episode will not be saved");
+    		   return;    		   
+    	   }
 		   String programmeNumber=episode.getCtrPrg();
 		   if(programmeNumber==null){
 			   return;
