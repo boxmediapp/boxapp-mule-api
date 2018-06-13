@@ -165,12 +165,19 @@ public class ImportC4ScheduleService {
  }
  public void importBoxEpisodes(ImportScheduleRequest request){
 	 String schedule=requestSchedulService(request);
-	 logger.info("Import Box episodes:"+schedule);
+	 //logger.info("Import Box episodes:"+schedule);
 	 try {			
 			C4Metadata c4metadata=c4SchedulerParser.parse(schedule);
 			for(ScheduleEvent event: c4metadata.getScheduleEvents()){
-				boxMetadataRepository.importBoxEpisode(event.getEpisode());
-				boxdataRepository.updateBoxEpisodeWithScheduleEvent(event, request);				
+				if(event.getEpisode()!=null){
+					boxMetadataRepository.importBoxEpisode(event.getEpisode());
+					//logger.info("***importing the schedule event:"+event);
+					boxdataRepository.updateBoxEpisodeWithScheduleEvent(event, request);
+				}
+				else{
+					logger.warn("event will not be saved because the episode is null:"+event);
+				}
+								
 			}
 			
 		} catch (DocumentException e) {

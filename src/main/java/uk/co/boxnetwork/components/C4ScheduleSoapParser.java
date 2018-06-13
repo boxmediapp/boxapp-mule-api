@@ -36,13 +36,14 @@ public class C4ScheduleSoapParser {
 			return parse(document);
 	}
 	public C4Metadata parse(Document document){
-		C4Metadata c4Medata=new C4Metadata();
-		
-		Element shceduleEvenGroups=xmlparser.getElementByPaths(document,schedulepath);
+		C4Metadata c4Medata=new C4Metadata();		
+		Element shceduleEvenGroups=xmlparser.getElementByPaths(document,schedulepath);				
 		for ( Iterator<Element> i = shceduleEvenGroups.elementIterator(); i.hasNext(); ) {
+			
 			Element elem = (Element) i.next();				
 			processScheduleEventGroup(elem,c4Medata);				    
 	    }
+		
 		return c4Medata;
 		
 	}	

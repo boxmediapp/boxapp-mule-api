@@ -63,7 +63,9 @@ public class BoxScheduleEvent {
 	public void setBoxChannel(BoxChannel boxChannel) {
 		this.boxChannel = boxChannel;
 	}
-	
+	public String toString(){
+		return "id=["+id+"]scheduleTimestamp=["+scheduleTimestamp+"]boxChannel=["+boxChannel+"]";
+	}
 	
 	
 }
