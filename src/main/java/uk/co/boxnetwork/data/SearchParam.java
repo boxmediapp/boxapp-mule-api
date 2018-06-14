@@ -139,9 +139,11 @@ public class SearchParam {
 	}
 	
 	private void transformSortByParameter(){
-		if(this.sortBy.indexOf(" ")>=0){
+		
+		if(this.sortBy.matches("^.*[^a-zA-Z0-9.].*$")){
 			   throw new RuntimeException("sortBy fields are illegal!!!");
 		}
+		
 		if(searchType==SearchParamType.EPISODE){						
 		   if(this.sortBy.equals("programmeNumber")){
 			   this.sortBy="ctrPrg"; 
@@ -263,7 +265,13 @@ public class SearchParam {
 					this.sortOrder=this.sortOrder.trim();
 					if(this.sortOrder.length()==0){
 						this.sortOrder=null;
-					}					
+					}
+					else{
+							sortOrder=sortOrder.toLowerCase();
+							if((!sortOrder.equals("asc")) && (!sortOrder.equals("desc"))){								
+								sortOrder=null;
+							}
+					}
 				}
 				String lim=queryparams.get("limit");
 				if(lim!=null){

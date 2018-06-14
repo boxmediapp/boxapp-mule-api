@@ -45,7 +45,7 @@ public class ListEpisodeTransformer extends BoxRestTransformer{
 	}
 	
 	private  Object getAllEpisodes(MuleMessage message, String outputEncoding){
-		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);		
+		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.GENERIC);		
 	    return imageService.findBoxEpisodes(searchParam);		    			
 				    
 	}
