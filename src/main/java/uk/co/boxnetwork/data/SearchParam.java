@@ -30,7 +30,8 @@ public class SearchParam {
 		S3ITEM,
 		BCPLAYLIST,
 		BCITEMINPLAYLIST,
-		ADVERTISEMENT_RULE
+		ADVERTISEMENT_RULE,
+		BOXEPISODE
 	}
 	
 	private String search=null;
@@ -157,6 +158,8 @@ public class SearchParam {
 				   this.sortBy="episode.ctrPrg"; 
 			}			
 		}
+		
+		
 
 	}
 	
@@ -792,7 +795,14 @@ public String selectSeriesGroupQuery(MediaApplicationID applicationId){
 		  return  query;
 	   }	   	   
 	   StringBuilder builder=new StringBuilder();
-	   builder.append(query).append(" order by ").append(queryAlias).append(".").append(this.sortBy);
+	   if(searchType==SearchParamType.BOXEPISODE && this.sortBy.equals("boxEpisode.imageSets")){							
+		   builder.append(query).append(" order by SIZE(").append(queryAlias).append(".").append(this.sortBy).append(")");
+			
+		}
+	   else{
+		   builder.append(query).append(" order by ").append(queryAlias).append(".").append(this.sortBy);
+	   }
+	   
 	   if(this.sortOrder!=null){
 		builder.append(" ").append(this.sortOrder);   
 	   }

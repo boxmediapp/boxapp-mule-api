@@ -52,6 +52,7 @@ public class ImageRepository {
 	public List<BoxScheduleEvent> findBoxScheduleEvent(SearchParam searchParam){		   		   
 		   String queryString=searchParam.getBoxScheduleSelectQuery();
 		   queryString=searchParam.addSortByToQuery(queryString, "e");
+		   logger.info("query******:"+queryString);
 		   TypedQuery<BoxScheduleEvent> query=entityManager.createQuery(queryString, BoxScheduleEvent.class);		   
 		   searchParam.config(query);		   		   
 		   return query.getResultList();		   

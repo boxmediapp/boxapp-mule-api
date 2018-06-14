@@ -32,7 +32,7 @@ public class ListScheduleEpisodeTransformer extends BoxRestTransformer{
 	}
 	
 	private  Object getAllEpisodes(MuleMessage message, String outputEncoding){
-		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.GENERIC);		
+		SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.BOXEPISODE);		
 	    return imageService.findBoxEpisodesByBoxScheduleEvent(searchParam);		    							    
 	}
 	            
