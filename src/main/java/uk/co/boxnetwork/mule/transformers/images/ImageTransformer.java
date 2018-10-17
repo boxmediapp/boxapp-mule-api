@@ -93,7 +93,6 @@ public class ImageTransformer extends BoxRestTransformer{
 					
 					uk.co.boxnetwork.data.image.Image image=imageService.deleteImageById(Long.valueOf(imgid),operator.getUsername());					
 					return image;
-				
 			}
 			
 		
