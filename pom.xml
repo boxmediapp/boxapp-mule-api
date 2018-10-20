@@ -19,8 +19,8 @@
 		<mule.version>3.8.0</mule.version>
     	<mule.tools.version>1.2</mule.tools.version>
        <jackson.version>1.8.9</jackson.version>       
-	   <spring.version>4.1.6.RELEASE</spring.version>
-	   <spring.security.version>2.0.9.RELEASE</spring.security.version>
+	   <spring.version>4.3.16.RELEASE</spring.version>
+	   <spring.security.version>2.0.16.RELEASE</spring.security.version>
 	   <hibernate.version>4.0.1.Final</hibernate.version>
 	    
 	   <aws.sdk.version>1.10.43</aws.sdk.version>
@@ -216,11 +216,7 @@
         </dependency>
  
  
-    <dependency>
-            <groupId>org.mule.modules</groupId>
-            <artifactId>mule-module-s3</artifactId>
-            <version>4.0.1</version>
-        </dependency>
+    
     <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
@@ -306,11 +302,7 @@
 </dependency>
    
    
-    <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.0.0.GA</version>
-    </dependency>
+  
 
     <dependency>
    		<groupId>org.springframework</groupId>
@@ -361,34 +353,13 @@
 	</dependency>
 	
 	
-     <dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			
-			<version>${spring.security.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.codehaus.jackson</groupId>
-					<artifactId>jackson-mapper-asl</artifactId>
-				</exclusion>
-			</exclusions>
-
-
-
-		</dependency>
-		
+     		
 		<dependency>
     		 <groupId>org.springframework.integration</groupId>
     		 <artifactId>spring-integration-ftp</artifactId>
     		<version>${spring.version}</version>
 		</dependency>
   
-    <dependency>
-            <groupId>com.mulesoft.muleesb.modules</groupId>
-            <artifactId>mule-module-spring-config-ee</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
         
         
 
@@ -437,12 +408,7 @@
      <version>2.3.23</version>
   </dependency>
 		
-    <dependency>
-            <groupId>com.mulesoft.muleesb.transports</groupId>
-            <artifactId>mule-transport-ftp-ee</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    
     </dependencies>
 
 	<repositories>
