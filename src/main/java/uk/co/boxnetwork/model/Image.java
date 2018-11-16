@@ -44,7 +44,7 @@ public class Image {
 	
 	
 	@Column(name="image_status")
-	private ImageStatus imageStatus=ImageStatus.WAITING_APPROVE;
+	private ImageStatus imageStatus=ImageStatus.APPROVED;
 	
  	    	
 	@ManyToOne(optional=false, fetch=FetchType.EAGER)

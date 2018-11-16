@@ -328,7 +328,7 @@ public class ImageService {
 				image.setS3BaseURL(fromImage.getS3BaseURL());
 				image.setImageSet(imageSet);				
 				image.setImageBoxMediaStatus(fromImage.getImageBoxMediaStatus());
-				image.setImageStatus(ImageStatus.WAITING_APPROVE);
+				image.setImageStatus(ImageStatus.APPROVED);
 				image.setTags(fromImage.getTags());
 				imageRepository.persist(image);				
 		}
