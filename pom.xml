@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>boxtv-metadata-app</artifactId>
-    <version>5.1.1</version>
+    <version>5.1.2</version>
     <packaging>mule</packaging>
 	<name>Mule boxtv-metadata-app Application</name>
 
@@ -46,6 +46,10 @@
                     <copyToAppsDirectory>true</copyToAppsDirectory>
 				<inclusions>
                        
+                    <inclusion>
+                            <groupId>org.mule.modules</groupId>
+                            <artifactId>mule-module-s3</artifactId>
+                        </inclusion>
                     </inclusions>
                 </configuration>
 			</plugin>
@@ -401,6 +405,11 @@
   </dependency>
 		
     
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-s3</artifactId>
+            <version>4.2.0</version>
+        </dependency>
     </dependencies>
 
 	<repositories>
@@ -422,6 +431,11 @@
    <url>http://repository.jboss.com/maven2</url>
  </repository>
     
+    <repository>
+            <id>mule-ce-releases</id>
+            <name>MuleCE Releases Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>

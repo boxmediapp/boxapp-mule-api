@@ -284,6 +284,31 @@ public class ImageService {
 		dbImage.setImageBoxMediaStatus(ImageBoxMediaStatus.UPLOADED);
 		imageRepository.persist(dbImage);
 	}
+	private Integer calculateNextFileCounterValue(BoxEpisode episode){
+		if(episode.getImageSets() == null || episode.getImageSets().size()==0){
+			return 1;
+		}
+		Integer fileCounter=0;
+		for(ImageSet imgset:episode.getImageSets()){
+			if(imgset.getFileCounter()!=null && imgset.getFileCounter()>fileCounter){
+				fileCounter=imgset.getFileCounter();
+			}
+		}
+		return fileCounter+1;		
+	}
+	private String buildFileVersionPart(int fileVersionCounter){
+	    if(fileVersionCounter<10){
+	    	return "00"+fileVersionCounter;
+	    }
+	    else if(fileVersionCounter<100){
+	    	return "0"+fileVersionCounter;
+	    }
+	    else{
+	    	return ""+fileVersionCounter;
+	    }
+		
+		
+	}
 	public void copyImageSet(MediaCommand mediaCommand){
 		
 		Long imageSetId=mediaCommand.getImagesetId();
@@ -302,15 +327,20 @@ public class ImageService {
 			logger.error("Failed find the imageset to clone:"+imageSetId);
 			return;
 		}
+		
 		ImageSet imageSet=new ImageSet();
 		imageSet.setBoxEpisode(episode);
 		imageSet.setTitle(episode.getTitle());
+		imageSet.setImageSetType(fromImageSet.getImageSetType());
+		imageSet.setFileCounter(calculateNextFileCounterValue(episode));
 		imageRepository.persist(imageSet);
-		imageSet.setFileCounter(1);
+		
 		List<Image> fromImages=imageRepository.findImagesByImageSet(fromImageSet);
 		
 		String 	programmeNumber=episode.getProgrammeNumber();
 		String  programmeNumberFilePart=programmeNumber.replace('/','_');
+		String fileVersionPart=buildFileVersionPart(imageSet.getFileCounter());
+		
 		
 		for(Image fromImage:fromImages){
 				String sourcefilename=fromImage.getFilename();
@@ -319,7 +349,7 @@ public class ImageService {
 				
 				int ind=sourcefilename.lastIndexOf(".");
 				String ext=sourcefilename.substring(ind);
-				String filename=appConfig.getImageClientFolder()+"/"+programmeNumberFilePart+"_001_"+width+"_"+height+ext;
+				String filename=appConfig.getImageClientFolder()+"/"+programmeNumberFilePart+"_"+fileVersionPart+"_"+width+"x"+height+ext;
 				s3BucketService.copyFile(appConfig.getImageBucket(), sourcefilename, appConfig.getImageBucket(), filename);
 				Image image=new Image();
 				image.setFilename(filename);
@@ -328,8 +358,9 @@ public class ImageService {
 				image.setS3BaseURL(fromImage.getS3BaseURL());
 				image.setImageSet(imageSet);				
 				image.setImageBoxMediaStatus(fromImage.getImageBoxMediaStatus());
-				image.setImageStatus(ImageStatus.WAITING_APPROVE);
+				image.setImageStatus(ImageStatus.APPROVED);
 				image.setTags(fromImage.getTags());
+				
 				imageRepository.persist(image);				
 		}
 		
