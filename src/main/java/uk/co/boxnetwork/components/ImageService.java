@@ -332,8 +332,9 @@ public class ImageService {
 		imageSet.setBoxEpisode(episode);
 		imageSet.setTitle(episode.getTitle());
 		imageSet.setImageSetType(fromImageSet.getImageSetType());
-		imageRepository.persist(imageSet);
 		imageSet.setFileCounter(calculateNextFileCounterValue(episode));
+		imageRepository.persist(imageSet);
+		
 		List<Image> fromImages=imageRepository.findImagesByImageSet(fromImageSet);
 		
 		String 	programmeNumber=episode.getProgrammeNumber();
