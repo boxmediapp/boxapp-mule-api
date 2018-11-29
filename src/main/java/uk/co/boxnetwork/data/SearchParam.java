@@ -313,6 +313,10 @@ public class SearchParam {
 							programmeNumber=programmeNumber.trim().replace("-","/");
 							if(programmeNumber.length()>0){
 								this.programmeNumber=programmeNumber;
+								if(this.programmeNumber.indexOf("/")==-1){
+									this.programmeNumber=this.programmeNumber+"/"+"%";
+									
+								}
 							}
 				}
 				String imageSets=queryparams.get("numberOfImageSets");
