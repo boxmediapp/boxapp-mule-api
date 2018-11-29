@@ -52,6 +52,7 @@ public class AllClientImageTransformer extends BoxRestTransformer{
 	}
 	private  Object findImages(MuleMessage message, String outputEncoding){
 	   SearchParam searchParam=new SearchParam(message,appConfig, SearchParam.SearchParamType.EPISODE);
+	   
 	   return imageService.findClientImages(searchParam);	  	   
 	}
 	
